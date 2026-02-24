@@ -82,14 +82,8 @@ projetqlio-phpmyadmin-1    0.0.0.0:8080->80/tcp
 
 > Étape indispensable — la base est vide au premier démarrage.
 
-**Option A — Ligne de commande (recommandé) :**
 
-```powershell
-# Attendre ~10 secondes que MariaDB soit prêt, puis :
-cmd /c "docker exec -i projetqlio-mariadb-1 mariadb -u root -pexample_root_password MES4 < FestoMES-2025-11-25-v2.sql"
-```
-
-**Option B — phpMyAdmin :**
+**phpMyAdmin :**
 
 1. Ouvrir http://localhost:8080
 2. Sélectionner la base `MES4`
