@@ -23,14 +23,14 @@
 
   <div class="kpi-card {% if total_errors > 0 %}red{% else %}green{% endif %}">
     <div class="kpi-label">KPI 7 – Erreurs</div>
-    <div class="kpi-value {% if total_errors > 0 %}red{% else %}green{% endif %}">{{ total_errors }}</div>
+    <div class="kpi-value {% if total_errors > 0 %}red{% else %}green{% endif %}">{{ total_errors|sep }}</div>
     <div class="kpi-sub">total détectées</div>
   </div>
 
   <div class="kpi-card green">
     <div class="kpi-label">KPI 9 – Sans erreur</div>
-    <div class="kpi-value green">{{ ok_orders }}</div>
-    <div class="kpi-sub">{{ fp_yield_pct }}% des OF ({{ total_orders }} total)</div>
+    <div class="kpi-value green">{{ ok_orders|sep }}</div>
+    <div class="kpi-sub">{{ fp_yield_pct }}% des OF ({{ total_orders|sep }} total)</div>
   </div>
 
 </div>
@@ -131,7 +131,7 @@
 
   <div class="section">
     <div class="section-title">
-      <i data-lucide="bar-chart"></i> KPI 8 – Pareto des erreurs par type
+      <i data-lucide="bar-chart"></i> KPI 8 – Taux d'erreur par étape (Pareto)
     </div>
     <div class="chart-box" id="chart-pareto"></div>
   </div>
@@ -149,20 +149,32 @@
 
 {% block scripts %}
 <script>
-const errorsData     = {{ errors_data|safe }};
+const stepErrorsData = {{ step_errors_data|safe }};
 const qualByResource = {{ qual_by_resource|safe }};
 
-// KPI 8 - Pareto errors (horizontal bar)
-if (errorsData.length > 0) {
+// KPI 8 – Pareto taux d'erreur par StepNo
+if (stepErrorsData.length > 0) {
+  const sorted = [...stepErrorsData].sort((a, b) => b.error_rate - a.error_rate);
   new ApexCharts(document.getElementById('chart-pareto'), mergeApex({
     chart:  { type: 'bar', height: 240 },
-    series: [{ name: 'Occurrences', data: errorsData.map(d => d.occurrences) }],
-    xaxis:  { categories: errorsData.map(d => (d.description || 'Code ' + d.error_code).substring(0, 30)) },
+    series: [{ name: 'Taux d\'erreur (%)', data: sorted.map(d => d.error_rate) }],
+    xaxis:  {
+      categories: sorted.map(d => 'Étape ' + d.StepNo),
+      labels: { rotate: -30, style: { fontSize: '11px' } }
+    },
+    yaxis: { min: 0, max: 100, title: { text: '% erreurs' } },
     colors: ['#ef4444'],
-    plotOptions: { bar: { horizontal: true, borderRadius: 3 } },
+    plotOptions: { bar: { borderRadius: 4 } },
     tooltip: {
-      y: { formatter: v => v + ' occurrence(s)' },
-      x: { show: true }
+      y: { formatter: v => v.toFixed(2) + ' %' },
+      custom: ({ dataPointIndex }) => {
+        const d = sorted[dataPointIndex];
+        return `<div style="padding:8px;font-size:12px">
+          <b>Étape ${d.StepNo}</b><br>
+          Taux erreur : ${d.error_rate} %<br>
+          Erreurs : ${d.errors} / ${d.total}
+        </div>`;
+      }
     }
   })).render();
 } else {

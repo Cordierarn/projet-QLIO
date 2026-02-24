@@ -7,6 +7,18 @@ import db
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "telefan-mes-4-secret-2026")
 
+
+@app.template_filter("sep")
+def sep_filter(value):
+    """Séparateur de milliers (espace fine) pour l'affichage français."""
+    try:
+        n = float(value)
+        if n == int(n):
+            return f"{int(n):,}".replace(",", "\u202f")
+        return f"{n:,.1f}".replace(",", "\u202f")
+    except (ValueError, TypeError):
+        return value
+
 VALID_USERS = {
     os.getenv("ADMIN_EMAIL", "admin@telefan.fr"): os.getenv("ADMIN_PASSWORD", "telefan2026"),
 }
@@ -125,6 +137,7 @@ def production():
     lead_df      = db.kpi_lead_time_delta()
     finished_df  = db.kpi_finished_per_day()
     orders_df    = db.kpi_orders_table()
+    advancement_df = db.kpi_order_advancement()
 
     ecart_avg = 0
     if not lead_df.empty:
@@ -140,7 +153,7 @@ def production():
         in_prog_data=json.dumps(db.to_records(in_prog_df.head(15))),
         lead_data=json.dumps(db.to_records(lead_df.tail(60)) if not lead_df.empty else []),
         finished_data=json.dumps(db.to_records(finished_df) if not finished_df.empty else []),
-        advancement=db.to_records(in_prog_df.head(8)),
+        advancement=db.to_records(advancement_df),
         orders=db.to_records(orders_df),
     )
 
@@ -150,6 +163,7 @@ def qualite():
     trs_df       = db.kpi_trs()
     ml_df        = db.kpi_machine_load()
     top_errors   = db.kpi_top_errors()
+    step_errors  = db.kpi_errors_by_step()
     total_errors = db.kpi_total_errors()
     fp_yield, ok_orders, total_orders = db.kpi_first_pass_yield()
 
@@ -184,13 +198,18 @@ def qualite():
         fp_yield_pct=round(fp_yield * 100, 1),
         trs_table=trs_table,
         errors_data=json.dumps(db.to_records(top_errors) if not top_errors.empty else []),
+        step_errors_data=json.dumps(db.to_records(step_errors) if not step_errors.empty else []),
         qual_by_resource=json.dumps(trs_table),
     )
 
 
 @app.route("/machines")
 def machines():
-    dt_df = db.kpi_mean_downtime()
+    date_from = request.args.get("from", "").strip()
+    date_to   = request.args.get("to",   "").strip()
+    db_min, db_max = db.get_machine_date_range()
+
+    dt_df = db.kpi_mean_downtime(date_from or None, date_to or None)
     ml_df = db.kpi_machine_load()
 
     total_dt = avg_mtbf = avg_mttr = 0.0
@@ -227,14 +246,22 @@ def machines():
         detail=detail,
         pareto_data=json.dumps(detail),
         occ_data=json.dumps(db.to_records(ml_df) if not ml_df.empty else []),
+        date_from=date_from,
+        date_to=date_to,
+        db_min=db_min or "",
+        db_max=db_max or "",
     )
 
 
 @app.route("/maintenance")
 def maintenance():
+    date_from = request.args.get("from", "").strip()
+    date_to   = request.args.get("to",   "").strip()
+    db_min, db_max = db.get_machine_date_range()
+
     buf_df          = db.kpi_buffer_fill()
     real_epp, calc_epp = db.kpi_energy_per_piece()
-    dt_df           = db.kpi_mean_downtime()
+    dt_df           = db.kpi_mean_downtime(date_from or None, date_to or None)
     ml_df           = db.kpi_machine_load()
     energy_df       = db.kpi_energy_by_resource()
 
@@ -270,6 +297,10 @@ def maintenance():
         energy_data=json.dumps(db.to_records(energy_df) if not energy_df.empty else []),
         total_machines=total_machines,
         occ_pct=round(occ_global * 100, 1),
+        date_from=date_from,
+        date_to=date_to,
+        db_min=db_min or "",
+        db_max=db_max or "",
     )
 
 

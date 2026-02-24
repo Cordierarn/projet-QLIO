@@ -47,16 +47,37 @@ def to_records(df: pd.DataFrame) -> list:
 # ──────────────────────────────────────────────
 
 def kpi_in_progress():
+    """KPI 1 – nombre d'OF distincts en cours (Active=1)."""
     df = run_query("""
-        SELECT CONCAT(ONo, '-', OPos) AS order_ref,
+        SELECT ONo AS order_ref,
                COUNT(*) AS active_steps
         FROM tblstep
         WHERE Active = 1
-        GROUP BY CONCAT(ONo, '-', OPos)
+        GROUP BY ONo
         ORDER BY active_steps DESC
     """)
-    total = int(df["active_steps"].sum()) if not df.empty else 0
+    total = len(df) if not df.empty else 0
     return total, df
+
+
+def kpi_order_advancement():
+    """KPI 3 – top 3 OF les plus avancés (FIFO) : StepNo_actuel / max_global_steps."""
+    df = run_query("""
+        SELECT op.ONo,
+               MAX(op.StepNo)   AS current_step,
+               tot.max_step
+        FROM tblorderpos op
+        CROSS JOIN (SELECT MAX(StepNo) AS max_step FROM tblorderpos) tot
+        WHERE op.End IS NULL
+        GROUP BY op.ONo, tot.max_step
+        ORDER BY current_step DESC
+        LIMIT 3
+    """)
+    if df.empty:
+        return df
+    max_s = int(df.iloc[0]["max_step"]) if df.iloc[0]["max_step"] else 1
+    df["pct"] = (df["current_step"] / max_s * 100).round(1).clip(upper=100)
+    return df
 
 
 def kpi_production_progress():
@@ -81,7 +102,6 @@ def kpi_lead_time_delta(date_clause: str = "", params: dict | None = None):
         return df
     df["delta_secs"] = df["actual_secs"] - df["planned_secs"]
     return df
-
 
 def kpi_finished_per_day(date_clause: str = "", params: dict | None = None):
     return run_query(f"""
@@ -142,6 +162,24 @@ def kpi_machine_load():
     return df[["ResourceID", "occupation"]]
 
 
+def kpi_errors_by_step():
+    """KPI 8 – taux d'erreur (%) par numéro d'étape, trié Pareto."""
+    return run_query("""
+        SELECT StepNo,
+               COUNT(*) AS total,
+               SUM(CASE WHEN ErrorStep=1 OR ErrorRetVal<>0 THEN 1 ELSE 0 END) AS errors,
+               ROUND(
+                 100.0 * SUM(CASE WHEN ErrorStep=1 OR ErrorRetVal<>0 THEN 1 ELSE 0 END) / COUNT(*),
+                 2
+               ) AS error_rate
+        FROM tblfinstep
+        GROUP BY StepNo
+        HAVING total > 0
+        ORDER BY error_rate DESC
+        LIMIT 25
+    """)
+
+
 def kpi_top_errors():
     df = run_query("""
         SELECT fs.ErrorRetVal   AS error_code,
@@ -185,12 +223,35 @@ def kpi_first_pass_yield():
     return (ok / total if total else 0.0), ok, total
 
 
-def kpi_mean_downtime():
+def get_machine_date_range():
+    """Retourne (min_date, max_date) sous forme de str ISO depuis tblmachinereport."""
     df = run_query("""
+        SELECT MIN(TimeStamp) AS min_ts, MAX(TimeStamp) AS max_ts
+        FROM tblmachinereport
+    """)
+    if df.empty or df.iloc[0]["min_ts"] is None:
+        return None, None
+    min_ts = pd.to_datetime(df.iloc[0]["min_ts"])
+    max_ts = pd.to_datetime(df.iloc[0]["max_ts"])
+    return min_ts.strftime("%Y-%m-%d"), max_ts.strftime("%Y-%m-%d")
+
+
+def kpi_mean_downtime(date_from=None, date_to=None):
+    conditions = []
+    params: dict = {}
+    if date_from:
+        conditions.append("TimeStamp >= :date_from")
+        params["date_from"] = date_from
+    if date_to:
+        conditions.append("TimeStamp < DATE_ADD(:date_to, INTERVAL 1 DAY)")
+        params["date_to"] = date_to
+    where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+    df = run_query(f"""
         SELECT ResourceID, TimeStamp, Busy, ErrorL1, ErrorL2
         FROM tblmachinereport
+        {where}
         ORDER BY ResourceID, TimeStamp
-    """)
+    """, params)
     if df.empty:
         return pd.DataFrame()
     df["TimeStamp"] = pd.to_datetime(df["TimeStamp"])
@@ -232,16 +293,17 @@ def kpi_buffer_fill():
 
 
 def kpi_energy_per_piece():
+    """KPI 12 – énergie moyenne par OF (divisée par COUNT DISTINCT ONo)."""
     df = run_query("""
         SELECT SUM(ElectricEnergyReal) AS real_energy,
                SUM(ElectricEnergyCalc) AS calc_energy,
-               COUNT(*)                AS steps
+               COUNT(DISTINCT ONo)     AS n_orders
         FROM tblfinstep
     """)
-    if df.empty or df.iloc[0]["steps"] == 0:
+    if df.empty or not df.iloc[0]["n_orders"]:
         return 0.0, 0.0
-    steps = df.iloc[0]["steps"]
-    return float(df.iloc[0]["real_energy"] / steps), float(df.iloc[0]["calc_energy"] / steps)
+    n = int(df.iloc[0]["n_orders"])
+    return float(df.iloc[0]["real_energy"] / n), float(df.iloc[0]["calc_energy"] / n)
 
 
 def kpi_energy_by_resource():

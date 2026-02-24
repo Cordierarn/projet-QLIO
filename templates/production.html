@@ -14,7 +14,7 @@
       <i data-lucide="package"></i> KPI 1 – Nombre d'OF en cours
     </div>
     <div class="big-metric accent">
-      <span class="num">{{ in_prog_total }}</span>
+      <span class="num">{{ in_prog_total|sep }}</span>
       <span class="unit">OF actifs</span>
     </div>
     <div class="chart-box" id="chart-kpi1"></div>
@@ -38,22 +38,22 @@
 
   <div class="section">
     <div class="section-title">
-      <i data-lucide="percent"></i> KPI 3 – Taux d'avancement des OF
-    </div>
-    <div class="big-metric green">
-      <span class="num">{{ ratio_pct }}%</span>
+      <i data-lucide="percent"></i> KPI 3 – Taux d'avancement des OF (Top 3 FIFO)
     </div>
     {% if advancement %}
-      {% set max_s = advancement[0].active_steps %}
       {% for item in advancement %}
-        {% set pct = (item.active_steps / max_s * 100)|round(1) if max_s else 0 %}
         <div class="progress-row">
           <div class="progress-header">
-            <span class="progress-label">{{ item.order_ref }}</span>
-            <span class="progress-value green">{{ pct }}%</span>
+            <span class="progress-label">OF {{ item.ONo }}</span>
+            <span class="progress-value green">
+              {{ item.pct }}%
+              <span style="font-size:11px;color:var(--text-muted)">
+                (étape {{ item.current_step }}/{{ item.max_step }})
+              </span>
+            </span>
           </div>
           <div class="progress-bg">
-            <div class="progress-fill green" style="width:{{ pct }}%"></div>
+            <div class="progress-fill green" style="width:{{ item.pct }}%"></div>
           </div>
         </div>
       {% endfor %}
@@ -67,7 +67,7 @@
       <i data-lucide="check-square"></i> KPI 4 – OF terminés
     </div>
     <div class="big-metric amber">
-      <span class="num">{{ finished }}</span>
+      <span class="num">{{ finished|sep }}</span>
       <span class="unit">OF terminés</span>
     </div>
     <div class="chart-box" id="chart-kpi4"></div>
@@ -159,11 +159,16 @@ if (leadData.length > 0) {
     '<p style="color:var(--text-muted);padding:20px;text-align:center">Pas de données de cycle</p>';
 }
 
-// KPI 4 - Finished per day
+// KPI 4 - Finished per day — courbe d'évolution cumulée
 if (finishedData.length > 0) {
+  let cumul = 0;
+  const cumulData = finishedData.map(d => { cumul += d.nb_ordres; return cumul; });
   new ApexCharts(document.getElementById('chart-kpi4'), mergeApex({
-    chart:  { type: 'bar', height: 210 },
-    series: [{ name: 'OF terminés', data: finishedData.map(d => d.nb_ordres) }],
+    chart:  { type: 'area', height: 210 },
+    series: [
+      { name: 'OF terminés (cumulés)', data: cumulData },
+      { name: 'Par jour',              data: finishedData.map(d => d.nb_ordres), type: 'bar' }
+    ],
     xaxis:  {
       categories: finishedData.map(d => {
         const dt = new Date(d.jour);
@@ -171,8 +176,10 @@ if (finishedData.length > 0) {
       }),
       labels: { rotate: -45, style: { fontSize: '11px' } }
     },
-    colors: ['#f59e0b'],
-    plotOptions: { bar: { borderRadius: 4 } },
+    colors: ['#f59e0b', '#3b82f6'],
+    stroke: { width: [2, 0], curve: 'smooth' },
+    fill:   { type: ['gradient', 'solid'], opacity: [0.3, 0.8] },
+    plotOptions: { bar: { borderRadius: 3 } },
     tooltip: { y: { formatter: v => v + ' OF' } }
   })).render();
 } else {
