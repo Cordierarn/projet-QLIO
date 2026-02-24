@@ -1,5 +1,4 @@
+flask==3.1.0
 pandas==2.2.3
-streamlit==1.39.0
 SQLAlchemy==2.0.34
 PyMySQL==1.1.1
-altair==5.4.1

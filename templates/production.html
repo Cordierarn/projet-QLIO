@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}Production KPI 1-4 – T'Elefan MES 4.0{% endblock %}
+{% block page_title %}Indicateurs de Production{% endblock %}
+{% block page_sub %}KPI 1 à 4 – Suivi des Ordres de Fabrication{% endblock %}
+
+{% block content %}
+
+<!-- ── KPI 1 & 2 ──────────────────────────────────────────────────────── -->
+<div class="grid-2 mb-16">
+
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="package"></i> KPI 1 – Nombre d'OF en cours
+    </div>
+    <div class="big-metric accent">
+      <span class="num">{{ in_prog_total }}</span>
+      <span class="unit">OF actifs</span>
+    </div>
+    <div class="chart-box" id="chart-kpi1"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="clock"></i> KPI 2 – Lead Time (Écart Prévu/Réel)
+    </div>
+    <div class="big-metric {% if ecart_avg_min > 0 %}red{% else %}green{% endif %}">
+      <span class="num">{% if ecart_avg_min > 0 %}+{% endif %}{{ ecart_avg_min }}</span>
+      <span class="unit">min écart moyen</span>
+    </div>
+    <div class="chart-box" id="chart-kpi2"></div>
+  </div>
+
+</div>
+
+<!-- ── KPI 3 & 4 ──────────────────────────────────────────────────────── -->
+<div class="grid-2 mb-16">
+
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="percent"></i> KPI 3 – Taux d'avancement des OF
+    </div>
+    <div class="big-metric green">
+      <span class="num">{{ ratio_pct }}%</span>
+    </div>
+    {% if advancement %}
+      {% set max_s = advancement[0].active_steps %}
+      {% for item in advancement %}
+        {% set pct = (item.active_steps / max_s * 100)|round(1) if max_s else 0 %}
+        <div class="progress-row">
+          <div class="progress-header">
+            <span class="progress-label">{{ item.order_ref }}</span>
+            <span class="progress-value green">{{ pct }}%</span>
+          </div>
+          <div class="progress-bg">
+            <div class="progress-fill green" style="width:{{ pct }}%"></div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p style="color:var(--text-muted);font-size:13px">Aucun OF en cours.</p>
+    {% endif %}
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="check-square"></i> KPI 4 – OF terminés
+    </div>
+    <div class="big-metric amber">
+      <span class="num">{{ finished }}</span>
+      <span class="unit">OF terminés</span>
+    </div>
+    <div class="chart-box" id="chart-kpi4"></div>
+  </div>
+
+</div>
+
+<!-- ── Récapitulatif ──────────────────────────────────────────────────── -->
+<div class="section">
+  <div class="section-title">
+    <i data-lucide="list"></i> Récapitulatif des Ordres de Fabrication
+  </div>
+  {% if orders %}
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>N° OF</th>
+        <th>Début prévu</th>
+        <th>Fin prévue</th>
+        <th>Début réel</th>
+        <th>Fin réelle</th>
+        <th>État</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for o in orders %}
+      <tr>
+        <td><strong>{{ o.ono }}</strong></td>
+        <td>{{ o.planned_start or '–' }}</td>
+        <td>{{ o.planned_end  or '–' }}</td>
+        <td>{{ o.actual_start or '–' }}</td>
+        <td>{{ o.actual_end   or '–' }}</td>
+        <td>
+          {% if o.state == 2 or o.state == 'Terminé' %}
+            <span class="badge ok">Terminé</span>
+          {% elif o.state == 1 %}
+            <span class="badge info">En cours</span>
+          {% else %}
+            <span class="badge">{{ o.state }}</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p style="color:var(--text-muted);font-size:13px">Aucune donnée disponible.</p>
+  {% endif %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+const inProgData  = {{ in_prog_data|safe }};
+const leadData    = {{ lead_data|safe }};
+const finishedData= {{ finished_data|safe }};
+
+// KPI 1 - OF en cours bar chart
+if (inProgData.length > 0) {
+  new ApexCharts(document.getElementById('chart-kpi1'), mergeApex({
+    chart:  { type: 'bar', height: 210 },
+    series: [{ name: 'Étapes actives', data: inProgData.map(d => d.active_steps) }],
+    xaxis:  { categories: inProgData.map(d => d.order_ref), labels: { rotate: -30, style: { fontSize: '11px' } } },
+    colors: ['#3b82f6'],
+    plotOptions: { bar: { borderRadius: 4 } }
+  })).render();
+} else {
+  document.getElementById('chart-kpi1').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Aucun OF en cours</p>';
+}
+
+// KPI 2 - Lead Time delta bar chart
+if (leadData.length > 0) {
+  new ApexCharts(document.getElementById('chart-kpi2'), mergeApex({
+    chart:  { type: 'bar', height: 210 },
+    series: [{ name: 'Δ (s)', data: leadData.map(d => d.delta_secs) }],
+    xaxis:  {
+      categories: leadData.map(d => d.order_ref),
+      labels: { rotate: -45, style: { fontSize: '10px' }, show: leadData.length < 40 }
+    },
+    colors: leadData.map(d => d.delta_secs > 0 ? '#ef4444' : '#10b981'),
+    plotOptions: { bar: { borderRadius: 3, distributed: true } },
+    legend: { show: false },
+    tooltip: { y: { formatter: v => v.toFixed(0) + ' s' } }
+  })).render();
+} else {
+  document.getElementById('chart-kpi2').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Pas de données de cycle</p>';
+}
+
+// KPI 4 - Finished per day
+if (finishedData.length > 0) {
+  new ApexCharts(document.getElementById('chart-kpi4'), mergeApex({
+    chart:  { type: 'bar', height: 210 },
+    series: [{ name: 'OF terminés', data: finishedData.map(d => d.nb_ordres) }],
+    xaxis:  {
+      categories: finishedData.map(d => {
+        const dt = new Date(d.jour);
+        return dt.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+      }),
+      labels: { rotate: -45, style: { fontSize: '11px' } }
+    },
+    colors: ['#f59e0b'],
+    plotOptions: { bar: { borderRadius: 4 } },
+    tooltip: { y: { formatter: v => v + ' OF' } }
+  })).render();
+} else {
+  document.getElementById('chart-kpi4').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Pas d\'OF terminés</p>';
+}
+
+lucide.createIcons();
+</script>
+{% endblock %}

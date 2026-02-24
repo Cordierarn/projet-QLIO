@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}Maintenance KPI 11-12 – T'Elefan MES 4.0{% endblock %}
+{% block page_title %}Indicateurs de Maintenance{% endblock %}
+{% block page_sub %}KPI 11-12 – Buffers et Consommation Électrique{% endblock %}
+
+{% block content %}
+
+<!-- ── 3 KPI Cards ───────────────────────────────────────────────────── -->
+<div class="grid-3 mb-16">
+
+  <div class="kpi-card {% if fill_pct > 80 %}amber{% else %}green{% endif %}">
+    <div class="kpi-label">KPI 11 – Remplissage Buffers</div>
+    <div class="kpi-value {% if fill_pct > 80 %}amber{% else %}green{% endif %}">{{ fill_pct }}%</div>
+    <div class="kpi-sub">global tous buffers</div>
+  </div>
+
+  <div class="kpi-card accent">
+    <div class="kpi-label">KPI 12 – Énergie / OF</div>
+    <div class="kpi-value accent">{{ real_epp }}</div>
+    <div class="kpi-sub">mWs réels · {{ calc_epp }} mWs calculés</div>
+  </div>
+
+  <div class="kpi-card amber">
+    <div class="kpi-label">MTBF / MTTR</div>
+    <div class="kpi-value amber">{{ avg_mtbf }}<span style="font-size:20px;color:var(--text-muted)"> / {{ avg_mttr }}</span></div>
+    <div class="kpi-sub">min inter-pannes / réparation</div>
+  </div>
+
+</div>
+
+<!-- ── Buffers + Énergie ──────────────────────────────────────────────── -->
+<div class="grid-2 mb-16">
+
+  <!-- KPI 11 - Buffers -->
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="database"></i> KPI 11 – Taux de remplissage des buffers
+    </div>
+    {% if buffers %}
+      {% for b in buffers %}
+        <div class="progress-row">
+          <div class="progress-header">
+            <span class="progress-label">
+              Buffer {{ b.id }}
+              {% if b.status == 'danger' %}
+                <span class="badge danger" style="margin-left:6px">Saturation !</span>
+              {% elif b.status == 'warn' %}
+                <span class="badge warn" style="margin-left:6px">Attention</span>
+              {% endif %}
+            </span>
+            <span class="progress-value {{ b.status if b.status != 'ok' else '' }}">
+              {{ b.pct }}%
+              <span style="font-size:11px;color:var(--text-muted)">
+                ({{ b.occupied }}/{{ b.total }})
+              </span>
+            </span>
+          </div>
+          <div class="progress-bg">
+            <div class="progress-fill {{ b.status if b.status != 'ok' else '' }}"
+                 style="width:{{ [b.pct, 100]|min }}%"></div>
+          </div>
+        </div>
+      {% endfor %}
+      <div class="chart-box mt-8" id="chart-buf"></div>
+    {% else %}
+      <p style="color:var(--text-muted);font-size:13px">Pas de données de buffer.</p>
+    {% endif %}
+  </div>
+
+  <!-- KPI 12 - Energy -->
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="zap"></i> KPI 12 – Consommation électrique par OF
+    </div>
+    <div class="dual-metric mb-16">
+      <div class="item">
+        <div class="lbl">Réelle</div>
+        <div class="val" style="color:var(--accent)">
+          {{ real_epp }} <span class="u">mWs</span>
+        </div>
+      </div>
+      <div class="item">
+        <div class="lbl">Calculée</div>
+        <div class="val" style="color:var(--green)">
+          {{ calc_epp }} <span class="u">mWs</span>
+        </div>
+      </div>
+    </div>
+    <div class="chart-box" id="chart-energy"></div>
+  </div>
+
+</div>
+
+<!-- ── État général équipements ──────────────────────────────────────── -->
+<div class="section">
+  <div class="section-title">
+    <i data-lucide="monitor-check"></i> État Général des Équipements
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;margin-bottom:16px">
+    <div style="font-size:36px;font-weight:700;color:var(--green)">
+      {{ total_machines }}/{{ total_machines }}
+    </div>
+    <div style="color:var(--text-muted);font-size:13px;line-height:1.7">
+      machines opérationnelles<br>
+      Taux de disponibilité moyen : <strong style="color:var(--text)">{{ occ_pct }}%</strong>
+    </div>
+  </div>
+  <div class="chart-box" id="chart-equip"></div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+const bufData    = {{ buf_chart_data|safe }};
+const energyData = {{ energy_data|safe }};
+
+// Buffer fill chart
+if (bufData.length > 0) {
+  new ApexCharts(document.getElementById('chart-buf'), mergeApex({
+    chart:  { type: 'bar', height: 160 },
+    series: [{ name: 'Remplissage', data: bufData.map(d => d.pct) }],
+    xaxis:  {
+      categories: bufData.map(d => 'Buffer ' + d.id),
+      labels: { style: { fontSize: '11px' } }
+    },
+    yaxis:  { min: 0, max: 100, title: { text: '%' } },
+    colors: bufData.map(d => d.status === 'danger' ? '#ef4444' : d.status === 'warn' ? '#f59e0b' : '#10b981'),
+    plotOptions: { bar: { borderRadius: 4, distributed: true } },
+    legend: { show: false },
+    tooltip: { y: { formatter: v => v.toFixed(1) + '%' } }
+  })).render();
+}
+
+// Energy by resource
+if (energyData.length > 0) {
+  new ApexCharts(document.getElementById('chart-energy'), mergeApex({
+    chart:  { type: 'bar', height: 200 },
+    series: [
+      { name: 'Réelle',    data: energyData.map(d => +(d.avg_real || 0).toFixed(4)) },
+      { name: 'Calculée',  data: energyData.map(d => +(d.avg_calc || 0).toFixed(4)) }
+    ],
+    xaxis:  {
+      categories: energyData.map(d => d.ResourceID),
+      labels: { rotate: -30, style: { fontSize: '11px' } }
+    },
+    colors: ['#3b82f6', '#10b981'],
+    plotOptions: { bar: { borderRadius: 3 } },
+    tooltip: { y: { formatter: v => v.toFixed(4) + ' mWs' } }
+  })).render();
+} else {
+  document.getElementById('chart-energy').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Pas de données d\'énergie</p>';
+}
+
+// Equipment status (reuse buf occupation)
+const equipColors = bufData.map(d => d.pct >= 80 ? '#10b981' : '#f59e0b');
+if (bufData.length > 0) {
+  new ApexCharts(document.getElementById('chart-equip'), mergeApex({
+    chart:  { type: 'radialBar', height: 220 },
+    series: bufData.slice(0, 6).map(d => d.pct),
+    labels: bufData.slice(0, 6).map(d => 'Buffer ' + d.id),
+    colors: ['#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4'],
+    plotOptions: {
+      radialBar: {
+        offsetY: 0,
+        startAngle: 0,
+        endAngle: 270,
+        hollow: { margin: 5, size: '30%' },
+        dataLabels: { name: { fontSize: '11px' }, value: { fontSize: '12px' } },
+        track: { background: '#1e2a45' }
+      }
+    }
+  })).render();
+} else {
+  document.getElementById('chart-equip').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Pas de données</p>';
+}
+
+lucide.createIcons();
+</script>
+{% endblock %}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}T'Elefan MES 4.0{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-name">T'Elefan</div>
+      <div class="brand-sub">MES 4.0 – Pilotage de Production</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      {% for endpoint, label, icon, sub in nav %}
+      <a href="{{ url_for(endpoint) }}"
+         class="nav-item {% if active == endpoint %}active{% endif %}">
+        <svg class="nav-icon" fill="none" stroke-width="2" viewBox="0 0 24 24"
+             xmlns="http://www.w3.org/2000/svg" data-lucide="{{ icon }}"></svg>
+        <span class="nav-label">{{ label }}</span>
+        <span class="nav-sub">{{ sub }}</span>
+      </a>
+      {% endfor %}
+    </nav>
+
+    <div class="sidebar-footer">
+      Sources : SQL · CSV Robotino<br>
+      <a href="http://localhost:8080" target="_blank">{{ db_info.user }}@{{ db_info.host }}/{{ db_info.database }}</a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="page-title">{% block page_title %}Dashboard{% endblock %}</div>
+        <div class="page-sub">{% block page_sub %}{% endblock %}</div>
+      </div>
+      <div class="header-right">
+        <div class="header-meta" id="clock"></div>
+        <a href="{{ url_for('logout') }}" class="header-user">
+          <div class="avatar">{{ user[0]|upper }}</div>
+          {{ user.split('@')[0]|title }}
+        </a>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+      {% block content %}{% endblock %}
+    </main>
+
+  </div>
+</div>
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<!-- ApexCharts -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.54.0/dist/apexcharts.min.js"></script>
+
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Live clock
+  function updateClock() {
+    const now = new Date();
+    const d = now.toLocaleDateString('fr-FR', {day:'2-digit',month:'long',year:'numeric'});
+    const t = now.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
+    const el = document.getElementById('clock');
+    if (el) el.innerHTML = d + '<br>' + t + ' · Actualisation : 5 min';
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Shared ApexCharts dark theme defaults
+  window.APEX_DEFAULTS = {
+    chart: {
+      background: 'transparent',
+      fontFamily: "Inter, -apple-system, sans-serif",
+      toolbar: { show: false },
+      animations: { enabled: true, speed: 400 }
+    },
+    theme: { mode: 'dark' },
+    grid: { borderColor: '#252e48', strokeDashArray: 3 },
+    tooltip: {
+      theme: 'dark',
+      style: { fontSize: '12px' }
+    },
+    colors: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'],
+    dataLabels: { enabled: false }
+  };
+
+  function mergeApex(opts) {
+    return Object.assign({}, window.APEX_DEFAULTS, opts, {
+      chart: Object.assign({}, window.APEX_DEFAULTS.chart, opts.chart || {}),
+      grid:  Object.assign({}, window.APEX_DEFAULTS.grid,  opts.grid  || {}),
+      tooltip: Object.assign({}, window.APEX_DEFAULTS.tooltip, opts.tooltip || {})
+    });
+  }
+</script>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Tableau de Bord – T'Elefan MES 4.0{% endblock %}
+{% block page_title %}Tableau de Bord Général{% endblock %}
+{% block page_sub %}Vue d'ensemble des 12 KPIs{% endblock %}
+
+{% block content %}
+
+<!-- ── Row 1 : 4 KPI Cards ─────────────────────────────────────────────── -->
+<div class="grid-4 mb-16">
+
+  <div class="kpi-card accent">
+    <div class="kpi-label">OF en cours</div>
+    <div class="kpi-value accent">{{ in_prog_total }}</div>
+    <div class="kpi-sub">ordres actifs</div>
+  </div>
+
+  <div class="kpi-card green">
+    <div class="kpi-label">OF terminés</div>
+    <div class="kpi-value green">{{ finished }}</div>
+    <div class="kpi-sub">cumul total</div>
+  </div>
+
+  <div class="kpi-card amber">
+    <div class="kpi-label">TRS Global</div>
+    <div class="kpi-value amber">{{ trs_pct }}%</div>
+    <div class="kpi-sub">Dispo {{ dispo_pct }}% · Perf {{ perf_pct }}% · Qual {{ qual_pct }}%</div>
+  </div>
+
+  <div class="kpi-card {% if total_errors > 10 %}red{% else %}accent{% endif %}">
+    <div class="kpi-label">Erreurs</div>
+    <div class="kpi-value {% if total_errors > 10 %}red{% else %}accent{% endif %}">{{ total_errors }}</div>
+    <div class="kpi-sub">total détectées</div>
+  </div>
+
+</div>
+
+<!-- ── Row 2 : Charts ─────────────────────────────────────────────────── -->
+<div class="grid-2 mb-16">
+
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="bar-chart-2"></i> Évolution des OF en cours
+    </div>
+    <div class="chart-box" id="chart-inprog"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="activity"></i> Lead Time – Écart Prévu/Réel
+    </div>
+    <div class="chart-box" id="chart-lead"></div>
+  </div>
+
+</div>
+
+<!-- ── Row 3 : TRS + Top 3 + Alertes ─────────────────────────────────── -->
+<div class="grid-3">
+
+  <!-- TRS components -->
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="pie-chart"></i> Composantes TRS
+    </div>
+    <div class="progress-row">
+      <div class="progress-header">
+        <span class="progress-label">Disponibilité</span>
+        <span class="progress-value">{{ dispo_pct }}%</span>
+      </div>
+      <div class="progress-bg">
+        <div class="progress-fill" style="width:{{ [dispo_pct,100]|min }}%"></div>
+      </div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-header">
+        <span class="progress-label">Performance</span>
+        <span class="progress-value green">{{ perf_pct }}%</span>
+      </div>
+      <div class="progress-bg">
+        <div class="progress-fill green" style="width:{{ [perf_pct,100]|min }}%"></div>
+      </div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-header">
+        <span class="progress-label">Qualité</span>
+        <span class="progress-value amber">{{ qual_pct }}%</span>
+      </div>
+      <div class="progress-bg">
+        <div class="progress-fill amber" style="width:{{ [qual_pct,100]|min }}%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top 3 advancement -->
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="trending-up"></i> Avancement OF en cours (Top 3)
+    </div>
+    {% if top3 %}
+      {% set max_steps = top3[0].active_steps %}
+      {% for item in top3 %}
+        {% set pct = (item.active_steps / max_steps * 100)|round(1) if max_steps else 0 %}
+        <div class="progress-row">
+          <div class="progress-header">
+            <span class="progress-label">{{ item.order_ref }}</span>
+            <span class="progress-value">{{ pct }}%</span>
+          </div>
+          <div class="progress-bg">
+            <div class="progress-fill" style="width:{{ pct }}%"></div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p style="color:var(--text-muted);font-size:13px">Aucun OF en cours.</p>
+    {% endif %}
+  </div>
+
+  <!-- Alerts -->
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="bell"></i> Alertes Récentes
+    </div>
+    {% for cls, msg in alerts %}
+    <div class="alert {{ cls }}">
+      {% if cls == 'warn' %}   <i data-lucide="alert-triangle"></i>
+      {% elif cls == 'danger' %}<i data-lucide="x-circle"></i>
+      {% elif cls == 'info' %}  <i data-lucide="info"></i>
+      {% else %}                <i data-lucide="check-circle"></i>
+      {% endif %}
+      {{ msg }}
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const inProgData = {{ in_prog_data|safe }};
+const leadData   = {{ lead_data|safe }};
+
+// Chart OF en cours
+if (inProgData.length > 0) {
+  new ApexCharts(document.getElementById('chart-inprog'), mergeApex({
+    chart:  { type: 'bar', height: 220 },
+    series: [{ name: 'Étapes actives', data: inProgData.map(d => d.active_steps) }],
+    xaxis:  { categories: inProgData.map(d => d.order_ref), labels: { rotate: -30, style: { fontSize: '11px' } } },
+    yaxis:  { title: { text: 'Étapes' } },
+    colors: ['#3b82f6'],
+    plotOptions: { bar: { borderRadius: 4 } }
+  })).render();
+} else {
+  document.getElementById('chart-inprog').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Aucun OF en cours</p>';
+}
+
+// Lead Time chart
+if (leadData.length > 0) {
+  const pos = leadData.filter(d => d.delta_secs >= 0);
+  const neg = leadData.filter(d => d.delta_secs <  0);
+  new ApexCharts(document.getElementById('chart-lead'), mergeApex({
+    chart:  { type: 'bar', height: 220 },
+    series: [{ name: 'Δ (s)', data: leadData.map(d => d.delta_secs) }],
+    xaxis:  { categories: leadData.map(d => d.order_ref), labels: { rotate: -45, style: { fontSize: '10px' }, show: leadData.length < 30 } },
+    yaxis:  { title: { text: 'Δ secondes' } },
+    colors: leadData.map(d => d.delta_secs > 0 ? '#ef4444' : '#10b981'),
+    plotOptions: { bar: { borderRadius: 3, distributed: true } },
+    legend: { show: false },
+    tooltip: { y: { formatter: v => v.toFixed(0) + ' s' } }
+  })).render();
+} else {
+  document.getElementById('chart-lead').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Pas de données de cycle</p>';
+}
+
+lucide.createIcons();
+</script>
+{% endblock %}

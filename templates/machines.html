@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Machines KPI 10 – T'Elefan MES 4.0{% endblock %}
+{% block page_title %}Indicateurs Machines{% endblock %}
+{% block page_sub %}KPI 10 – Temps d'arrêt par ressource{% endblock %}
+
+{% block content %}
+
+<!-- ── 3 KPI Cards ───────────────────────────────────────────────────── -->
+<div class="grid-3 mb-16">
+
+  <div class="kpi-card {% if total_h >= 1 %}red{% else %}green{% endif %}">
+    <div class="kpi-label">Arrêt Total</div>
+    <div class="kpi-value {% if total_h >= 1 %}red{% else %}green{% endif %}">
+      {{ total_h }}h{{ '%02d'|format(total_m) }}
+    </div>
+    <div class="kpi-sub">cumul toutes ressources</div>
+  </div>
+
+  <div class="kpi-card accent">
+    <div class="kpi-label">MTBF</div>
+    <div class="kpi-value accent">{{ avg_mtbf }}</div>
+    <div class="kpi-sub">min · temps moyen entre pannes</div>
+  </div>
+
+  <div class="kpi-card amber">
+    <div class="kpi-label">MTTR</div>
+    <div class="kpi-value amber">{{ avg_mttr }}</div>
+    <div class="kpi-sub">min · temps moyen de réparation</div>
+  </div>
+
+</div>
+
+<!-- ── Détail + Pareto ───────────────────────────────────────────────── -->
+<div class="grid-2 mb-16">
+
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="table-2"></i> KPI 10 – Détail par ressource
+    </div>
+    {% if detail %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Ressource</th>
+          <th>Busy (%)</th>
+          <th>Pannes</th>
+          <th>MTTR (min)</th>
+          <th>MTBF (min)</th>
+          <th>Arrêt (min)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in detail %}
+        <tr>
+          <td><strong>{{ r.resource }}</strong></td>
+          <td>
+            <span class="badge {% if r.busy_pct >= 80 %}ok{% elif r.busy_pct >= 60 %}warn{% else %}danger{% endif %}">
+              {{ r.busy_pct }}%
+            </span>
+          </td>
+          <td>{{ r.pannes }}</td>
+          <td>{{ r.mttr }}</td>
+          <td>{{ r.mtbf }}</td>
+          <td>
+            <span {% if r.downtime > 60 %}style="color:var(--red);font-weight:600"{% endif %}>
+              {{ r.downtime }}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p style="color:var(--text-muted);font-size:13px">Pas de données de temps d'arrêt.</p>
+    {% endif %}
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="bar-chart-horizontal"></i> Arrêts par ressource (Pareto)
+    </div>
+    <div class="chart-box" id="chart-pareto"></div>
+  </div>
+
+</div>
+
+<!-- ── Occupation des machines ──────────────────────────────────────── -->
+<div class="section">
+  <div class="section-title">
+    <i data-lucide="cpu"></i> Occupation des machines (Busy %)
+  </div>
+  <div class="chart-box" id="chart-occ"></div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+const paretoData = {{ pareto_data|safe }};
+const occData    = {{ occ_data|safe }};
+
+// Pareto
+if (paretoData.length > 0) {
+  const sorted = [...paretoData].sort((a,b) => b.downtime - a.downtime);
+  new ApexCharts(document.getElementById('chart-pareto'), mergeApex({
+    chart:  { type: 'bar', height: 240 },
+    series: [{ name: 'Arrêt (min)', data: sorted.map(d => d.downtime) }],
+    xaxis:  {
+      categories: sorted.map(d => d.resource),
+      labels: { rotate: -30, style: { fontSize: '11px' } }
+    },
+    colors: ['#ef4444'],
+    plotOptions: { bar: { borderRadius: 4 } },
+    tooltip: { y: { formatter: v => v.toFixed(1) + ' min' } }
+  })).render();
+} else {
+  document.getElementById('chart-pareto').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Pas de données</p>';
+}
+
+// Occupation
+if (occData.length > 0) {
+  new ApexCharts(document.getElementById('chart-occ'), mergeApex({
+    chart:  { type: 'bar', height: 230 },
+    series: [
+      { name: 'Occupation (%)', data: occData.map(d => +(d.occupation * 100).toFixed(1)) },
+      { name: 'Seuil 70%',     data: occData.map(() => 70), type: 'line' }
+    ],
+    xaxis:  {
+      categories: occData.map(d => d.ResourceID),
+      labels: { rotate: -30, style: { fontSize: '11px' } }
+    },
+    yaxis: { min: 0, max: 100, title: { text: 'Occupation (%)' } },
+    colors: occData.map(d => d.occupation * 100 < 70 ? '#f59e0b' : '#3b82f6').concat(['#ef4444']),
+    stroke: { width: [0, 2], dashArray: [0, 5] },
+    plotOptions: { bar: { borderRadius: 4, distributed: true } },
+    legend: { show: false },
+    tooltip: { y: { formatter: v => v.toFixed(1) + '%' } }
+  })).render();
+} else {
+  document.getElementById('chart-occ').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Pas de données d\'occupation</p>';
+}
+
+lucide.createIcons();
+</script>
+{% endblock %}

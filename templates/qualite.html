@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}Qualité KPI 5-9 – T'Elefan MES 4.0{% endblock %}
+{% block page_title %}Indicateurs de Qualité{% endblock %}
+{% block page_sub %}KPI 5 à 9 – TRS, Erreurs et Performance{% endblock %}
+
+{% block content %}
+
+<!-- ── Row 1 : 4 KPIs ─────────────────────────────────────────────────── -->
+<div class="grid-4 mb-16">
+
+  <div class="kpi-card amber">
+    <div class="kpi-label">KPI 5 – TRS Global</div>
+    <div class="kpi-value amber">{{ trs_pct }}%</div>
+    <div class="kpi-sub">Rendement Synthétique</div>
+  </div>
+
+  <div class="kpi-card accent">
+    <div class="kpi-label">KPI 6 – Occupation</div>
+    <div class="kpi-value accent">{{ occ_pct }}%</div>
+    <div class="kpi-sub">taux moyen machines</div>
+  </div>
+
+  <div class="kpi-card {% if total_errors > 0 %}red{% else %}green{% endif %}">
+    <div class="kpi-label">KPI 7 – Erreurs</div>
+    <div class="kpi-value {% if total_errors > 0 %}red{% else %}green{% endif %}">{{ total_errors }}</div>
+    <div class="kpi-sub">total détectées</div>
+  </div>
+
+  <div class="kpi-card green">
+    <div class="kpi-label">KPI 9 – Sans erreur</div>
+    <div class="kpi-value green">{{ ok_orders }}</div>
+    <div class="kpi-sub">{{ fp_yield_pct }}% des OF ({{ total_orders }} total)</div>
+  </div>
+
+</div>
+
+<!-- ── TRS global breakdown ─────────────────────────────────────────────── -->
+<div class="section mb-16">
+  <div class="section-title">
+    <i data-lucide="gauge"></i> KPI 5 – Composantes TRS globales
+  </div>
+  <div class="grid-3">
+    <div>
+      <div class="progress-row">
+        <div class="progress-header">
+          <span class="progress-label">Disponibilité</span>
+          <span class="progress-value">{{ dispo_pct }}%</span>
+        </div>
+        <div class="progress-bg">
+          <div class="progress-fill" style="width:{{ [dispo_pct,100]|min }}%"></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="progress-row">
+        <div class="progress-header">
+          <span class="progress-label">Performance</span>
+          <span class="progress-value green">{{ perf_pct }}%</span>
+        </div>
+        <div class="progress-bg">
+          <div class="progress-fill green" style="width:{{ [perf_pct,100]|min }}%"></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="progress-row">
+        <div class="progress-header">
+          <span class="progress-label">Qualité</span>
+          <span class="progress-value amber">{{ qual_pct }}%</span>
+        </div>
+        <div class="progress-bg">
+          <div class="progress-fill amber" style="width:{{ [qual_pct,100]|min }}%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TRS par ressource ───────────────────────────────────────────────── -->
+<div class="section mb-16">
+  <div class="section-title">
+    <i data-lucide="table"></i> KPI 5 – TRS par ressource
+  </div>
+  {% if trs_table %}
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Ressource</th>
+        <th>Disponibilité</th>
+        <th>Performance</th>
+        <th>Qualité</th>
+        <th>TRS</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in trs_table %}
+      <tr>
+        <td><strong>{{ r.resource }}</strong></td>
+        <td>
+          <span class="badge {% if r.availability >= 90 %}ok{% elif r.availability >= 70 %}warn{% else %}danger{% endif %}">
+            {{ r.availability }}%
+          </span>
+        </td>
+        <td>
+          <span class="badge {% if r.performance >= 90 %}ok{% elif r.performance >= 70 %}warn{% else %}danger{% endif %}">
+            {{ r.performance }}%
+          </span>
+        </td>
+        <td>
+          <span class="badge {% if r.quality >= 95 %}ok{% elif r.quality >= 80 %}warn{% else %}danger{% endif %}">
+            {{ r.quality }}%
+          </span>
+        </td>
+        <td>
+          <strong style="color:{% if r.trs >= 80 %}var(--green){% elif r.trs >= 60 %}var(--amber){% else %}var(--red){% endif %}">
+            {{ r.trs }}%
+          </strong>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p style="color:var(--text-muted);font-size:13px">Pas de données TRS.</p>
+  {% endif %}
+</div>
+
+<!-- ── KPI 8 Pareto + qualité par ressource ───────────────────────────── -->
+<div class="grid-2">
+
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="bar-chart"></i> KPI 8 – Pareto des erreurs par type
+    </div>
+    <div class="chart-box" id="chart-pareto"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="shield-check"></i> Taux de qualité par ressource
+    </div>
+    <div class="chart-box" id="chart-qual-resource"></div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+const errorsData     = {{ errors_data|safe }};
+const qualByResource = {{ qual_by_resource|safe }};
+
+// KPI 8 - Pareto errors (horizontal bar)
+if (errorsData.length > 0) {
+  new ApexCharts(document.getElementById('chart-pareto'), mergeApex({
+    chart:  { type: 'bar', height: 240 },
+    series: [{ name: 'Occurrences', data: errorsData.map(d => d.occurrences) }],
+    xaxis:  { categories: errorsData.map(d => (d.description || 'Code ' + d.error_code).substring(0, 30)) },
+    colors: ['#ef4444'],
+    plotOptions: { bar: { horizontal: true, borderRadius: 3 } },
+    tooltip: {
+      y: { formatter: v => v + ' occurrence(s)' },
+      x: { show: true }
+    }
+  })).render();
+} else {
+  document.getElementById('chart-pareto').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Aucune erreur enregistrée</p>';
+}
+
+// Quality by resource
+if (qualByResource.length > 0) {
+  const threshold = qualByResource.map(() => 95);
+  new ApexCharts(document.getElementById('chart-qual-resource'), mergeApex({
+    chart:  { type: 'bar', height: 240 },
+    series: [
+      { name: 'Qualité (%)', data: qualByResource.map(r => r.quality) },
+      { name: 'Seuil 95%',   data: threshold, type: 'line' }
+    ],
+    xaxis:  {
+      categories: qualByResource.map(r => r.resource),
+      labels: { rotate: -30, style: { fontSize: '11px' } }
+    },
+    yaxis: { min: 0, max: 100, title: { text: 'Qualité (%)' } },
+    colors: ['#10b981', '#f59e0b'],
+    stroke: { width: [0, 2], dashArray: [0, 5] },
+    plotOptions: { bar: { borderRadius: 4 } },
+    tooltip: { y: { formatter: v => v.toFixed(1) + '%' } }
+  })).render();
+} else {
+  document.getElementById('chart-qual-resource').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Pas de données</p>';
+}
+
+lucide.createIcons();
+</script>
+{% endblock %}

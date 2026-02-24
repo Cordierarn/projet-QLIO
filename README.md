@@ -1,52 +1,37 @@
-# 🏭 Dashboard MES 4.0 – Projet QLIO
+# Dashboard MES 4.0 – Projet QLIO
 
-> Dashboard Streamlit de pilotage industriel pour la plateforme **Festo MES 4.0** et le robot **Robotino**.  
-> Données stockées dans **MariaDB** (Docker), visualisation via **Streamlit + Altair**.
-
----
-
-## 📋 Table des matières
-
-1. [Prérequis](#-prérequis)
-2. [Installation pas à pas](#-installation-pas-à-pas)
-3. [Lancement du projet](#-lancement-du-projet)
-4. [Accès aux interfaces](#-accès-aux-interfaces)
-5. [Configuration avancée](#-configuration-avancée)
-6. [Structure du projet](#-structure-du-projet)
-7. [KPIs couverts](#-kpis-couverts)
-8. [Dépannage](#-dépannage)
-9. [Idées d'évolution](#-idées-dévolution)
+> Dashboard de pilotage industriel pour la plateforme **Festo MES 4.0**.
+> Backend **Flask (Python)**, frontend **HTML/CSS** avec icônes SVG Lucide et graphiques ApexCharts.
+> Données stockées dans **MariaDB** (Docker).
 
 ---
 
-## 🔧 Prérequis
+## Table des matières
 
-Avant de commencer, vérifiez que les outils suivants sont installés sur votre machine :
+1. [Prérequis](#prérequis)
+2. [Installation pas à pas](#installation-pas-à-pas)
+3. [Lancement du projet](#lancement-du-projet)
+4. [Accès aux interfaces](#accès-aux-interfaces)
+5. [Configuration avancée](#configuration-avancée)
+6. [Structure du projet](#structure-du-projet)
+7. [KPIs couverts](#kpis-couverts)
+8. [Dépannage](#dépannage)
 
-| Outil | Version minimum | Lien de téléchargement |
-|-------|----------------|----------------------|
+---
+
+## Prérequis
+
+| Outil | Version minimum | Lien |
+|-------|----------------|------|
 | **Git** | 2.30+ | https://git-scm.com/downloads |
 | **Docker Desktop** | 4.0+ | https://www.docker.com/products/docker-desktop/ |
 | **Python** | 3.10+ | https://www.python.org/downloads/ |
-| **pip** | 21+ | Inclus avec Python |
 
-### Vérifier l'installation
-
-Ouvrez un terminal **PowerShell** et tapez :
-
-```powershell
-git --version
-docker --version
-docker compose version
-python --version
-pip --version
-```
-
-> ⚠️ **Docker Desktop doit être lancé** avant de continuer. Vérifiez que l'icône Docker est visible dans la barre des tâches et qu'il indique "Docker Desktop is running".
+> Docker Desktop doit être **lancé** avant de continuer.
 
 ---
 
-## 📦 Installation pas à pas
+## Installation pas à pas
 
 ### 1. Cloner le dépôt
 
@@ -55,17 +40,12 @@ git clone https://github.com/Cordierarn/projet-QLIO.git
 cd projet-QLIO
 ```
 
-### 2. Créer un environnement virtuel Python (recommandé)
+### 2. Créer un environnement virtuel Python
 
 ```powershell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
-
-> 💡 Si vous obtenez une erreur de politique d'exécution PowerShell, exécutez d'abord :
-> ```powershell
-> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-> ```
 
 ### 3. Installer les dépendances Python
 
@@ -73,15 +53,12 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-Les packages installés :
-
 | Package | Rôle |
 |---------|------|
-| `streamlit` | Framework web pour le dashboard |
+| `flask` | Framework web backend |
 | `pandas` | Manipulation des données |
-| `sqlalchemy` | ORM / connexion à la BDD |
-| `pymysql` | Driver MySQL/MariaDB pour Python |
-| `altair` | Graphiques interactifs |
+| `sqlalchemy` | Connexion à la base de données |
+| `pymysql` | Driver MySQL/MariaDB |
 
 ### 4. Démarrer les conteneurs Docker (MariaDB + phpMyAdmin)
 
@@ -89,17 +66,12 @@ Les packages installés :
 docker compose up -d
 ```
 
-Cela démarre deux services :
-- **MariaDB** sur le port `3306` – base de données
-- **phpMyAdmin** sur le port `8080` – interface web pour la BDD
-
 Vérifiez que les conteneurs tournent :
 
 ```powershell
 docker ps
 ```
 
-Vous devez voir deux conteneurs en état `Up` :
 ```
 NAMES                      PORTS
 projetqlio-mariadb-1       0.0.0.0:3306->3306/tcp
@@ -108,22 +80,20 @@ projetqlio-phpmyadmin-1    0.0.0.0:8080->80/tcp
 
 ### 5. Importer le dump SQL dans MariaDB
 
-> ⚠️ **Étape indispensable** – La base de données est vide au premier démarrage. Il faut importer le fichier SQL fourni.
+> Étape indispensable — la base est vide au premier démarrage.
 
-**Option A – Via la ligne de commande (recommandé) :**
+**Option A — Ligne de commande (recommandé) :**
 
 ```powershell
 # Attendre ~10 secondes que MariaDB soit prêt, puis :
-cmd /c "docker exec -i projetqlio-mariadb-1 mariadb -u root -pexample_root_password MES4 < FestoMES-2025-03-27.sql"
+cmd /c "docker exec -i projetqlio-mariadb-1 mariadb -u root -pexample_root_password MES4 < FestoMES-2025-11-25-v2.sql"
 ```
 
-**Option B – Via phpMyAdmin (interface graphique) :**
+**Option B — phpMyAdmin :**
 
-1. Ouvrir http://localhost:8080 dans votre navigateur
-2. Sélectionner la base `MES4` dans le panneau de gauche
-3. Cliquer sur l'onglet **Importer**
-4. Choisir le fichier `FestoMES-2025-03-27.sql`
-5. Cliquer sur **Exécuter**
+1. Ouvrir http://localhost:8080
+2. Sélectionner la base `MES4`
+3. Onglet **Importer** → choisir `FestoMES-2025-11-25-v2.sql` → **Exécuter**
 
 ### 6. Vérifier l'import
 
@@ -131,38 +101,43 @@ cmd /c "docker exec -i projetqlio-mariadb-1 mariadb -u root -pexample_root_passw
 docker exec projetqlio-mariadb-1 mariadb -u root -pexample_root_password MES4 -e "SHOW TABLES;"
 ```
 
-Vous devez voir une liste de tables dont : `tblfinorder`, `tblfinorderpos`, `tblfinstep`, `tblmachinereport`, `tblorder`, `tblstep`, etc.
+Vous devez voir : `tblfinorder`, `tblfinorderpos`, `tblfinstep`, `tblmachinereport`, etc.
 
 ---
 
-## 🚀 Lancement du projet
+## Lancement du projet
 
 ```powershell
-streamlit run app.py
+python app.py
 ```
 
-Le dashboard s'ouvre automatiquement dans votre navigateur à l'adresse :  
-👉 **http://localhost:8501**
+Le dashboard est accessible à :
+**http://localhost:5000**
 
-> 💡 Pour arrêter l'application, appuyez sur `Ctrl+C` dans le terminal.
+**Identifiants par défaut :**
+
+| Champ | Valeur |
+|-------|--------|
+| Email | `admin@telefan.fr` |
+| Mot de passe | `telefan2026` |
+
+> Pour arrêter l'application : `Ctrl+C` dans le terminal.
 
 ---
 
-## 🌐 Accès aux interfaces
+## Accès aux interfaces
 
 | Service | URL | Identifiants |
 |---------|-----|-------------|
-| **Dashboard Streamlit** | http://localhost:8501 | – |
+| **Dashboard MES 4.0** | http://localhost:5000 | `admin@telefan.fr` / `telefan2026` |
 | **phpMyAdmin** | http://localhost:8080 | `root` / `example_root_password` |
 | **MariaDB** (direct) | `localhost:3306` | `root` / `example_root_password` |
 
 ---
 
-## ⚙️ Configuration avancée
+## Configuration avancée
 
 ### Variables d'environnement
-
-La connexion à la base peut être personnalisée via des variables d'environnement :
 
 | Variable | Valeur par défaut | Description |
 |----------|------------------|-------------|
@@ -171,117 +146,116 @@ La connexion à la base peut être personnalisée via des variables d'environnem
 | `DB_USER` | `root` | Utilisateur BDD |
 | `DB_PASSWORD` | `example_root_password` | Mot de passe BDD |
 | `DB_NAME` | `MES4` | Nom de la base |
+| `ADMIN_EMAIL` | `admin@telefan.fr` | Email de connexion au dashboard |
+| `ADMIN_PASSWORD` | `telefan2026` | Mot de passe de connexion |
+| `SECRET_KEY` | `telefan-mes-4-secret-2026` | Clé de session Flask |
+| `PORT` | `5000` | Port d'écoute Flask |
 
-Exemple pour changer l'hôte :
+Exemple :
 
 ```powershell
 $env:DB_HOST = "192.168.1.100"
-streamlit run app.py
+$env:ADMIN_PASSWORD = "mon_mot_de_passe"
+python app.py
 ```
-
-### Données Robotino
-
-Le fichier `robotino_data.csv` doit être placé **à la racine du projet** (même dossier que `app.py`). Il est lu automatiquement par le dashboard pour afficher les métriques du Robotino (trajectoire, vitesse, consommation).
 
 ---
 
-## 📁 Structure du projet
+## Structure du projet
 
 ```
 projet-QLIO/
-├── app.py                          # Application Streamlit principale
-├── docker-compose.yml              # Configuration Docker (MariaDB + phpMyAdmin)
-├── FestoMES-2025-03-27.sql         # Dump de la base de données MES4
-├── requirements.txt                # Dépendances Python
-├── robotino_data.csv               # Données du robot Robotino
-├── README.md                       # Ce fichier
-├── STATUS.md                       # Suivi d'avancement
-├── .gitignore                      # Fichiers exclus du versioning
-└── data/                           # Volume Docker MariaDB (ignoré par Git)
+├── app.py                      # Backend Flask (routes, auth, données)
+├── db.py                       # Requêtes SQL et fonctions KPI
+├── requirements.txt            # Dépendances Python
+├── docker-compose.yml          # MariaDB + phpMyAdmin
+├── FestoMES-2025-11-25-v2.sql  # Dump base de données (version courante)
+├── templates/
+│   ├── base.html               # Layout : sidebar, header, CDN JS
+│   ├── login.html              # Page de connexion
+│   ├── dashboard.html          # Accueil – Vue générale
+│   ├── production.html         # KPI 1 à 4 – Suivi des OF
+│   ├── qualite.html            # KPI 5 à 9 – TRS, erreurs
+│   ├── machines.html           # KPI 10 – Temps d'arrêt
+│   └── maintenance.html        # KPI 11-12 – Buffers, énergie
+└── static/
+    └── css/
+        └── style.css           # Thème sombre T'Elefan
 ```
 
 ---
 
-## 📊 KPIs couverts
+## KPIs couverts
+
+### Production (KPI 1–4)
 
 | KPI | Source | Description |
 |-----|--------|-------------|
-| **Pièces en cours** | `tblstep` | Nombre d'étapes actives (`Active=1`) |
-| **Taux d'avancement** | `tblorder` + `tblfinorder` | Ordres en cours / (planifiés + terminés) |
-| **Lead time (Δ prévu/réel)** | `tblfinorderpos` | Écart entre durée planifiée et réelle |
-| **Ordres terminés / jour** | `tblfinorder` | Histogramme journalier |
-| **TRS / OEE** | `tblmachinereport` + `tblfinstep` | Disponibilité × Performance × Qualité |
-| **Taux d'occupation machine** | `tblmachinereport` | Ratio Busy / total par ressource |
-| **Top erreurs** | `tblfinstep` + `tblmainterror` | Erreurs les plus fréquentes |
-| **First Pass Yield** | `tblfinstep` | % d'ordres sans erreur au 1er passage |
-| **Temps moyen d'arrêt** | `tblmachinereport` | Durée moyenne des séquences d'erreur |
-| **Remplissage buffers** | `tblbufferpos` | Taux d'occupation des positions de buffer |
-| **Énergie par étape** | `tblfinstep` | Consommation électrique réelle vs calculée |
-| **Robotino** | `robotino_data.csv` | Distance, vitesse, puissance, trajectoire |
+| **KPI 1** – OF en cours | `tblstep` | Nombre d'étapes actives (`Active=1`) |
+| **KPI 2** – Lead Time | `tblfinorderpos` | Écart entre durée planifiée et réelle |
+| **KPI 3** – Taux d'avancement | `tblorder` + `tblfinorder` | Progression des OF actifs |
+| **KPI 4** – OF terminés | `tblfinorder` | Histogramme des ordres terminés/jour |
+
+### Qualité (KPI 5–9)
+
+| KPI | Source | Description |
+|-----|--------|-------------|
+| **KPI 5** – TRS / OEE | `tblmachinereport` + `tblfinstep` | Disponibilité × Performance × Qualité |
+| **KPI 6** – Occupation | `tblmachinereport` | Taux Busy par ressource |
+| **KPI 7** – Erreurs | `tblfinstep` | Total d'erreurs détectées |
+| **KPI 8** – Pareto erreurs | `tblfinstep` + `tblmainterror` | Erreurs les plus fréquentes |
+| **KPI 9** – First Pass Yield | `tblfinstep` | % d'ordres sans erreur au 1er passage |
+
+### Machines (KPI 10)
+
+| KPI | Source | Description |
+|-----|--------|-------------|
+| **KPI 10** – Temps d'arrêt | `tblmachinereport` | MTBF, MTTR, arrêts par ressource |
+
+### Maintenance (KPI 11–12)
+
+| KPI | Source | Description |
+|-----|--------|-------------|
+| **KPI 11** – Buffers | `tblbufferpos` | Taux de remplissage par buffer |
+| **KPI 12** – Énergie | `tblfinstep` | Consommation électrique réelle vs calculée |
 
 ---
 
-## 🔥 Dépannage
+## Dépannage
 
-### « Connexion BDD impossible »
+### Connexion BDD impossible
 
-1. Vérifiez que Docker tourne : `docker ps`
-2. Vérifiez que l'import SQL a été fait (voir [étape 5](#5-importer-le-dump-sql-dans-mariadb))
-3. Testez la connexion manuellement :
+1. Vérifier Docker : `docker ps`
+2. Vérifier l'import SQL (voir étape 5)
+3. Tester manuellement :
    ```powershell
    docker exec projetqlio-mariadb-1 mariadb -u root -pexample_root_password MES4 -e "SELECT 1;"
    ```
 
-### « Table 'xxx' doesn't exist »
+### Table 'xxx' doesn't exist
 
-L'import SQL n'a pas été effectué. Refaites l'[étape 5](#5-importer-le-dump-sql-dans-mariadb).
+L'import SQL n'a pas été effectué. Refaire l'étape 5.
 
-### « Port 3306 already in use »
+### Port 3306 déjà utilisé
 
-Un autre service MySQL/MariaDB tourne déjà sur votre machine. Arrêtez-le ou changez le port dans `docker-compose.yml` :
-
+Modifier `docker-compose.yml` :
 ```yaml
 ports:
-  - "3307:3306"   # Utiliser le port 3307 à la place
+  - "3307:3306"
 ```
+Puis : `$env:DB_PORT = "3307"`
 
-Puis mettez à jour la variable d'environnement :
-```powershell
-$env:DB_PORT = "3307"
-```
-
-### « Set-ExecutionPolicy » erreur PowerShell
+### Port 5000 déjà utilisé
 
 ```powershell
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+$env:PORT = "5001"
+python app.py
 ```
 
-### Docker Desktop ne démarre pas
-
-- Windows : activez **WSL 2** et **Hyper-V** dans les fonctionnalités Windows
-- Redémarrez votre PC après l'installation de Docker Desktop
-
-### Le dashboard est lent au premier chargement
-
-C'est normal. Les données sont mises en cache pendant 5 minutes (TTL=300s). Les rechargements suivants seront rapides.
-
 ---
 
-## 💡 Idées d'évolution
+## Auteurs
 
-- Relier les données Robotino aux ordres de fabrication via les timestamps
-- Heatmap des vitesses/arrêts du Robotino et alertes batterie
-- Export PDF des rapports
-- Alerting automatique quand le TRS descend sous un seuil
-- Tests de performance sous charge (caches, agrégations matérialisées)
-- Ajout d'un système d'authentification utilisateur
+**Arnaud Cordier** · **Corentin Seu** · **Alem Nadji** — Groupe n°7
 
----
-
-## 👥 Auteurs
-
-- **Arnaud Cordier** – Étudiant BUT QLIO
-
----
-
-*Projet réalisé dans le cadre du BUT QLIO – IUT*
+*Projet réalisé dans le cadre du BUT SD – IUT*
