@@ -1,4 +1,4 @@
-# Dashboard MES 4.0 – Projet QLIO
+# Dashboard MES 4.0 – Groupe n°7
 
 > Dashboard de pilotage industriel pour la plateforme **Festo MES 4.0**.
 > Backend **Flask (Python)**, frontend **HTML/CSS** avec icônes SVG Lucide et graphiques ApexCharts.
