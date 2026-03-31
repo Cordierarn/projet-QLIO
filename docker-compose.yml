@@ -3,12 +3,11 @@ version: '3'
 services:
   mariadb:
     image: mariadb:latest
+    container_name: db_qlio           # Nom fixe plus facile à cibler
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example_root_password
       MYSQL_DATABASE: MES4
-      MYSQL_USER: example_user
-      MYSQL_PASSWORD: example_password
     ports:
       - "3306:3306"
     volumes:
@@ -16,11 +15,11 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    container_name: pma_qlio
     restart: always
     environment:
-      PMA_HOST: mariadb
-      PMA_USER: root
-      PMA_PASSWORD: example_root_password
+      PMA_HOST: db_qlio               # Doit correspondre au container_name de mariadb
+      PMA_ARBITRARY: 1                # Permet de modifier l'hôte si besoin sur la page de login
     ports:
       - "8080:80"
     depends_on:
