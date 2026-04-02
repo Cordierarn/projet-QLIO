@@ -1,5 +1,5 @@
--- --------------------------------------------------------
--- Hôte:                         127.0.0.1
+﻿-- --------------------------------------------------------
+-- HÃ´te:                         127.0.0.1
 -- Version du serveur:           10.6.11-MariaDB - mariadb.org binary distribution
 -- SE du serveur:                Win64
 -- HeidiSQL Version:             12.3.0.6589
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `tblagvdocked` (
   KEY `ResourceId` (`ResourceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblagvdocked : ~1 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblagvdocked : ~1 rows (environ)
 INSERT INTO `tblagvdocked` (`AgvId`, `ResourceId`) VALUES
 	(10, 0);
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `tblaltoperation` (
   UNIQUE KEY `AltOpNo` (`AltOpNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblaltoperation : ~2 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblaltoperation : ~2 rows (environ)
 INSERT INTO `tblaltoperation` (`OpNo`, `AltOpNo`) VALUES
 	(122, 126),
 	(126, 122);
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `tblaltoperationparameter` (
   `Claculation` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblaltoperationparameter : ~0 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblaltoperationparameter : ~0 rows (environ)
 
 -- Listage de la structure de table mes4. tblautomaticorder
 CREATE TABLE IF NOT EXISTS `tblautomaticorder` (
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `tblautomaticorder` (
   KEY `ResourceId` (`ResourceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblautomaticorder : ~0 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblautomaticorder : ~0 rows (environ)
 
 -- Listage de la structure de table mes4. tblautoordertype
 CREATE TABLE IF NOT EXISTS `tblautoordertype` (
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `tblautoordertype` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblautoordertype : ~3 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblautoordertype : ~3 rows (environ)
 INSERT INTO `tblautoordertype` (`ID`, `Description`) VALUES
 	(1, 'fill buffer cyclic'),
 	(2, 'fill buffer after message event'),
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `tblbookedbufmsg` (
   KEY `ResourceId` (`ResourceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblbookedbufmsg : ~0 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblbookedbufmsg : ~0 rows (environ)
 
 -- Listage de la structure de table mes4. tblbox
 CREATE TABLE IF NOT EXISTS `tblbox` (
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `tblbox` (
   KEY `BoxPNo` (`BoxPNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblbox : ~20 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblbox : ~20 rows (environ)
 INSERT INTO `tblbox` (`BoxPNo`, `BoxID`, `ONo`, `OPos`, `Full`) VALUES
 	(27, 1, 0, 0, 0),
 	(27, 2, 0, 0, 0),
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `tblboxdef` (
   PRIMARY KEY (`BoxPNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblboxdef : ~2 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblboxdef : ~2 rows (environ)
 INSERT INTO `tblboxdef` (`BoxPNo`, `Count`, `PosCount`, `RowCount`) VALUES
 	(27, 4, 8, 4),
 	(28, 16, 8, 4);
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `tblboxpos` (
   KEY `PNo` (`PNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblboxpos : ~160 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblboxpos : ~160 rows (environ)
 INSERT INTO `tblboxpos` (`BoxPos`, `BoxPNo`, `BoxId`, `ONo`, `OPos`, `PNo`, `PNoGroup`) VALUES
 	(1, 27, 1, 0, 0, 0, 5),
 	(1, 27, 2, 0, 0, 0, 5),
@@ -348,7 +348,7 @@ CREATE TABLE IF NOT EXISTS `tblbuffer` (
   KEY `ResourceId` (`ResourceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblbuffer : ~10 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblbuffer : ~10 rows (environ)
 INSERT INTO `tblbuffer` (`ResourceId`, `BufNo`, `Description`, `Type`, `BeltNo`, `Sides`, `Rows`, `Columns`) VALUES
 	(1, 1, 'Storage', 1, 0, 2, 4, 4),
 	(7, 1, 'Box', 12, 1, 1, 1, 2),
@@ -385,7 +385,7 @@ CREATE TABLE IF NOT EXISTS `tblbufferpos` (
   KEY `PNo` (`PNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblbufferpos : ~77 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblbufferpos : ~77 rows (environ)
 INSERT INTO `tblbufferpos` (`ResourceId`, `BufNo`, `BufPos`, `PNo`, `ONo`, `OPos`, `Type`, `Zone`, `Quantity`, `QuantityMax`, `TimeStamp`, `PalletID`, `BoxID`, `PNoGroup`, `Booked`) VALUES
 	(1, 1, 1, 0, 0, 0, 1, 0, 0, 0, '2026-03-31 11:21:22', 0, 0, 0, 0),
 	(1, 1, 2, 0, 0, 0, 1, 0, 0, 0, '2026-03-31 11:16:12', 0, 0, 1, 0),
@@ -472,7 +472,7 @@ CREATE TABLE IF NOT EXISTS `tblbuffertype` (
   PRIMARY KEY (`Type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblbuffertype : ~6 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblbuffertype : ~6 rows (environ)
 INSERT INTO `tblbuffertype` (`Type`, `Description`) VALUES
 	(1, 'storage'),
 	(2, 'fifo'),
@@ -497,7 +497,7 @@ CREATE TABLE IF NOT EXISTS `tblcarrier` (
   KEY `PNo` (`PNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblcarrier : ~10 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblcarrier : ~10 rows (environ)
 INSERT INTO `tblcarrier` (`CarrierID`, `CarrierTypeID`, `ONo`, `OPos`, `PNo`, `PNoGroup`, `LastResource`, `LastPosition`, `Reporting`) VALUES
 	(1, 31, 0, 0, 0, 0, 6, 1, '2026-03-27 14:51:14'),
 	(2, 31, 0, 0, 0, 0, 2, 1, '2026-03-31 09:26:34'),
@@ -521,7 +521,7 @@ CREATE TABLE IF NOT EXISTS `tblcarrierdef` (
   KEY `PNo` (`PNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblcarrierdef : ~0 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblcarrierdef : ~0 rows (environ)
 INSERT INTO `tblcarrierdef` (`CarrierTypeID`, `PNo`, `Count`, `PosCount`) VALUES
 	(31, 31, 10, 0);
 
@@ -537,7 +537,7 @@ CREATE TABLE IF NOT EXISTS `tblchartdef` (
   PRIMARY KEY (`ChartNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblchartdef : ~0 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblchartdef : ~0 rows (environ)
 INSERT INTO `tblchartdef` (`ChartNo`, `OpNo`, `Description`, `Parameter`, `UpperLimit`, `LowerLimit`, `Default`) VALUES
 	(1, 115, 'difference', 4, 2, 3, 1);
 
@@ -553,7 +553,7 @@ CREATE TABLE IF NOT EXISTS `tblcustomer` (
   PRIMARY KEY (`CNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblcustomer : ~3 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblcustomer : ~3 rows (environ)
 INSERT INTO `tblcustomer` (`CNo`, `FirstName`, `LastName`, `Address`, `Phone`, `E-Mail`, `Company`) VALUES
 	(0, NULL, NULL, NULL, NULL, NULL, 'No Company'),
 	(1, 'Max', 'Mustermann', 'Rechbergstr. 3, 73770 Denkendorf', '+49 (0)711 3467 0', 'services.didactic@festo.com', 'Festo Didactic SE'),
@@ -567,7 +567,7 @@ CREATE TABLE IF NOT EXISTS `tbldatatype` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tbldatatype : ~4 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tbldatatype : ~4 rows (environ)
 INSERT INTO `tbldatatype` (`ID`, `Description`, `LengthByteCoDeSys`) VALUES
 	(1, 'Int16', 2),
 	(2, 'Int32', 4),
@@ -582,7 +582,7 @@ CREATE TABLE IF NOT EXISTS `tblerrorcodes` (
   PRIMARY KEY (`ErrorId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblerrorcodes : ~4 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblerrorcodes : ~4 rows (environ)
 INSERT INTO `tblerrorcodes` (`ErrorId`, `Description`, `Short`) VALUES
 	(0, 'no error', 'IDLE'),
 	(1, 'general error', 'ERR'),
@@ -603,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `tblfinorder` (
   PRIMARY KEY (`ONo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblfinorder : ~189 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblfinorder : ~189 rows (environ)
 INSERT INTO `tblfinorder` (`ONo`, `PlannedStart`, `PlannedEnd`, `Start`, `End`, `CNo`, `State`, `Enabled`, `Release`) VALUES
 	(1001, '2016-04-19 07:47:00', '2016-04-19 07:47:00', '2016-04-19 08:30:00', '2016-04-19 09:05:00', 0, 100, 1, '2016-04-19 07:47:00'),
 	(1002, '2016-02-02 03:23:00', '2016-02-02 03:23:00', '2016-02-02 03:30:00', '2016-02-02 03:45:00', 0, 100, 1, '2016-02-02 03:23:00'),
@@ -850,7 +850,7 @@ CREATE TABLE IF NOT EXISTS `tblfinorderpos` (
   KEY `ONo` (`ONo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblfinorderpos : ~411 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblfinorderpos : ~411 rows (environ)
 INSERT INTO `tblfinorderpos` (`ONo`, `OPos`, `PlannedStart`, `PlannedEnd`, `Start`, `End`, `WPNo`, `StepNo`, `MainOPos`, `State`, `ResourceID`, `OpNo`, `WONo`, `PNo`, `subOrderBlocked`, `Error`, `OrderPNo`) VALUES
 	(1000, 1, '2017-01-19 07:49:00', '2017-01-19 07:49:00', '2017-01-19 08:30:00', '2017-01-19 09:05:00', 9000, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0),
 	(1001, 1, '2016-04-19 07:47:00', '2016-04-19 07:47:00', '2016-04-19 08:30:00', '2016-04-19 09:05:00', 9000, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0),
@@ -1332,7 +1332,7 @@ CREATE TABLE IF NOT EXISTS `tblfinstep` (
   KEY `ONo` (`ONo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblfinstep : ~1 460 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblfinstep : ~1â€¯460 rows (environ)
 INSERT INTO `tblfinstep` (`WPNo`, `StepNo`, `ONo`, `OPos`, `Description`, `OpNo`, `NextStepNo`, `FirstStep`, `ErrorStepNo`, `NewPNo`, `PlannedStart`, `PlannedEnd`, `Start`, `End`, `OPNoType`, `ResourceID`, `TransportTime`, `ErrorStep`, `ElectricEnergyCalc`, `ElectricEnergyReal`, `CompressedAirCalc`, `CompressedAirReal`, `FreeString`, `StaffId`, `ErrorRetVal`, `Active`) VALUES
 	(9000, 10, 1000, 1, 'service', 1030, 0, 1, 0, 0, '2017-01-19 07:49:00', '2017-01-19 07:49:00', '2017-01-19 08:30:00', '2017-01-19 09:05:00', 1, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0),
 	(9000, 10, 1001, 1, 'service', 1030, 0, 1, 0, 0, '2016-04-19 07:47:00', '2016-04-19 07:47:00', '2016-04-19 08:30:00', '2016-04-19 09:05:00', 1, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0),
@@ -3017,7 +3017,7 @@ CREATE TABLE IF NOT EXISTS `tblfinstepparameter` (
   KEY `ONo` (`ONo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblfinstepparameter : ~5 830 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblfinstepparameter : ~5â€¯830 rows (environ)
 INSERT INTO `tblfinstepparameter` (`WPNo`, `StepNo`, `ONo`, `OPos`, `ParameterNo`, `Parameter`, `ParameterType`) VALUES
 	(9000, 10, 1000, 1, 1, '0', 1),
 	(9000, 10, 1000, 1, 2, '20001', 1),
@@ -9447,7 +9447,7 @@ CREATE TABLE IF NOT EXISTS `tblinfo` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblinfo : ~0 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblinfo : ~0 rows (environ)
 INSERT INTO `tblinfo` (`Id`, `Version`, `Changed`, `Decription`) VALUES
 	(1, 'DB220617', '2022-06-07 09:55:34', 'DB template for CP-System');
 
@@ -9468,7 +9468,7 @@ CREATE TABLE IF NOT EXISTS `tblmachinereport` (
   KEY `ResourceID` (`ResourceID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13282 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblmachinereport : ~10 172 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblmachinereport : ~10â€¯172 rows (environ)
 INSERT INTO `tblmachinereport` (`ResourceID`, `TimeStamp`, `AutomaticMode`, `ManualMode`, `Busy`, `Reset`, `ErrorL0`, `ErrorL1`, `ErrorL2`, `ID`) VALUES
 	(1, '2022-12-01 10:48:25', 0, 0, 0, 0, 0, 0, 0, 1),
 	(1, '2023-10-04 16:30:11', 0, 0, 0, 0, 0, 0, 0, 2),
@@ -22760,7 +22760,7 @@ CREATE TABLE IF NOT EXISTS `tblmainterror` (
   PRIMARY KEY (`ErrorNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblmainterror : ~59 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblmainterror : ~59 rows (environ)
 INSERT INTO `tblmainterror` (`ErrorNo`, `ErrorDesc`) VALUES
 	(0, 'Preventive maintenance'),
 	(11, 'Unknown tool type gripped'),
@@ -22830,7 +22830,7 @@ CREATE TABLE IF NOT EXISTS `tblmainterrorlinks` (
   `Link` longtext DEFAULT NULL COMMENT 'link'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblmainterrorlinks : ~8 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblmainterrorlinks : ~8 rows (environ)
 INSERT INTO `tblmainterrorlinks` (`ErrorNo`, `LinkType`, `LinkDesc`, `Link`) VALUES
 	(11, 1, 'Link to Error Picture', '../Images/Error_Pictures/RASS_Errors/RassErrorNo11_Pic1_1.jpg'),
 	(11, 3, 'Link to pdf error description', '../SensorDataSheets/RASS/SIEN-M5B-PS-S-L_2007-05b_719235D4.pdf'),
@@ -22850,7 +22850,7 @@ CREATE TABLE IF NOT EXISTS `tblmaintlinks` (
   `Link` longtext DEFAULT NULL COMMENT 'link'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblmaintlinks : ~35 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblmaintlinks : ~35 rows (environ)
 INSERT INTO `tblmaintlinks` (`ErrorNo`, `SolutionNo`, `LinkType`, `LinkDesc`, `Link`) VALUES
 	(11, 1, 1, NULL, '../Images/Error_Pictures/RASS_Errors/RassErrorNo11_Pic1_1.jpg'),
 	(11, 1, 1, NULL, '../Images/Error_Pictures/RASS_Errors/RassErrorNo11_Pic1_2.jpg'),
@@ -22899,7 +22899,7 @@ CREATE TABLE IF NOT EXISTS `tblmaintsolutions` (
   PRIMARY KEY (`ErrorNo`,`SolutionNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblmaintsolutions : ~77 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblmaintsolutions : ~77 rows (environ)
 INSERT INTO `tblmaintsolutions` (`ErrorNo`, `SolutionNo`, `ModuleType`, `CauseDesc`, `SolutionDesc`, `Rating`) VALUES
 	(0, 1, NULL, NULL, 'clean the belts', 0),
 	(0, 2, NULL, NULL, 'replace the hoses', 0),
@@ -22986,7 +22986,7 @@ CREATE TABLE IF NOT EXISTS `tblmclasstype` (
   PRIMARY KEY (`MClass`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblmclasstype : ~10 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblmclasstype : ~10 rows (environ)
 INSERT INTO `tblmclasstype` (`MClass`, `Description`) VALUES
 	(0, 'no message'),
 	(10, 'set in MES'),
@@ -23006,7 +23006,7 @@ CREATE TABLE IF NOT EXISTS `tblmrptype` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblmrptype : ~3 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblmrptype : ~3 rows (environ)
 INSERT INTO `tblmrptype` (`ID`, `Description`) VALUES
 	(1, 'no planning'),
 	(2, 'demand planning (plan)'),
@@ -23020,7 +23020,7 @@ CREATE TABLE IF NOT EXISTS `tblonoconfig` (
   `Step` int(11) NOT NULL COMMENT 'step size'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci ROW_FORMAT=COMPACT;
 
--- Listage des données de la table mes4.tblonoconfig : ~0 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblonoconfig : ~0 rows (environ)
 INSERT INTO `tblonoconfig` (`nextONo`, `minONo`, `maxONo`, `Step`) VALUES
 	(2396, 2000, 9999999, 1);
 
@@ -23036,7 +23036,7 @@ CREATE TABLE IF NOT EXISTS `tbloperation` (
   PRIMARY KEY (`OpNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tbloperation : ~67 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tbloperation : ~67 rows (environ)
 INSERT INTO `tbloperation` (`OpNo`, `Description`, `Type`, `Short`, `SqlWrite`, `Picture`, `String`) VALUES
 	(0, 'nothing', 0, 'nothing', NULL, 'Pictures\\Default\\empty.png', NULL),
 	(110, 'pressing', 1, 'pressing', '', 'Pictures\\Default\\Operations\\Pressing.png', ''),
@@ -23122,7 +23122,7 @@ CREATE TABLE IF NOT EXISTS `tbloperationparameter` (
   PRIMARY KEY (`OpNo`,`ParameterNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tbloperationparameter : ~255 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tbloperationparameter : ~255 rows (environ)
 INSERT INTO `tbloperationparameter` (`OpNo`, `ParameterNo`, `Description`, `DataType`, `LowLimit`, `HighLimit`, `ParameterType`, `Parameter`, `QuerryChooseParameter`, `ValueType`, `StringLength`) VALUES
 	(110, 1, 'pressing time [s]', 2, 0, 120, 1, '5', '', 2, 0),
 	(111, 1, 'pressure [N]', 2, 5, 100, 2, '80', '', 1, 0),
@@ -23394,7 +23394,7 @@ CREATE TABLE IF NOT EXISTS `tblorder` (
   PRIMARY KEY (`ONo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblorder : ~2 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblorder : ~2 rows (environ)
 INSERT INTO `tblorder` (`ONo`, `PlannedStart`, `PlannedEnd`, `Start`, `End`, `CNo`, `State`, `Enabled`, `Release`) VALUES
 	(2382, '2026-03-27 14:28:15', '2026-03-27 14:32:22', NULL, NULL, 0, 0, 0, NULL),
 	(2395, '2026-03-31 11:18:46', '2026-03-31 11:19:53', '2026-03-31 11:19:01', NULL, 0, 1, 1, NULL);
@@ -23426,7 +23426,7 @@ CREATE TABLE IF NOT EXISTS `tblorderpos` (
   KEY `StepNo` (`StepNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblorderpos : ~11 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblorderpos : ~11 rows (environ)
 INSERT INTO `tblorderpos` (`ONo`, `OPos`, `PlannedStart`, `PlannedEnd`, `Start`, `End`, `WPNo`, `StepNo`, `MainOPos`, `State`, `ResourceID`, `OpNo`, `WONo`, `PNo`, `subOrderBlocked`, `Error`, `OrderPNo`) VALUES
 	(2382, 1, '2026-03-27 14:28:15', '2026-03-27 14:29:22', NULL, NULL, 9005, 10, 0, 0, 1, 213, 0, 9005, 0, 0, 9005),
 	(2382, 2, '2026-03-27 14:28:35', '2026-03-27 14:29:42', NULL, NULL, 9005, 10, 0, 0, 1, 213, 0, 9005, 0, 0, 9005),
@@ -23451,7 +23451,7 @@ CREATE TABLE IF NOT EXISTS `tblpallet` (
   KEY `PalletPNo` (`PalletPNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblpallet : ~0 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblpallet : ~0 rows (environ)
 
 -- Listage de la structure de table mes4. tblpalletdef
 CREATE TABLE IF NOT EXISTS `tblpalletdef` (
@@ -23462,7 +23462,7 @@ CREATE TABLE IF NOT EXISTS `tblpalletdef` (
   KEY `PalletPNo` (`PalletPNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblpalletdef : ~0 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblpalletdef : ~0 rows (environ)
 
 -- Listage de la structure de table mes4. tblpalletpos
 CREATE TABLE IF NOT EXISTS `tblpalletpos` (
@@ -23478,7 +23478,7 @@ CREATE TABLE IF NOT EXISTS `tblpalletpos` (
   KEY `PNo` (`PNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblpalletpos : ~0 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblpalletpos : ~0 rows (environ)
 
 -- Listage de la structure de table mes4. tblparametertypes
 CREATE TABLE IF NOT EXISTS `tblparametertypes` (
@@ -23487,7 +23487,7 @@ CREATE TABLE IF NOT EXISTS `tblparametertypes` (
   PRIMARY KEY (`Type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblparametertypes : ~4 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblparametertypes : ~4 rows (environ)
 INSERT INTO `tblparametertypes` (`Type`, `Description`) VALUES
 	(1, 'constant'),
 	(2, 'changable'),
@@ -23502,7 +23502,7 @@ CREATE TABLE IF NOT EXISTS `tblparametervaluetypes` (
   PRIMARY KEY (`Type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblparametervaluetypes : ~4 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblparametervaluetypes : ~4 rows (environ)
 INSERT INTO `tblparametervaluetypes` (`Type`, `Description`, `Feld1`) VALUES
 	(1, 'nothing', '4 Bytes'),
 	(2, 'time [s]', '4 Bytes'),
@@ -23526,7 +23526,7 @@ CREATE TABLE IF NOT EXISTS `tblparts` (
   KEY `DefResourceId` (`DefResourceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblparts : ~76 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblparts : ~76 rows (environ)
 INSERT INTO `tblparts` (`PNo`, `Description`, `Type`, `WPNo`, `Picture`, `BasePallet`, `MrpType`, `SafetyStock`, `LotSize`, `DefResourceId`, `Short`) VALUES
 	(0, 'nothing', 0, 0, 'Pictures\\Default\\empty.png', 0, 1, 0, 1, 0, NULL),
 	(1, 'essai', 1, 0, 'Pictures\\Default\\NoPicture.png', 25, 1, 0, 0, 0, NULL),
@@ -23619,2078 +23619,14 @@ CREATE TABLE IF NOT EXISTS `tblpartsreport` (
   KEY `ID` (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1668 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblpartsreport : ~1 195 rows (environ)
-INSERT INTO `tblpartsreport` (`ResourceID`, `TimeStamp`, `PNo`, `ErrorID`, `ID`) VALUES
-	(0, '2023-10-09 16:57:35', 0, 0, 1),
-	(0, '2023-10-09 16:58:19', 0, 0, 2),
-	(0, '2023-10-09 16:58:49', 0, 0, 3),
-	(0, '2023-10-09 16:59:26', 0, 0, 4),
-	(0, '2023-10-10 13:29:38', 0, 0, 6),
-	(0, '2023-10-10 13:39:43', 0, 0, 12),
-	(0, '2023-10-10 13:40:34', 0, 0, 13),
-	(0, '2023-10-10 13:42:23', 0, 0, 14),
-	(0, '2023-10-10 13:42:23', 0, 0, 15),
-	(0, '2023-10-10 13:45:46', 0, 0, 16),
-	(0, '2023-10-10 17:59:10', 0, 0, 17),
-	(0, '2023-10-10 18:26:48', 0, 0, 18),
-	(0, '2023-10-10 18:27:14', 0, 0, 19),
-	(0, '2023-10-10 18:28:29', 0, 0, 20),
-	(0, '2023-10-10 18:28:49', 0, 0, 21),
-	(0, '2023-10-10 18:29:15', 0, 0, 22),
-	(0, '2023-10-10 18:29:34', 0, 0, 23),
-	(0, '2023-10-10 18:29:50', 0, 0, 24),
-	(0, '2023-10-10 18:31:47', 0, 0, 25),
-	(0, '2023-10-10 18:32:25', 0, 0, 26),
-	(0, '2023-10-12 09:04:11', 0, 0, 28),
-	(0, '2023-10-12 11:04:34', 0, 0, 29),
-	(0, '2023-10-16 16:19:39', 0, 0, 38),
-	(0, '2023-10-16 16:19:39', 0, 0, 39),
-	(0, '2023-10-16 16:19:39', 0, 0, 40),
-	(0, '2023-10-16 16:46:10', 0, 0, 49),
-	(0, '2023-10-16 16:46:10', 0, 0, 50),
-	(0, '2023-10-16 16:46:10', 0, 0, 51),
-	(0, '2023-10-16 17:06:59', 0, 0, 64),
-	(0, '2023-10-16 17:07:07', 0, 0, 65),
-	(0, '2023-10-16 17:07:14', 0, 0, 66),
-	(0, '2023-10-16 17:24:31', 0, 0, 74),
-	(0, '2023-10-16 17:37:35', 0, 0, 80),
-	(0, '2023-10-16 17:37:35', 0, 0, 81),
-	(0, '2023-10-16 17:37:35', 0, 0, 82),
-	(0, '2023-10-16 17:37:35', 0, 0, 83),
-	(0, '2023-10-16 17:51:09', 0, 0, 97),
-	(0, '2023-10-16 17:51:09', 0, 0, 98),
-	(0, '2023-10-16 17:51:09', 0, 0, 99),
-	(0, '2023-10-16 17:51:09', 0, 0, 100),
-	(0, '2023-10-16 18:24:43', 0, 0, 141),
-	(0, '2023-10-18 08:43:03', 0, 0, 201),
-	(0, '2023-10-18 08:56:30', 0, 0, 203),
-	(0, '2023-10-18 08:56:30', 0, 0, 204),
-	(0, '2023-10-18 08:56:30', 0, 0, 205),
-	(0, '2023-10-18 08:56:30', 0, 0, 206),
-	(0, '2023-10-18 08:56:30', 0, 0, 207),
-	(0, '2023-10-18 08:56:30', 0, 0, 208),
-	(0, '2023-10-18 10:25:06', 0, 0, 214),
-	(0, '2023-10-18 10:25:06', 0, 0, 215),
-	(0, '2023-10-18 10:25:06', 0, 0, 216),
-	(0, '2023-10-18 10:29:45', 0, 0, 224),
-	(0, '2023-10-18 10:29:45', 0, 0, 225),
-	(0, '2023-10-18 15:52:25', 0, 0, 300),
-	(0, '2023-10-18 15:52:25', 0, 0, 301),
-	(0, '2023-10-18 15:52:25', 0, 0, 302),
-	(0, '2023-10-18 15:52:25', 0, 0, 303),
-	(0, '2023-10-18 15:56:29', 0, 0, 312),
-	(0, '2023-10-18 15:56:29', 0, 0, 313),
-	(0, '2023-10-18 16:33:52', 0, 0, 352),
-	(0, '2023-10-18 16:33:53', 0, 0, 353),
-	(0, '2023-10-18 16:34:00', 0, 0, 354),
-	(0, '2023-10-18 17:31:02', 0, 0, 371),
-	(0, '2023-10-18 17:31:03', 0, 0, 372),
-	(0, '2023-10-18 17:33:39', 0, 0, 374),
-	(0, '2023-10-18 17:33:39', 0, 0, 375),
-	(0, '2023-10-18 17:33:39', 0, 0, 376),
-	(0, '2023-10-18 17:33:39', 0, 0, 377),
-	(0, '2023-10-18 17:33:39', 0, 0, 378),
-	(0, '2023-10-18 17:33:39', 0, 0, 379),
-	(0, '2023-10-18 17:33:39', 0, 0, 380),
-	(0, '2023-10-18 17:33:39', 0, 0, 381),
-	(0, '2024-11-11 12:46:55', 0, 0, 765),
-	(0, '2024-11-11 12:46:55', 0, 0, 766),
-	(0, '2024-11-11 15:54:42', 0, 0, 782),
-	(0, '2024-11-11 15:54:55', 0, 0, 783),
-	(0, '2024-11-11 15:55:03', 0, 0, 784),
-	(0, '2024-11-11 16:13:30', 0, 0, 785),
-	(0, '2024-11-11 16:26:40', 0, 0, 802),
-	(0, '2024-11-11 16:28:40', 0, 0, 803),
-	(0, '2024-11-11 16:28:40', 0, 0, 804),
-	(0, '2024-11-11 16:28:40', 0, 0, 805),
-	(0, '2024-11-11 16:48:09', 0, 0, 807),
-	(0, '2024-11-12 08:54:36', 0, 0, 855),
-	(0, '2024-11-13 09:10:29', 0, 0, 856),
-	(0, '2024-11-13 09:10:29', 0, 0, 857),
-	(0, '2024-11-13 09:10:29', 0, 0, 858),
-	(0, '2024-11-13 09:14:29', 0, 0, 859),
-	(0, '2024-11-13 09:35:46', 0, 0, 887),
-	(0, '2024-11-13 10:29:41', 0, 0, 923),
-	(0, '2024-11-13 10:35:21', 0, 0, 934),
-	(0, '2024-11-13 11:04:58', 0, 0, 957),
-	(1, '2023-10-16 16:18:16', 0, 0, 35),
-	(1, '2023-10-16 16:18:35', 0, 0, 36),
-	(1, '2023-10-16 16:18:53', 0, 0, 37),
-	(1, '2023-10-16 16:39:26', 0, 0, 43),
-	(1, '2023-10-16 16:40:34', 0, 0, 45),
-	(1, '2023-10-16 16:41:46', 0, 0, 47),
-	(1, '2023-10-16 16:45:54', 0, 0, 48),
-	(1, '2023-10-16 16:46:14', 0, 0, 52),
-	(1, '2023-10-16 16:46:35', 0, 0, 53),
-	(1, '2023-10-16 17:00:18', 0, 99, 57),
-	(1, '2023-10-16 17:00:44', 0, 0, 58),
-	(1, '2023-10-16 17:01:47', 0, 0, 60),
-	(1, '2023-10-16 17:02:59', 0, 0, 61),
-	(1, '2023-10-16 17:03:21', 0, 0, 62),
-	(1, '2023-10-16 17:03:43', 0, 0, 63),
-	(1, '2023-10-16 17:10:11', 0, 0, 70),
-	(1, '2023-10-16 17:10:48', 0, 0, 72),
-	(1, '2023-10-16 17:11:14', 0, 0, 73),
-	(1, '2023-10-16 17:25:32', 0, 0, 75),
-	(1, '2023-10-16 17:25:54', 0, 0, 77),
-	(1, '2023-10-16 17:26:17', 0, 0, 78),
-	(1, '2023-10-16 17:26:40', 0, 0, 79),
-	(1, '2023-10-16 17:40:08', 0, 0, 87),
-	(1, '2023-10-16 17:40:45', 0, 0, 89),
-	(1, '2023-10-16 17:41:13', 0, 0, 90),
-	(1, '2023-10-16 17:42:10', 0, 0, 92),
-	(1, '2023-10-16 17:43:45', 0, 0, 93),
-	(1, '2023-10-16 17:44:17', 0, 0, 94),
-	(1, '2023-10-16 17:44:37', 0, 0, 95),
-	(1, '2023-10-16 17:44:56', 0, 0, 96),
-	(1, '2023-10-16 17:55:26', 0, 0, 104),
-	(1, '2023-10-16 17:56:14', 0, 0, 107),
-	(1, '2023-10-16 17:56:36', 0, 0, 108),
-	(1, '2023-10-16 17:56:57', 0, 0, 109),
-	(1, '2023-10-16 17:58:20', 0, 0, 110),
-	(1, '2023-10-16 17:58:42', 0, 0, 111),
-	(1, '2023-10-16 17:59:04', 0, 0, 112),
-	(1, '2023-10-16 17:59:27', 0, 0, 113),
-	(1, '2023-10-16 18:05:45', 0, 0, 119),
-	(1, '2023-10-16 18:06:08', 0, 0, 121),
-	(1, '2023-10-16 18:06:28', 0, 0, 122),
-	(1, '2023-10-16 18:06:47', 0, 0, 123),
-	(1, '2023-10-16 18:08:37', 0, 0, 126),
-	(1, '2023-10-16 18:09:08', 0, 0, 128),
-	(1, '2023-10-16 18:09:43', 0, 0, 129),
-	(1, '2023-10-16 18:10:47', 0, 0, 131),
-	(1, '2023-10-16 18:18:25', 0, 0, 133),
-	(1, '2023-10-16 18:18:44', 0, 0, 134),
-	(1, '2023-10-16 18:19:02', 0, 0, 135),
-	(1, '2023-10-16 18:19:21', 0, 0, 136),
-	(1, '2023-10-16 18:27:16', 0, 0, 143),
-	(1, '2023-10-16 18:27:45', 0, 0, 144),
-	(1, '2023-10-16 18:28:05', 0, 0, 146),
-	(1, '2023-10-16 18:28:25', 0, 0, 148),
-	(1, '2023-10-16 18:28:47', 0, 0, 149),
-	(1, '2023-10-17 11:54:09', 0, 0, 160),
-	(1, '2023-10-17 16:24:54', 0, 0, 161),
-	(1, '2023-10-17 16:25:12', 0, 0, 162),
-	(1, '2023-10-17 16:25:30', 0, 0, 163),
-	(1, '2023-10-17 16:25:50', 0, 0, 166),
-	(1, '2023-10-17 16:29:37', 0, 0, 171),
-	(1, '2023-10-17 16:32:06', 0, 0, 174),
-	(1, '2023-10-17 16:34:18', 0, 0, 179),
-	(1, '2023-10-17 16:36:11', 0, 0, 180),
-	(1, '2023-10-17 16:37:57', 0, 0, 181),
-	(1, '2023-10-17 16:38:16', 0, 0, 182),
-	(1, '2023-10-17 16:38:35', 0, 0, 183),
-	(1, '2023-10-17 16:38:55', 0, 0, 185),
-	(1, '2023-10-17 16:40:15', 0, 0, 194),
-	(1, '2023-10-17 16:41:18', 0, 0, 198),
-	(1, '2023-10-17 16:41:36', 0, 0, 199),
-	(1, '2023-10-17 16:41:55', 0, 0, 200),
-	(1, '2023-10-18 10:20:24', 0, 0, 211),
-	(1, '2023-10-18 10:20:46', 0, 0, 212),
-	(1, '2023-10-18 10:21:07', 0, 0, 213),
-	(1, '2023-10-18 10:27:31', 0, 0, 220),
-	(1, '2023-10-18 10:28:01', 0, 0, 222),
-	(1, '2023-10-18 10:28:36', 0, 0, 223),
-	(1, '2023-10-18 10:29:50', 0, 0, 226),
-	(1, '2023-10-18 10:30:10', 0, 0, 227),
-	(1, '2023-10-18 10:50:39', 0, 0, 237),
-	(1, '2023-10-18 10:55:09', 0, 0, 241),
-	(1, '2023-10-18 15:26:56', 0, 0, 242),
-	(1, '2023-10-18 15:27:16', 0, 0, 243),
-	(1, '2023-10-18 15:27:38', 0, 0, 245),
-	(1, '2023-10-18 15:28:00', 0, 0, 247),
-	(1, '2023-10-18 15:32:22', 0, 0, 251),
-	(1, '2023-10-18 15:32:41', 0, 0, 252),
-	(1, '2023-10-18 15:32:59', 0, 0, 253),
-	(1, '2023-10-18 15:33:18', 0, 0, 255),
-	(1, '2023-10-18 15:39:09', 0, 0, 260),
-	(1, '2023-10-18 15:39:31', 0, 0, 261),
-	(1, '2023-10-18 15:39:47', 0, 0, 262),
-	(1, '2023-10-18 15:40:09', 0, 0, 263),
-	(1, '2023-10-18 15:41:52', 0, 0, 271),
-	(1, '2023-10-18 15:42:11', 0, 0, 273),
-	(1, '2023-10-18 15:42:29', 0, 0, 274),
-	(1, '2023-10-18 15:42:48', 0, 0, 276),
-	(1, '2023-10-18 15:43:10', 0, 0, 280),
-	(1, '2023-10-18 15:43:40', 0, 0, 281),
-	(1, '2023-10-18 15:44:36', 0, 0, 282),
-	(1, '2023-10-18 15:45:06', 0, 0, 283),
-	(1, '2023-10-18 15:47:24', 0, 0, 289),
-	(1, '2023-10-18 15:48:16', 0, 0, 290),
-	(1, '2023-10-18 15:48:46', 0, 0, 291),
-	(1, '2023-10-18 15:51:04', 0, 0, 295),
-	(1, '2023-10-18 15:51:34', 0, 0, 296),
-	(1, '2023-10-18 15:51:54', 0, 0, 297),
-	(1, '2023-10-18 15:55:27', 0, 0, 309),
-	(1, '2023-10-18 15:56:29', 0, 0, 311),
-	(1, '2023-10-18 15:56:47', 0, 0, 314),
-	(1, '2023-10-18 15:57:07', 0, 0, 316),
-	(1, '2023-10-18 16:15:35', 0, 0, 332),
-	(1, '2023-10-18 16:16:08', 0, 0, 333),
-	(1, '2023-10-18 16:29:24', 0, 0, 334),
-	(1, '2023-10-18 16:30:04', 0, 0, 335),
-	(1, '2023-10-18 16:30:25', 0, 0, 337),
-	(1, '2023-10-18 16:30:47', 0, 0, 338),
-	(1, '2023-10-18 16:31:06', 0, 0, 339),
-	(1, '2023-10-18 16:31:28', 0, 0, 340),
-	(1, '2023-10-18 16:31:53', 0, 0, 342),
-	(1, '2023-10-18 16:32:09', 0, 0, 344),
-	(1, '2023-10-18 16:32:27', 0, 0, 345),
-	(1, '2023-10-18 16:32:44', 0, 0, 347),
-	(1, '2023-10-18 16:33:00', 0, 0, 348),
-	(1, '2023-10-18 16:33:16', 0, 0, 350),
-	(1, '2023-10-18 16:33:35', 0, 0, 351),
-	(1, '2023-10-18 16:35:58', 0, 0, 357),
-	(1, '2023-10-18 16:36:28', 0, 0, 359),
-	(1, '2023-10-18 16:37:38', 0, 0, 361),
-	(1, '2023-10-18 16:38:34', 0, 0, 364),
-	(1, '2023-10-18 16:39:02', 0, 0, 365),
-	(1, '2023-10-18 16:42:08', 0, 0, 366),
-	(1, '2023-10-18 16:42:30', 0, 0, 367),
-	(1, '2023-10-18 17:45:52', 0, 0, 394),
-	(1, '2023-10-18 17:47:23', 0, 0, 397),
-	(1, '2023-10-19 11:03:19', 0, 0, 398),
-	(1, '2023-10-19 11:03:38', 0, 0, 399),
-	(1, '2023-10-19 17:08:51', 0, 0, 403),
-	(1, '2023-10-19 17:09:10', 0, 0, 404),
-	(1, '2023-10-19 17:09:30', 0, 0, 406),
-	(1, '2023-10-19 17:09:51', 0, 0, 408),
-	(1, '2023-10-19 17:27:09', 0, 0, 413),
-	(1, '2023-10-19 17:33:13', 0, 0, 414),
-	(1, '2023-10-19 18:26:15', 0, 0, 424),
-	(1, '2023-10-19 18:26:34', 0, 0, 425),
-	(1, '2023-10-19 18:26:51', 0, 0, 426),
-	(1, '2023-10-19 18:27:07', 0, 0, 427),
-	(1, '2023-10-19 18:27:25', 0, 1, 428),
-	(1, '2023-10-19 18:27:33', 0, 1, 429),
-	(1, '2023-10-19 18:27:36', 0, 1, 430),
-	(1, '2023-10-19 18:27:39', 0, 1, 431),
-	(1, '2023-10-19 18:27:44', 0, 1, 432),
-	(1, '2023-10-19 18:29:12', 0, 0, 436),
-	(1, '2023-10-19 18:38:07', 0, 0, 437),
-	(1, '2023-10-19 18:38:28', 0, 0, 438),
-	(1, '2024-10-18 14:12:28', 0, 0, 442),
-	(1, '2024-10-18 14:13:05', 0, 0, 443),
-	(1, '2024-10-18 14:13:22', 0, 0, 444),
-	(1, '2024-10-18 14:13:43', 0, 0, 445),
-	(1, '2024-10-18 14:14:20', 0, 0, 446),
-	(1, '2024-10-18 14:14:36', 0, 0, 447),
-	(1, '2024-10-18 14:14:49', 0, 0, 448),
-	(1, '2024-10-18 14:15:05', 0, 0, 449),
-	(1, '2024-10-18 14:15:23', 0, 0, 450),
-	(1, '2024-10-18 14:15:42', 0, 0, 451),
-	(1, '2024-10-18 14:15:56', 0, 0, 452),
-	(1, '2024-10-18 14:16:11', 0, 0, 453),
-	(1, '2024-10-18 14:16:26', 0, 0, 454),
-	(1, '2024-10-18 14:16:43', 0, 0, 455),
-	(1, '2024-10-18 14:16:57', 0, 0, 456),
-	(1, '2024-10-18 14:17:14', 0, 0, 457),
-	(1, '2024-10-18 14:17:28', 0, 0, 458),
-	(1, '2024-10-18 14:17:45', 0, 0, 459),
-	(1, '2024-10-18 14:17:59', 0, 0, 460),
-	(1, '2024-10-18 14:18:16', 0, 0, 461),
-	(1, '2024-10-18 14:18:31', 0, 0, 462),
-	(1, '2024-10-18 14:18:48', 0, 0, 463),
-	(1, '2024-10-18 14:19:25', 0, 0, 464),
-	(1, '2024-10-18 14:19:40', 0, 0, 465),
-	(1, '2024-10-18 14:19:58', 0, 0, 466),
-	(1, '2024-10-18 14:20:13', 0, 0, 467),
-	(1, '2024-10-18 14:20:30', 0, 0, 468),
-	(1, '2024-10-18 14:20:46', 0, 0, 469),
-	(1, '2024-10-18 14:21:03', 0, 0, 470),
-	(1, '2024-10-18 14:21:19', 0, 0, 471),
-	(1, '2024-10-18 14:21:35', 0, 0, 472),
-	(1, '2024-10-18 14:22:09', 0, 0, 473),
-	(1, '2024-10-18 14:22:25', 0, 0, 474),
-	(1, '2024-10-18 14:22:41', 0, 0, 475),
-	(1, '2024-10-18 14:22:56', 0, 0, 476),
-	(1, '2024-10-18 14:23:13', 0, 0, 477),
-	(1, '2024-10-18 14:23:29', 0, 0, 478),
-	(1, '2024-10-18 14:23:42', 0, 0, 479),
-	(1, '2024-10-18 14:23:58', 0, 0, 480),
-	(1, '2024-10-18 14:24:12', 0, 0, 481),
-	(1, '2024-10-18 14:24:28', 0, 0, 482),
-	(1, '2024-10-18 14:24:44', 0, 0, 483),
-	(1, '2024-10-18 14:25:01', 0, 0, 484),
-	(1, '2024-10-18 14:25:35', 0, 0, 485),
-	(1, '2024-10-18 14:25:49', 0, 0, 486),
-	(1, '2024-10-18 14:26:06', 0, 0, 487),
-	(1, '2024-10-18 14:26:20', 0, 0, 488),
-	(1, '2024-10-18 14:26:43', 0, 0, 489),
-	(1, '2024-10-18 14:27:18', 0, 0, 490),
-	(1, '2024-10-18 14:27:34', 0, 0, 491),
-	(1, '2024-10-18 14:28:28', 0, 0, 492),
-	(1, '2024-10-18 14:28:43', 0, 0, 493),
-	(1, '2024-10-18 14:29:37', 0, 0, 494),
-	(1, '2024-10-18 14:29:47', 0, 99, 495),
-	(1, '2024-10-18 14:29:51', 0, 99, 496),
-	(1, '2024-10-18 14:29:54', 0, 99, 497),
-	(1, '2024-10-18 14:29:58', 0, 99, 498),
-	(1, '2024-10-18 14:30:42', 0, 0, 499),
-	(1, '2024-10-18 14:30:58', 0, 0, 500),
-	(1, '2024-10-18 14:31:15', 0, 0, 501),
-	(1, '2024-10-18 14:31:59', 0, 0, 502),
-	(1, '2024-10-18 14:32:34', 0, 0, 503),
-	(1, '2024-10-18 14:43:51', 0, 0, 504),
-	(1, '2024-10-18 14:44:13', 0, 0, 505),
-	(1, '2024-10-18 14:44:40', 0, 0, 506),
-	(1, '2024-10-18 14:44:57', 0, 0, 507),
-	(1, '2024-10-18 14:45:12', 0, 0, 508),
-	(1, '2024-10-18 14:45:27', 0, 0, 509),
-	(1, '2024-10-18 14:45:41', 0, 0, 510),
-	(1, '2024-10-18 14:45:57', 0, 0, 511),
-	(1, '2024-10-18 14:46:10', 0, 0, 512),
-	(1, '2024-10-18 14:46:26', 0, 0, 513),
-	(1, '2024-10-18 14:46:40', 0, 0, 514),
-	(1, '2024-10-18 14:46:56', 0, 0, 515),
-	(1, '2024-10-18 14:47:11', 0, 0, 516),
-	(1, '2024-10-18 14:47:27', 0, 0, 517),
-	(1, '2024-10-18 14:47:42', 0, 0, 518),
-	(1, '2024-10-18 14:47:58', 0, 0, 519),
-	(1, '2024-10-18 14:48:13', 0, 0, 520),
-	(1, '2024-10-18 14:48:29', 0, 0, 521),
-	(1, '2024-10-18 14:48:44', 0, 0, 522),
-	(1, '2024-10-18 14:49:00', 0, 0, 523),
-	(1, '2024-10-18 14:49:15', 0, 0, 524),
-	(1, '2024-10-18 14:49:32', 0, 0, 525),
-	(1, '2024-10-18 14:49:48', 0, 0, 526),
-	(1, '2024-10-18 14:50:05', 0, 0, 527),
-	(1, '2024-10-18 14:50:20', 0, 0, 528),
-	(1, '2024-10-18 14:50:37', 0, 0, 529),
-	(1, '2024-10-18 14:50:53', 0, 0, 530),
-	(1, '2024-10-18 14:51:10', 0, 0, 531),
-	(1, '2024-10-18 14:51:26', 0, 0, 532),
-	(1, '2024-10-18 14:51:43', 0, 0, 533),
-	(1, '2024-10-18 14:51:59', 0, 0, 534),
-	(1, '2024-10-18 14:52:15', 0, 0, 535),
-	(1, '2024-10-18 14:52:31', 0, 0, 536),
-	(1, '2024-10-18 14:52:47', 0, 0, 537),
-	(1, '2024-10-18 14:53:03', 0, 0, 538),
-	(1, '2024-10-18 14:53:20', 0, 0, 539),
-	(1, '2024-10-18 14:53:34', 0, 0, 540),
-	(1, '2024-10-18 14:53:50', 0, 0, 541),
-	(1, '2024-10-18 14:54:03', 0, 0, 542),
-	(1, '2024-10-18 14:54:19', 0, 0, 543),
-	(1, '2024-10-18 14:54:33', 0, 0, 544),
-	(1, '2024-10-18 14:54:48', 0, 0, 545),
-	(1, '2024-10-18 14:55:02', 0, 0, 546),
-	(1, '2024-10-18 14:55:18', 0, 0, 547),
-	(1, '2024-10-18 14:55:33', 0, 0, 548),
-	(1, '2024-10-18 14:55:49', 0, 0, 549),
-	(1, '2024-10-18 14:56:04', 0, 0, 550),
-	(1, '2024-10-18 14:56:20', 0, 0, 551),
-	(1, '2024-10-18 14:56:35', 0, 0, 552),
-	(1, '2024-10-18 14:56:51', 0, 0, 553),
-	(1, '2024-10-18 14:57:06', 0, 0, 554),
-	(1, '2024-10-18 14:57:22', 0, 0, 555),
-	(1, '2024-10-18 14:57:38', 0, 0, 556),
-	(1, '2024-10-18 14:57:55', 0, 0, 557),
-	(1, '2024-10-18 14:58:10', 0, 0, 558),
-	(1, '2024-10-18 14:58:27', 0, 0, 559),
-	(1, '2024-10-18 14:58:43', 0, 0, 560),
-	(1, '2024-10-18 14:59:00', 0, 0, 561),
-	(1, '2024-10-18 14:59:15', 0, 0, 562),
-	(1, '2024-10-18 14:59:32', 0, 0, 563),
-	(1, '2024-10-18 14:59:48', 0, 0, 564),
-	(1, '2024-10-18 15:00:09', 0, 0, 565),
-	(1, '2024-10-18 15:00:30', 0, 0, 566),
-	(1, '2024-10-18 15:00:51', 0, 0, 567),
-	(1, '2024-10-18 15:46:44', 0, 0, 568),
-	(1, '2024-10-18 15:47:00', 0, 0, 569),
-	(1, '2024-10-18 15:47:24', 0, 0, 570),
-	(1, '2024-10-18 15:47:41', 0, 0, 571),
-	(1, '2024-10-18 15:47:59', 0, 0, 572),
-	(1, '2024-10-18 15:48:14', 0, 0, 573),
-	(1, '2024-10-18 15:48:29', 0, 0, 574),
-	(1, '2024-10-18 15:48:43', 0, 0, 575),
-	(1, '2024-10-18 15:48:59', 0, 0, 576),
-	(1, '2024-10-18 15:49:12', 0, 0, 577),
-	(1, '2024-10-18 15:49:28', 0, 0, 578),
-	(1, '2024-10-18 15:49:42', 0, 0, 579),
-	(1, '2024-10-18 15:50:00', 0, 0, 580),
-	(1, '2024-10-18 15:50:14', 0, 0, 581),
-	(1, '2024-10-18 15:50:31', 0, 0, 582),
-	(1, '2024-10-18 15:50:45', 0, 0, 583),
-	(1, '2024-10-18 15:51:02', 0, 0, 584),
-	(1, '2024-10-18 15:51:16', 0, 0, 585),
-	(1, '2024-10-18 15:51:33', 0, 0, 586),
-	(1, '2024-10-18 15:51:47', 0, 0, 587),
-	(1, '2024-10-18 15:52:05', 0, 0, 588),
-	(1, '2024-10-18 15:52:21', 0, 0, 589),
-	(1, '2024-10-18 15:52:38', 0, 0, 590),
-	(1, '2024-10-18 15:52:53', 0, 0, 591),
-	(1, '2024-10-18 15:53:10', 0, 0, 592),
-	(1, '2024-10-18 15:53:26', 0, 0, 593),
-	(1, '2024-10-18 15:53:43', 0, 0, 594),
-	(1, '2024-10-18 15:53:58', 0, 0, 595),
-	(1, '2024-10-18 15:54:15', 0, 0, 596),
-	(1, '2024-10-18 15:54:31', 0, 0, 597),
-	(1, '2024-10-18 15:54:47', 0, 0, 598),
-	(1, '2024-10-18 15:55:03', 0, 0, 599),
-	(1, '2024-10-18 15:55:19', 0, 0, 600),
-	(1, '2024-10-18 15:55:35', 0, 0, 601),
-	(1, '2024-10-18 15:55:51', 0, 0, 602),
-	(1, '2024-10-18 15:56:07', 0, 0, 603),
-	(1, '2024-10-18 15:56:24', 0, 0, 604),
-	(1, '2024-10-18 15:56:39', 0, 0, 605),
-	(1, '2024-10-18 15:56:54', 0, 0, 606),
-	(1, '2024-10-18 15:57:08', 0, 0, 607),
-	(1, '2024-10-18 15:57:24', 0, 0, 608),
-	(1, '2024-10-18 15:57:37', 0, 0, 609),
-	(1, '2024-10-18 15:57:53', 0, 0, 610),
-	(1, '2024-10-18 15:58:07', 0, 0, 611),
-	(1, '2024-10-18 15:58:25', 0, 0, 612),
-	(1, '2024-10-18 15:58:39', 0, 0, 613),
-	(1, '2024-10-18 15:58:56', 0, 0, 614),
-	(1, '2024-10-18 15:59:10', 0, 0, 615),
-	(1, '2024-10-18 15:59:27', 0, 0, 616),
-	(1, '2024-10-18 15:59:41', 0, 0, 617),
-	(1, '2024-10-18 15:59:58', 0, 0, 618),
-	(1, '2024-10-18 16:00:13', 0, 0, 619),
-	(1, '2024-10-18 16:00:31', 0, 0, 620),
-	(1, '2024-10-18 16:00:46', 0, 0, 621),
-	(1, '2024-10-18 16:01:03', 0, 0, 622),
-	(1, '2024-10-18 16:01:19', 0, 0, 623),
-	(1, '2024-10-18 16:01:36', 0, 0, 624),
-	(1, '2024-10-18 16:01:51', 0, 0, 625),
-	(1, '2024-10-18 16:02:08', 0, 0, 626),
-	(1, '2024-10-18 16:02:23', 0, 0, 627),
-	(1, '2024-10-18 16:02:44', 0, 0, 628),
-	(1, '2024-10-18 16:03:05', 0, 0, 629),
-	(1, '2024-10-18 16:03:26', 0, 0, 630),
-	(1, '2024-10-18 16:03:47', 0, 0, 631),
-	(1, '2024-11-04 15:47:40', 0, 0, 634),
-	(1, '2024-11-04 15:48:11', 0, 0, 635),
-	(1, '2024-11-04 15:49:33', 0, 0, 638),
-	(1, '2024-11-04 15:49:50', 0, 0, 639),
-	(1, '2024-11-05 11:56:40', 0, 0, 640),
-	(1, '2024-11-05 11:56:58', 0, 0, 641),
-	(1, '2024-11-05 11:58:43', 0, 0, 646),
-	(1, '2024-11-05 11:59:48', 0, 0, 648),
-	(1, '2024-11-05 12:01:25', 0, 0, 649),
-	(1, '2024-11-05 12:05:54', 0, 0, 654),
-	(1, '2024-11-05 12:11:27', 0, 0, 657),
-	(1, '2024-11-05 12:11:45', 0, 0, 658),
-	(1, '2024-11-05 12:12:47', 0, 0, 661),
-	(1, '2024-11-05 12:13:16', 0, 0, 662),
-	(1, '2024-11-07 15:33:22', 0, 0, 666),
-	(1, '2024-11-07 15:34:36', 0, 0, 668),
-	(1, '2024-11-07 15:34:53', 0, 0, 669),
-	(1, '2024-11-07 15:35:52', 0, 0, 671),
-	(1, '2024-11-08 08:37:33', 0, 0, 672),
-	(1, '2024-11-08 08:57:27', 0, 0, 674),
-	(1, '2024-11-08 08:58:56', 0, 99, 676),
-	(1, '2024-11-08 09:00:17', 0, 0, 677),
-	(1, '2024-11-08 15:20:14', 0, 0, 678),
-	(1, '2024-11-08 15:20:32', 0, 0, 679),
-	(1, '2024-11-08 15:21:50', 0, 0, 682),
-	(1, '2024-11-08 15:22:08', 0, 0, 683),
-	(1, '2024-11-08 15:24:01', 0, 0, 684),
-	(1, '2024-11-08 15:24:17', 0, 0, 685),
-	(1, '2024-11-08 15:26:05', 0, 0, 693),
-	(1, '2024-11-08 15:26:31', 0, 0, 695),
-	(1, '2024-11-08 15:28:16', 0, 0, 696),
-	(1, '2024-11-08 15:28:34', 0, 0, 697),
-	(1, '2024-11-08 15:28:54', 0, 0, 699),
-	(1, '2024-11-08 15:29:58', 0, 0, 702),
-	(1, '2024-11-08 15:30:16', 0, 0, 703),
-	(1, '2024-11-08 15:30:40', 0, 0, 704),
-	(1, '2024-11-08 15:34:35', 0, 0, 705),
-	(1, '2024-11-08 15:34:53', 0, 0, 706),
-	(1, '2024-11-08 15:35:12', 0, 0, 707),
-	(1, '2024-11-08 15:39:08', 0, 0, 716),
-	(1, '2024-11-08 15:40:52', 0, 0, 721),
-	(1, '2024-11-08 15:41:13', 0, 0, 722),
-	(1, '2024-11-09 10:44:30', 0, 0, 723),
-	(1, '2024-11-09 10:45:22', 0, 0, 725),
-	(1, '2024-11-09 10:51:40', 0, 0, 726),
-	(1, '2024-11-09 10:53:05', 0, 0, 728),
-	(1, '2024-11-09 11:00:25', 0, 0, 729),
-	(1, '2024-11-09 11:03:30', 0, 0, 730),
-	(1, '2024-11-09 11:07:26', 0, 0, 736),
-	(1, '2024-11-09 11:16:51', 0, 0, 740),
-	(1, '2024-11-09 11:23:13', 0, 0, 744),
-	(1, '2024-11-09 11:23:29', 0, 0, 745),
-	(1, '2024-11-09 11:23:45', 0, 0, 746),
-	(1, '2024-11-09 11:24:42', 0, 0, 749),
-	(1, '2024-11-09 11:25:02', 0, 0, 751),
-	(1, '2024-11-09 11:27:01', 0, 0, 752),
-	(1, '2024-11-09 11:46:16', 0, 0, 755),
-	(1, '2024-11-09 11:46:37', 0, 0, 756),
-	(1, '2024-11-09 11:47:32', 0, 0, 760),
-	(1, '2024-11-09 11:47:54', 0, 0, 761),
-	(1, '2024-11-09 11:48:15', 0, 0, 762),
-	(1, '2024-11-09 11:48:47', 0, 0, 764),
-	(1, '2024-11-11 15:47:37', 0, 0, 767),
-	(1, '2024-11-11 15:47:53', 0, 0, 768),
-	(1, '2024-11-11 15:48:18', 0, 0, 769),
-	(1, '2024-11-11 15:48:37', 0, 0, 772),
-	(1, '2024-11-11 15:48:56', 0, 0, 774),
-	(1, '2024-11-11 15:49:12', 0, 0, 776),
-	(1, '2024-11-11 15:49:28', 0, 0, 778),
-	(1, '2024-11-11 15:49:53', 0, 0, 779),
-	(1, '2024-11-11 15:50:09', 0, 0, 780),
-	(1, '2024-11-11 15:50:28', 0, 0, 781),
-	(1, '2024-11-11 16:17:10', 0, 0, 789),
-	(1, '2024-11-11 16:17:28', 0, 0, 790),
-	(1, '2024-11-11 16:17:46', 0, 0, 791),
-	(1, '2024-11-11 16:18:33', 0, 0, 794),
-	(1, '2024-11-11 16:19:04', 0, 0, 796),
-	(1, '2024-11-11 16:19:34', 0, 0, 797),
-	(1, '2024-11-11 16:20:00', 0, 0, 799),
-	(1, '2024-11-11 16:21:23', 0, 0, 801),
-	(1, '2024-11-11 16:50:51', 0, 0, 809),
-	(1, '2024-11-11 16:52:13', 0, 0, 811),
-	(1, '2024-11-11 17:00:28', 0, 0, 812),
-	(1, '2024-11-11 17:00:46', 0, 0, 813),
-	(1, '2024-11-11 17:01:04', 0, 0, 814),
-	(1, '2024-11-11 17:02:02', 0, 0, 820),
-	(1, '2024-11-11 17:07:52', 0, 0, 826),
-	(1, '2024-11-11 17:09:08', 0, 0, 832),
-	(1, '2024-11-11 17:09:32', 0, 0, 834),
-	(1, '2024-11-11 17:09:55', 0, 0, 835),
-	(1, '2024-11-11 17:16:16', 0, 0, 836),
-	(1, '2024-11-11 17:17:48', 0, 0, 838),
-	(1, '2024-11-11 17:21:54', 0, 0, 840),
-	(1, '2024-11-11 17:23:09', 0, 0, 845),
-	(1, '2024-11-11 17:23:22', 0, 0, 846),
-	(1, '2024-11-11 17:23:39', 0, 0, 847),
-	(1, '2024-11-11 17:23:59', 0, 0, 849),
-	(1, '2024-11-11 17:24:49', 0, 0, 852),
-	(1, '2024-11-11 17:25:07', 0, 0, 853),
-	(1, '2024-11-11 17:25:32', 0, 0, 854),
-	(1, '2024-11-13 09:18:30', 0, 0, 864),
-	(1, '2024-11-13 09:18:49', 0, 0, 865),
-	(1, '2024-11-13 09:19:17', 0, 0, 868),
-	(1, '2024-11-13 09:21:51', 0, 0, 871),
-	(1, '2024-11-13 09:22:07', 0, 0, 872),
-	(1, '2024-11-13 09:33:42', 0, 0, 880),
-	(1, '2024-11-13 09:34:00', 0, 0, 881),
-	(1, '2024-11-13 09:34:19', 0, 0, 882),
-	(1, '2024-11-13 09:35:16', 0, 0, 885),
-	(1, '2024-11-13 09:35:32', 0, 0, 886),
-	(1, '2024-11-13 09:35:50', 0, 0, 888),
-	(1, '2024-11-13 09:36:06', 0, 0, 889),
-	(1, '2024-11-13 09:37:28', 0, 0, 891),
-	(1, '2024-11-13 09:37:44', 0, 0, 892),
-	(1, '2024-11-13 09:39:23', 0, 0, 897),
-	(1, '2024-11-13 09:43:19', 0, 0, 905),
-	(1, '2024-11-13 09:43:48', 0, 0, 907),
-	(1, '2024-11-13 09:46:08', 0, 0, 912),
-	(1, '2024-11-13 10:26:28', 0, 0, 915),
-	(1, '2024-11-13 10:26:49', 0, 0, 916),
-	(1, '2024-11-13 10:27:50', 0, 0, 919),
-	(1, '2024-11-13 10:28:07', 0, 0, 920),
-	(1, '2024-11-13 10:28:30', 0, 0, 921),
-	(1, '2024-11-13 10:28:46', 0, 0, 922),
-	(1, '2024-11-13 10:32:19', 0, 0, 931),
-	(1, '2024-11-13 10:32:51', 0, 0, 933),
-	(1, '2024-11-13 10:53:24', 0, 0, 938),
-	(1, '2024-11-13 10:54:47', 0, 0, 940),
-	(1, '2024-11-13 10:55:28', 0, 0, 942),
-	(1, '2024-11-13 10:55:47', 0, 0, 943),
-	(1, '2024-11-13 11:00:19', 0, 0, 947),
-	(1, '2024-11-13 11:00:36', 0, 0, 949),
-	(1, '2024-11-13 11:01:07', 0, 0, 951),
-	(1, '2024-11-13 11:02:29', 0, 0, 956),
-	(1, '2024-11-13 11:22:35', 0, 0, 960),
-	(1, '2024-11-13 11:23:58', 0, 0, 962),
-	(1, '2024-11-13 17:14:48', 0, 0, 963),
-	(1, '2024-11-13 17:17:49', 0, 0, 970),
-	(1, '2024-11-13 17:20:12', 0, 0, 978),
-	(1, '2024-11-13 17:21:02', 0, 0, 980),
-	(1, '2024-11-25 16:02:39', 0, 0, 981),
-	(1, '2024-11-25 16:04:53', 0, 0, 983),
-	(1, '2024-11-25 16:23:01', 0, 0, 984),
-	(1, '2024-11-25 16:24:23', 0, 0, 986),
-	(1, '2024-11-26 08:38:59', 0, 0, 987),
-	(1, '2024-11-26 08:47:33', 0, 0, 992),
-	(1, '2024-11-26 09:06:27', 0, 0, 994),
-	(1, '2024-11-26 09:07:49', 0, 0, 996),
-	(1, '2024-11-27 14:00:35', 0, 0, 998),
-	(1, '2024-11-27 14:02:35', 0, 0, 1000),
-	(1, '2024-11-27 14:14:28', 0, 0, 1002),
-	(1, '2024-11-27 14:15:49', 0, 0, 1004),
-	(1, '2024-11-27 14:27:37', 0, 0, 1006),
-	(1, '2024-11-27 14:29:20', 0, 0, 1008),
-	(1, '2024-11-27 14:34:14', 0, 0, 1010),
-	(1, '2024-11-27 14:35:40', 0, 0, 1012),
-	(1, '2024-11-27 14:39:34', 0, 0, 1013),
-	(1, '2024-11-27 14:41:30', 0, 0, 1015),
-	(1, '2024-12-05 10:04:52', 0, 0, 1016),
-	(1, '2024-12-05 10:07:31', 0, 0, 1017),
-	(1, '2024-12-05 10:10:55', 0, 0, 1022),
-	(1, '2024-12-05 11:09:34', 0, 0, 1023),
-	(1, '2024-12-05 11:11:49', 0, 0, 1025),
-	(1, '2024-12-05 11:12:49', 0, 0, 1026),
-	(1, '2024-12-05 11:17:29', 0, 0, 1031),
-	(1, '2024-12-05 11:18:17', 0, 0, 1034),
-	(1, '2025-03-19 11:27:30', 0, 0, 1035),
-	(1, '2025-03-19 11:33:56', 0, 0, 1038),
-	(1, '2025-03-19 11:43:05', 0, 0, 1039),
-	(1, '2025-03-19 11:46:06', 0, 99, 1042),
-	(1, '2025-03-19 11:50:24', 0, 0, 1043),
-	(1, '2025-03-19 11:52:00', 0, 0, 1046),
-	(1, '2025-03-19 12:57:44', 0, 0, 1047),
-	(1, '2025-03-19 13:00:47', 0, 0, 1048),
-	(1, '2025-03-19 13:07:28', 0, 0, 1049),
-	(1, '2025-03-19 13:15:31', 0, 0, 1051),
-	(1, '2025-03-19 13:18:25', 0, 0, 1054),
-	(1, '2025-03-19 13:23:30', 0, 0, 1055),
-	(1, '2025-03-19 13:36:04', 0, 0, 1056),
-	(1, '2025-03-19 13:48:47', 0, 0, 1057),
-	(1, '2025-03-19 13:50:07', 0, 0, 1061),
-	(1, '2025-03-19 14:44:30', 0, 0, 1062),
-	(1, '2025-03-19 14:48:12', 0, 0, 1063),
-	(1, '2025-03-19 14:50:54', 0, 0, 1066),
-	(1, '2025-03-19 14:54:51', 0, 0, 1067),
-	(1, '2025-03-19 14:57:30', 0, 0, 1070),
-	(1, '2025-03-19 15:21:11', 0, 0, 1071),
-	(1, '2025-03-19 15:25:07', 0, 0, 1074),
-	(1, '2025-03-19 15:25:25', 0, 0, 1075),
-	(1, '2025-03-19 16:08:01', 0, 0, 1078),
-	(1, '2025-03-20 13:20:51', 0, 0, 1080),
-	(1, '2025-03-20 13:22:46', 0, 0, 1082),
-	(1, '2025-03-21 11:37:19', 0, 0, 1084),
-	(1, '2025-03-21 11:38:44', 0, 0, 1086),
-	(1, '2025-03-21 11:55:39', 0, 0, 1091),
-	(1, '2025-03-21 11:55:59', 0, 0, 1092),
-	(1, '2025-03-21 11:56:26', 0, 0, 1094),
-	(1, '2025-03-21 11:56:45', 0, 0, 1099),
-	(1, '2025-03-21 11:57:02', 0, 0, 1101),
-	(1, '2025-03-21 11:57:19', 0, 0, 1102),
-	(1, '2025-03-21 11:57:35', 0, 0, 1104),
-	(1, '2025-03-21 11:57:59', 0, 0, 1106),
-	(1, '2025-03-21 11:58:19', 0, 0, 1107),
-	(1, '2025-03-21 11:58:34', 0, 0, 1109),
-	(1, '2025-03-21 11:58:51', 0, 0, 1110),
-	(1, '2025-03-21 11:59:07', 0, 0, 1111),
-	(1, '2025-03-21 11:59:26', 0, 0, 1113),
-	(1, '2025-03-21 11:59:42', 0, 0, 1114),
-	(1, '2025-03-21 12:00:15', 0, 0, 1116),
-	(1, '2025-03-21 12:00:52', 0, 0, 1118),
-	(1, '2025-03-21 14:08:46', 0, 0, 1123),
-	(1, '2025-03-21 14:09:06', 0, 0, 1124),
-	(1, '2025-03-21 14:09:25', 0, 0, 1125),
-	(1, '2025-03-21 14:09:45', 0, 0, 1126),
-	(1, '2025-03-21 14:45:26', 0, 0, 1149),
-	(1, '2025-03-21 14:45:56', 0, 0, 1151),
-	(1, '2025-03-26 10:50:49', 0, 0, 1162),
-	(1, '2025-03-26 11:29:56', 0, 0, 1179),
-	(1, '2025-03-26 11:41:31', 0, 0, 1186),
-	(1, '2025-06-12 18:21:26', 0, 0, 1193),
-	(1, '2025-06-12 19:24:09', 0, 0, 1223),
-	(1, '2025-06-26 16:13:42', 0, 0, 1243),
-	(1, '2025-11-17 09:36:10', 0, 0, 1247),
-	(1, '2025-11-17 09:39:15', 0, 1, 1248),
-	(1, '2025-11-17 09:50:17', 0, 1, 1249),
-	(1, '2025-11-17 09:59:58', 0, 1, 1250),
-	(1, '2025-11-17 10:09:51', 0, 1, 1251),
-	(1, '2025-11-17 10:36:19', 0, 1, 1252),
-	(1, '2025-11-17 11:29:55', 0, 1, 1253),
-	(1, '2025-11-17 11:31:46', 0, 1, 1254),
-	(1, '2025-11-17 11:32:50', 0, 0, 1255),
-	(1, '2025-11-17 11:37:14', 0, 0, 1260),
-	(1, '2025-11-17 11:39:38', 0, 0, 1261),
-	(1, '2025-11-17 11:41:49', 0, 0, 1266),
-	(1, '2025-11-17 11:42:16', 0, 0, 1267),
-	(1, '2025-11-17 11:51:37', 0, 0, 1269),
-	(1, '2025-11-17 11:57:24', 0, 0, 1271),
-	(1, '2025-11-17 12:00:51', 0, 0, 1276),
-	(1, '2025-11-17 12:02:49', 0, 0, 1277),
-	(1, '2025-11-17 12:04:22', 0, 0, 1282),
-	(1, '2025-11-24 08:37:59', 0, 1, 1283),
-	(1, '2025-11-24 08:40:07', 0, 0, 1284),
-	(1, '2025-11-24 08:41:05', 0, 1, 1286),
-	(1, '2025-11-24 08:56:50', 0, 1, 1287),
-	(1, '2025-11-24 08:58:44', 0, 1, 1288),
-	(1, '2025-11-24 09:20:18', 0, 1, 1289),
-	(1, '2025-11-24 09:26:22', 0, 0, 1290),
-	(1, '2025-11-24 09:29:19', 0, 0, 1295),
-	(1, '2025-11-24 09:31:12', 0, 1, 1296),
-	(1, '2025-11-24 10:10:25', 0, 0, 1297),
-	(1, '2025-11-24 10:15:47', 0, 0, 1302),
-	(1, '2025-11-24 10:26:37', 0, 0, 1303),
-	(1, '2025-11-24 10:26:58', 0, 0, 1304),
-	(1, '2025-11-24 10:28:50', 0, 0, 1311),
-	(1, '2025-11-24 10:29:56', 0, 0, 1314),
-	(1, '2025-11-25 16:05:34', 0, 0, 1315),
-	(1, '2025-11-25 16:07:45', 0, 0, 1320),
-	(1, '2025-11-25 16:08:43', 0, 0, 1321),
-	(1, '2025-11-25 16:09:39', 0, 0, 1323),
-	(1, '2025-11-25 16:10:55', 0, 0, 1330),
-	(1, '2025-11-25 16:11:28', 0, 0, 1332),
-	(1, '2025-12-01 08:47:07', 0, 0, 1333),
-	(1, '2025-12-01 08:52:55', 0, 0, 1338),
-	(1, '2025-12-01 09:02:55', 0, 1, 1339),
-	(1, '2025-12-01 09:03:14', 0, 1, 1340),
-	(1, '2025-12-01 09:03:21', 0, 1, 1341),
-	(1, '2025-12-01 09:03:27', 0,52; 0.0; 0.0; 
- 92060.0; 0.535; 0.0; 8.366; 0.0; 0.0; 
- 92061.0; 0.535; 0.0; 8.416; 0.0; 0.0; 
- 92062.0; 0.535; 0.0; 8.359; 0.0; 0.0; 
- 92063.0; 0.535; 0.0; 8.404; 0.0; 0.0; 
- 92064.0; 0.535; 0.0; 8.417; 0.0; 0.0; 
- 92065.0; 0.535; 0.0; 8.334; 0.0; 0.0; 
- 92066.0; 0.535; 0.0; 8.524; 0.0; 0.0; 
- 92067.0; 0.535; 0.0; 8.333; 0.0; 0.0; 
- 92068.0; 0.535; 0.0; 8.433; 0.0; 0.0; 
- 92069.0; 0.535; 0.0; 8.419; 0.0; 0.0; 
- 92070.0; 0.535; 0.0; 8.372; 0.0; 0.0; 
- 92071.0; 0.535; 0.0; 8.473; 0.0; 0.0; 
- 92072.0; 0.535; 0.0; 8.334; 0.0; 0.0; 
- 92073.0; 0.535; 0.0; 8.415; 0.0; 0.0; 
- 92074.0; 0.535; 0.0; 8.436; 0.0; 0.0; 
- 92075.0; 0.535; 0.0; 8.345; 0.0; 0.0; 
- 92076.0; 0.535; 0.0; 8.506; 0.0; 0.0; 
- 92077.0; 0.535; 0.0; 8.332; 0.0; 0.0; 
- 92078.0; 0.535; 0.0; 8.399; 0.0; 0.0; 
- 92079.0; 0.535; 0.0; 8.418; 0.0; 0.0; 
- 92080.0; 0.535; 0.0; 8.367; 0.0; 0.0; 
- 92081.0; 0.535; 0.0; 8.462; 0.0; 0.0; 
- 92082.0; 0.535; 0.0; 8.388; 0.0; 0.0; 
- 92083.0; 0.535; 0.0; 8.358; 0.0; 0.0; 
- 92084.0; 0.535; 0.0; 8.457; 0.0; 0.0; 
- 92085.0; 0.535; 0.0; 8.338; 0.0; 0.0; 
- 92086.0; 0.535; 0.0; 8.522; 0.0; 0.0; 
- 92087.0; 0.535; 0.0; 8.381; 0.0; 0.0; 
- 92088.0; 0.535; 0.0; 8.446; 0.0; 0.0; 
- 92089.0; 0.535; 0.0; 8.375; 0.0; 0.0; 
- 92090.0; 0.535; 0.0; 8.386; 0.0; 0.0; 
- 92091.0; 0.535; 0.0; 8.449; 0.0; 0.0; 
- 92092.0; 0.535; 0.0; 8.383; 0.0; 0.0; 
- 92093.0; 0.535; 0.0; 8.352; 0.0; 0.0; 
- 92094.0; 0.535; 0.0; 8.432; 0.0; 0.0; 
- 92095.0; 0.535; 0.0; 8.325; 0.0; 0.0; 
- 92096.0; 0.535; 0.0; 8.443; 0.0; 0.0; 
- 92097.0; 0.535; 0.0; 8.366; 0.0; 0.0; 
- 92098.0; 0.535; 0.0; 8.434; 0.0; 0.0; 
- 92099.0; 0.535; 0.0; 8.363; 0.0; 0.0; 
- 92100.0; 0.535; 0.0; 8.379; 0.0; 0.0; 
- 92101.0; 0.535; 0.0; 8.425; 0.0; 0.0; 
- 92102.0; 0.535; 0.0; 8.377; 0.0; 0.0; 
- 92103.0; 0.535; 0.0; 8.383; 0.0; 0.0; 
- 92104.0; 0.535; 0.0; 8.481; 0.0; 0.0; 
- 92105.0; 0.535; 0.0; 8.341; 0.0; 0.0; 
- 92106.0; 0.535; 0.0; 8.518; 0.0; 0.0; 
- 92107.0; 0.535; 0.0; 8.324; 0.0; 0.0; 
- 92108.0; 0.535; 0.0; 8.42; 0.0; 0.0; 
- 92109.0; 0.535; 0.0; 8.399; 0.0; 0.0; 
- 92110.0; 0.535; 0.0; 8.364; 0.0; 0.0; 
- 92111.0; 0.535; 0.0; 8.451; 0.0; 0.0; 
- 92112.0; 0.535; 0.0; 8.383; 0.0; 0.0; 
- 92113.0; 0.535; 0.0; 8.393; 0.0; 0.0; 
- 92114.0; 0.535; 0.0; 8.411; 0.0; 0.0; 
- 92115.0; 0.535; 0.0; 8.329; 0.0; 0.0; 
- 92116.0; 0.535; 0.0; 8.438; 0.0; 0.0; 
- 92117.0; 0.535; 0.0; 8.309; 0.0; 0.0; 
- 92118.0; 0.535; 0.0; 8.397; 0.0; 0.0; 
- 92119.0; 0.535; 0.0; 8.403; 0.0; 0.0; 
- 92120.0; 0.535; 0.0; 8.385; 0.0; 0.0; 
- 92121.0; 0.535; 0.0; 8.413; 0.0; 0.0; 
- 92122.0; 0.535; 0.0; 8.382; 0.0; 0.0; 
- 92123.0; 0.535; 0.0; 8.384; 0.0; 0.0; 
- 92124.0; 0.535; 0.0; 8.412; 0.0; 0.0; 
- 92125.0; 0.535; 0.0; 8.312; 0.0; 0.0; 
- 92126.0; 0.535; 0.0; 8.517; 0.0; 0.0; 
- 92127.0; 0.535; 0.0; 8.311; 0.0; 0.0; 
- 92128.0; 0.535; 0.0; 8.392; 0.0; 0.0; 
- 92129.0; 0.535; 0.0; 8.409; 0.0; 0.0; 
- 92130.0; 0.535; 0.0; 8.4; 0.0; 0.0; 
- 92131.0; 0.535; 0.0; 8.48; 0.0; 0.0; 
- 92132.0; 0.535; 0.0; 8.374; 0.0; 0.0; 
- 92133.0; 0.535; 0.0; 8.425; 0.0; 0.0; 
- 92134.0; 0.535; 0.0; 8.421; 0.0; 0.0; 
- 92135.0; 0.535; 0.0; 8.346; 0.0; 0.0; 
- 92136.0; 0.535; 0.0; 8.499; 0.0; 0.0; 
- 92137.0; 0.535; 0.0; 8.363; 0.0; 0.0; 
- 92138.0; 0.535; 0.0; 8.389; 0.0; 0.0; 
- 92139.0; 0.535; 0.0; 8.441; 0.0; 0.0; 
- 92140.0; 0.535; 0.0; 8.397; 0.0; 0.0; 
- 92141.0; 0.535; 0.0; 8.464; 0.0; 0.0; 
- 92142.0; 0.535; 0.0; 8.388; 0.0; 0.0; 
- 92143.0; 0.535; 0.0; 8.395; 0.0; 0.0; 
- 92144.0; 0.535; 0.0; 8.452; 0.0; 0.0; 
- 92145.0; 0.535; 0.0; 8.353; 0.0; 0.0; 
- 92146.0; 0.535; 0.0; 8.503; 0.0; 0.0; 
- 92147.0; 0.535; 0.0; 8.34; 0.0; 0.0; 
- 92148.0; 0.535; 0.0; 8.451; 0.0; 0.0; 
- 92149.0; 0.535; 0.0; 8.399; 0.0; 0.0; 
- 92150.0; 0.535; 0.0; 8.39; 0.0; 0.0; 
- 92151.0; 0.535; 0.0; 8.407; 0.0; 0.0; 
- 92152.0; 0.535; 0.0; 8.34; 0.0; 0.0; 
- 92153.0; 0.535; 0.0; 8.33; 0.0; 0.0; 
- 92154.0; 0.535; 0.0; 8.469; 0.0; 0.0; 
- 92155.0; 0.535; 0.0; 8.326; 0.0; 0.0; 
- 92156.0; 0.535; 0.0; 8.421; 0.0; 0.0; 
- 92157.0; 0.535; 0.0; 8.337; 0.0; 0.0; 
- 92158.0; 0.535; 0.0; 8.422; 0.0; 0.0; 
- 92159.0; 0.535; 0.0; 8.359; 0.0; 0.0; 
- 92160.0; 0.535; 0.0; 8.35; 0.0; 0.0; 
- 92161.0; 0.535; 0.0; 8.446; 0.0; 0.0; 
- 92162.0; 0.535; 0.0; 8.408; 0.0; 0.0; 
- 92163.0; 0.535; 0.0; 8.357; 0.0; 0.0; 
- 92164.0; 0.535; 0.0; 8.471; 0.0; 0.0; 
- 92165.0; 0.535; 0.0; 8.314; 0.0; 0.0; 
- 92166.0; 0.535; 0.0; 8.514; 0.0; 0.0; 
- 92167.0; 0.535; 0.0; 8.329; 0.0; 0.0; 
- 92168.0; 0.535; 0.0; 8.442; 0.0; 0.0; 
- 92169.0; 0.535; 0.0; 8.406; 0.0; 0.0; 
- 92170.0; 0.535; 0.0; 8.376; 0.0; 0.0; 
- 92171.0; 0.535; 0.0; 8.423; 0.0; 0.0; 
- 92172.0; 0.535; 0.0; 8.363; 0.0; 0.0; 
- 92173.0; 0.535; 0.0; 8.367; 0.0; 0.0; 
- 92174.0; 0.535; 0.0; 8.417; 0.0; 0.0; 
- 92175.0; 0.535; 0.0; 8.314; 0.0; 0.0; 
- 92176.0; 0.535; 0.0; 8.441; 0.0; 0.0; 
- 92177.0; 0.535; 0.0; 8.33; 0.0; 0.0; 
- 92178.0; 0.535; 0.0; 8.399; 0.0; 0.0; 
- 92179.0; 0.535; 0.0; 8.396; 0.0; 0.0; 
- 92180.0; 0.535; 0.0; 8.341; 0.0; 0.0; 
- 92181.0; 0.535; 0.0; 8.395; 0.0; 0.0; 
- 92182.0; 0.535; 0.0; 8.374; 0.0; 0.0; 
- 92183.0; 0.535; 0.0; 8.382; 0.0; 0.0; 
- 92184.0; 0.535; 0.0; 8.399; 0.0; 0.0; 
- 92185.0; 0.535; 0.0; 8.339; 0.0; 0.0; 
- 92186.0; 0.535; 0.0; 8.516; 0.0; 0.0; 
- 92187.0; 0.535; 0.0; 8.35; 0.0; 0.0; 
- 92188.0; 0.535; 0.0; 8.397; 0.0; 0.0; 
- 92189.0; 0.535; 0.0; 8.419; 0.0; 0.0; 
- 92190.0; 0.535; 0.0; 8.396; 0.0; 0.0; 
- 92191.0; 0.535; 0.0; 8.475; 0.0; 0.0; 
- 92192.0; 0.535; 0.0; 8.372; 0.0; 0.0; 
- 92193.0; 0.535; 0.0; 8.418; 0.0; 0.0; 
- 92194.0; 0.535; 0.0; 8.426; 0.0; 0.0; 
- 92195.0; 0.535; 0.0; 8.342; 0.0; 0.0; 
- 92196.0; 0.535; 0.0; 8.482; 0.0; 0.0; 
- 92197.0; 0.535; 0.0; 8.349; 0.0; 0.0; 
- 92198.0; 0.535; 0.0; 8.388; 0.0; 0.0; 
- 92199.0; 0.535; 0.0; 8.462; 0.0; 0.0; 
- 92200.0; 0.535; 0.0; 8.374; 0.0; 0.0; 
- 92201.0; 0.535; 0.0; 8.462; 0.0; 0.0; 
- 92202.0; 0.535; 0.0; 8.373; 0.0; 0.0; 
- 92203.0; 0.535; 0.0; 8.373; 0.0; 0.0; 
- 92204.0; 0.535; 0.0; 8.44; 0.0; 0.0; 
- 92205.0; 0.535; 0.0; 8.322; 0.0; 0.0; 
- 92206.0; 0.535; 0.0; 8.48; 0.0; 0.0; 
- 92207.0; 0.535; 0.0; 8.329; 0.0; 0.0; 
- 92208.0; 0.535; 0.0; 8.424; 0.0; 0.0; 
- 92209.0; 0.535; 0.0; 8.384; 0.0; 0.0; 
- 92210.0; 0.535; 0.0; 8.372; 0.0; 0.0; 
- 92211.0; 0.535; 0.0; 8.398; 0.0; 0.0; 
- 92212.0; 0.535; 0.0; 8.365; 0.0; 0.0; 
- 92213.0; 0.535; 0.0; 8.361; 0.0; 0.0; 
- 92214.0; 0.535; 0.0; 8.448; 0.0; 0.0; 
- 92215.0; 0.535; 0.0; 8.33; 0.0; 0.0; 
- 92216.0; 0.535; 0.0; 8.436; 0.0; 0.0; 
- 92217.0; 0.534; 0.0; 8.364; 0.0; 0.0; 
- 92218.0; 0.535; 0.0; 8.426; 0.0; 0.0; 
- 92219.0; 0.535; 0.0; 8.393; 0.0; 0.0; 
- 92220.0; 0.535; 0.0; 8.403; 0.0; 0.0; 
- 92221.0; 0.535; 0.0; 8.46; 0.0; 0.0; 
- 92222.0; 0.535; 0.0; 8.39; 0.0; 0.0; 
- 92223.0; 0.535; 0.0; 8.37; 0.0; 0.0; 
- 92224.0; 0.535; 0.0; 8.513; 0.0; 0.0; 
- 92225.0; 0.535; 0.0; 8.346; 0.0; 0.0; 
- 92226.0; 0.535; 0.0; 8.539; 0.0; 0.0; 
- 92227.0; 0.535; 0.0; 8.327; 0.0; 0.0; 
- 92228.0; 0.535; 0.0; 8.426; 0.0; 0.0; 
- 92229.0; 0.534; 0.0; 8.436; 0.0; 0.0; 
- 92230.0; 0.535; 0.0; 8.379; 0.0; 0.0; 
- 92231.0; 0.535; 0.0; 8.455; 0.0; 0.0; 
- 92232.0; 0.534; 0.0; 8.415; 0.0; 0.0; 
- 92233.0; 0.535; 0.0; 8.376; 0.0; 0.0; 
- 92234.0; 0.534; 0.0; 8.466; 0.0; 0.0; 
- 92235.0; 0.534; 0.0; 8.33; 0.0; 0.0; 
- 92236.0; 0.534; 0.0; 8.442; 0.0; 0.0; 
- 92237.0; 0.533; 0.0; 8.337; 0.0; 0.0; 
- 92238.0; 0.533; 0.0; 8.389; 0.0; 0.0; 
- 92239.0; 0.534; 0.0; 8.399; 0.0; 0.0; 
- 92240.0; 0.534; 0.0; 8.375; 0.0; 0.0; 
- 92241.0; 0.534; 0.0; 8.451; 0.0; 0.0; 
- 92242.0; 0.534; 0.0; 8.394; 0.0; 0.0; 
- 92243.0; 0.534; 0.0; 8.374; 0.0; 0.0; 
- 92244.0; 0.533; 0.0; 8.448; 0.0; 0.0; 
- 92245.0; 0.533; 0.0; 8.343; 0.0; 0.0; 
- 92246.0; 0.533; 0.0; 8.516; 0.0; 0.0; 
- 92247.0; 0.533; 0.0; 8.335; 0.0; 0.0; 
- 92248.0; 0.533; 0.0; 8.403; 0.0; 0.0; 
- 92249.0; 0.533; 0.0; 8.425; 0.0; 0.0; 
- 92250.0; 0.533; 0.0; 8.397; 0.0; 0.0; 
- 92251.0; 0.533; 0.0; 8.465; 0.0; 0.0; 
- 92252.0; 0.532; 0.0; 8.376; 0.0; 0.0; 
- 92253.0; 0.533; 0.0; 8.415; 0.0; 0.0; 
- 92254.0; 0.533; 0.0; 8.431; 0.0; 0.0; 
- 92255.0; 0.533; 0.0; 8.362; 0.0; 0.0; 
- 92256.0; 0.532; 0.0; 8.499; 0.0; 0.0; 
- 92257.0; 0.533; 0.0; 8.404; 0.0; 0.0; 
- 92258.0; 0.533; 0.0; 8.385; 0.0; 0.0; 
- 92259.0; 0.532; 0.0; 8.491; 0.0; 0.0; 
- 92260.0; 0.531; 0.0; 8.369; 0.0; 0.0; 
- 92261.0; 0.533; 0.0; 8.475; 0.0; 0.0; 
- 92262.0; 0.532; 0.0; 8.37; 0.0; 0.0; 
- 92263.0; 0.532; 0.0; 8.38; 0.0; 0.0; 
- 92264.0; 0.532; 0.0; 8.46; 0.0; 0.0; 
- 92265.0; 0.532; 0.0; 8.357; 0.0; 0.0; 
- 92266.0; 0.531; 0.0; 8.486; 0.0; 0.0; 
- 92267.0; 0.531; 0.0; 8.359; 0.0; 0.0; 
- 92268.0; 0.531; 0.0; 8.411; 0.0; 0.0; 
- 92269.0; 0.532; 0.0; 8.43; 0.0; 0.0; 
- 92270.0; 0.531; 0.0; 8.382; 0.0; 0.0; 
- 92271.0; 0.531; 0.0; 8.415; 0.0; 0.0; 
- 92272.0; 0.531; 0.0; 8.388; 0.0; 0.0; 
- 92273.0; 0.531; 0.0; 8.35; 0.0; 0.0; 
- 92274.0; 0.53; 0.0; 8.434; 0.0; 0.0; 
- 92275.0; 0.53; 0.0; 8.352; 0.0; 0.0; 
- 92276.0; 0.53; 0.0; 8.447; 0.0; 0.0; 
- 92277.0; 0.531; 0.0; 8.372; 0.0; 0.0; 
- 92278.0; 0.53; 0.0; 8.388; 0.0; 0.0; 
- 92279.0; 0.53; 0.0; 8.362; 0.0; 0.0; 
- 92280.0; 0.53; 0.0; 8.385; 0.0; 0.0; 
- 92281.0; 0.53; 0.0; 8.477; 0.0; 0.0; 
- 92282.0; 0.53; 0.0; 8.416; 0.0; 0.0; 
- 92283.0; 0.53; 0.0; 8.364; 0.0; 0.0; 
- 92284.0; 0.53; 0.0; 8.518; 0.0; 0.0; 
- 92285.0; 0.53; 0.0; 8.341; 0.0; 0.0; 
- 92286.0; 0.531; 0.0; 8.524; 0.0; 0.0; 
- 92287.0; 0.53; 0.0; 8.36; 0.0; 0.0; 
- 92288.0; 0.53; 0.0; 8.432; 0.0; 0.0; 
- 92289.0; 0.53; 0.0; 8.414; 0.0; 0.0; 
- 92290.0; 0.53; 0.0; 8.37; 0.0; 0.0; 
- 92291.0; 0.53; 0.0; 8.439; 0.0; 0.0; 
- 92292.0; 0.53; 0.0; 8.434; 0.0; 0.0; 
- 92293.0; 0.53; 0.0; 8.329; 0.0; 0.0; 
- 92294.0; 0.53; 0.0; 8.461; 0.0; 0.0; 
- 92295.0; 0.53; 0.0; 8.332; 0.0; 0.0; 
- 92296.0; 0.53; 0.0; 8.457; 0.0; 0.0; 
- 92297.0; 0.53; 0.0; 8.358; 0.0; 0.0; 
- 92298.0; 0.53; 0.0; 8.383; 0.0; 0.0; 
- 92299.0; 0.53; 0.0; 8.406; 0.0; 0.0; 
- 92300.0; 0.53; 0.0; 8.38; 0.0; 0.0; 
- 92301.0; 0.53; 0.0; 8.408; 0.0; 0.0; 
- 92302.0; 0.53; 0.0; 8.417; 0.0; 0.0; 
- 92303.0; 0.53; 0.0; 8.362; 0.0; 0.0; 
- 92304.0; 0.53; 0.0; 8.485; 0.0; 0.0; 
- 92305.0; 0.53; 0.0; 8.379; 0.0; 0.0; 
- 92306.0; 0.53; 0.0; 8.511; 0.0; 0.0; 
- 92307.0; 0.53; 0.0; 8.375; 0.0; 0.0; 
- 92308.0; 0.53; 0.0; 8.392; 0.0; 0.0; 
- 92309.0; 0.53; 0.0; 8.447; 0.0; 0.0; 
- 92310.0; 0.53; 0.0; 8.393; 0.0; 0.0; 
- 92311.0; 0.53; 0.0; 8.487; 0.0; 0.0; 
- 92312.0; 0.53; 0.0; 8.377; 0.0; 0.0; 
- 92313.0; 0.53; 0.0; 8.407; 0.0; 0.0; 
- 92314.0; 0.529; 0.0; 8.422; 0.0; 0.0; 
- 92315.0; 0.53; 0.0; 8.348; 0.0; 0.0; 
- 92316.0; 0.53; 0.0; 8.48; 0.0; 0.0; 
- 92317.0; 0.529; 0.0; 8.405; 0.0; 0.0; 
- 92318.0; 0.529; 0.0; 8.374; 0.0; 0.0; 
- 92319.0; 0.529; 0.0; 8.497; 0.0; 0.0; 
- 92320.0; 0.53; 0.0; 8.388; 0.0; 0.0; 
- 92321.0; 0.529; 0.0; 8.465; 0.0; 0.0; 
- 92322.0; 0.529; 0.0; 8.39; 0.0; 0.0; 
- 92323.0; 0.529; 0.0; 8.369; 0.0; 0.0; 
- 92324.0; 0.529; 0.0; 8.461; 0.0; 0.0; 
- 92325.0; 0.529; 0.0; 8.358; 0.0; 0.0; 
- 92326.0; 0.529; 0.0; 8.485; 0.0; 0.0; 
- 92327.0; 0.529; 0.0; 8.384; 0.0; 0.0; 
- 92328.0; 0.529; 0.0; 8.405; 0.0; 0.0; 
- 92329.0; 0.529; 0.0; 8.435; 0.0; 0.0; 
- 92330.0; 0.529; 0.0; 8.367; 0.0; 0.0; 
- 92331.0; 0.529; 0.0; 8.418; 0.0; 0.0; 
- 92332.0; 0.529; 0.0; 8.369; 0.0; 0.0; 
- 92333.0; 0.529; 0.0; 8.335; 0.0; 0.0; 
- 92334.0; 0.529; 0.0; 8.454; 0.0; 0.0; 
- 92335.0; 0.529; 0.0; 8.318; 0.0; 0.0; 
- 92336.0; 0.529; 0.0; 8.423; 0.0; 0.0; 
- 92337.0; 0.529; 0.0; 8.341; 0.0; 0.0; 
- 92338.0; 0.529; 0.0; 8.391; 0.0; 0.0; 
- 92339.0; 0.529; 0.0; 8.431; 0.0; 0.0; 
- 92340.0; 0.529; 0.0; 8.386; 0.0; 0.0; 
- 92341.0; 0.529; 0.0; 8.457; 0.0; 0.0; 
- 92342.0; 0.529; 0.0; 8.419; 0.0; 0.0; 
- 92343.0; 0.529; 0.0; 8.36; 0.0; 0.0; 
- 92344.0; 0.529; 0.0; 8.503; 0.0; 0.0; 
- 92345.0; 0.529; 0.0; 8.332; 0.0; 0.0; 
- 92346.0; 0.529; 0.0; 8.518; 0.0; 0.0; 
- 92347.0; 0.529; 0.0; 8.341; 0.0; 0.0; 
- 92348.0; 0.529; 0.0; 8.384; 0.0; 0.0; 
- 92349.0; 0.529; 0.0; 8.427; 0.0; 0.0; 
- 92350.0; 0.529; 0.0; 8.375; 0.0; 0.0; 
- 92351.0; 0.529; 0.0; 8.401; 0.0; 0.0; 
- 92352.0; 0.529; 0.0; 8.378; 0.0; 0.0; 
- 92353.0; 0.529; 0.0; 8.349; 0.0; 0.0; 
- 92354.0; 0.529; 0.0; 8.427; 0.0; 0.0; 
- 92355.0; 0.529; 0.0; 8.316; 0.0; 0.0; 
- 92356.0; 0.529; 0.0; 8.437; 0.0; 0.0; 
- 92357.0; 0.529; 0.0; 8.333; 0.0; 0.0; 
- 92358.0; 0.529; 0.0; 8.398; 0.0; 0.0; 
- 92359.0; 0.529; 0.0; 8.386; 0.0; 0.0; 
- 92360.0; 0.529; 0.0; 8.354; 0.0; 0.0; 
- 92361.0; 0.529; 0.0; 8.416; 0.0; 0.0; 
- 92362.0; 0.529; 0.0; 8.416; 0.0; 0.0; 
- 92363.0; 0.529; 0.0; 8.334; 0.0; 0.0; 
- 92364.0; 0.53; 0.0; 8.495; 0.0; 0.0; 
- 92365.0; 0.529; 0.0; 8.346; 0.0; 0.0; 
- 92366.0; 0.529; 0.0; 8.499; 0.0; 0.0; 
- 92367.0; 0.529; 0.0; 8.348; 0.0; 0.0; 
- 92368.0; 0.529; 0.0; 8.377; 0.0; 0.0; 
- 92369.0; 0.529; 0.0; 8.431; 0.0; 0.0; 
- 92370.0; 0.53; 0.0; 8.353; 0.0; 0.0; 
- 92371.0; 0.529; 0.0; 8.44; 0.0; 0.0; 
- 92372.0; 0.529; 0.0; 8.408; 0.0; 0.0; 
- 92373.0; 0.53; 0.0; 8.356; 0.0; 0.0; 
- 92374.0; 0.53; 0.0; 8.447; 0.0; 0.0; 
- 92375.0; 0.53; 0.0; 8.313; 0.0; 0.0; 
- 92376.0; 0.529; 0.0; 8.464; 0.0; 0.0; 
- 92377.0; 0.53; 0.0; 8.412; 0.0; 0.0; 
- 92378.0; 0.53; 0.0; 8.369; 0.0; 0.0; 
- 92379.0; 0.529; 0.0; 8.477; 0.0; 0.0; 
- 92380.0; 0.529; 0.0; 8.348; 0.0; 0.0; 
- 92381.0; 0.53; 0.0; 8.468; 0.0; 0.0; 
- 92382.0; 0.53; 0.0; 8.402; 0.0; 0.0; 
- 92383.0; 0.53; 0.0; 8.367; 0.0; 0.0; 
- 92384.0; 0.53; 0.0; 8.429; 0.0; 0.0; 
- 92385.0; 0.529; 0.0; 8.324; 0.0; 0.0; 
- 92386.0; 0.53; 0.0; 8.422; 0.0; 0.0; 
- 92387.0; 0.53; 0.0; 8.395; 0.0; 0.0; 
- 92388.0; 0.53; 0.0; 8.363; 0.0; 0.0; 
- 92389.0; 0.53; 0.0; 8.42; 0.0; 0.0; 
- 92390.0; 0.53; 0.0; 8.344; 0.0; 0.0; 
- 92391.0; 0.529; 0.0; 8.384; 0.0; 0.0; 
- 92392.0; 0.53; 0.0; 8.339; 0.0; 0.0; 
- 92393.0; 0.53; 0.0; 8.315; 0.0; 0.0; 
- 92394.0; 0.53; 0.0; 8.429; 0.0; 0.0; 
- 92395.0; 0.53; 0.0; 8.345; 0.0; 0.0; 
- 92396.0; 0.53; 0.0; 8.425; 0.0; 0.0; 
- 92397.0; 0.53; 0.0; 8.416; 0.0; 0.0; 
- 92398.0; 0.53; 0.0; 8.35; 0.0; 0.0; 
- 92399.0; 0.53; 0.0; 8.425; 0.0; 0.0; 
- 92400.0; 0.53; 0.0; 8.38; 0.0; 0.0; 
- 92401.0; 0.53; 0.0; 8.44; 0.0; 0.0; 
- 92402.0; 0.529; 0.0; 8.396; 0.0; 0.0; 
- 92403.0; 0.53; 0.0; 8.325; 0.0; 0.0; 
- 92404.0; 0.53; 0.0; 8.455; 0.0; 0.0; 
- 92405.0; 0.53; 0.0; 8.3; 0.0; 0.0; 
- 92406.0; 0.53; 0.0; 8.482; 0.0; 0.0; 
- 92407.0; 0.53; 0.0; 8.349; 0.0; 0.0; 
- 92408.0; 0.53; 0.0; 8.356; 0.0; 0.0; 
- 92409.0; 0.53; 0.0; 8.39; 0.0; 0.0; 
- 92410.0; 0.53; 0.0; 8.345; 0.0; 0.0; 
- 92411.0; 0.53; 0.0; 8.406; 0.0; 0.0; 
- 92412.0; 0.53; 0.0; 8.379; 0.0; 0.0; 
- 92413.0; 0.53; 0.0; 8.329; 0.0; 0.0; 
- 92414.0; 0.53; 0.0; 8.431; 0.0; 0.0; 
- 92415.0; 0.53; 0.0; 8.346; 0.0; 0.0; 
- 92416.0; 0.53; 0.0; 8.435; 0.0; 0.0; 
- 92417.0; 0.53; 0.0; 8.343; 0.0; 0.0; 
- 92418.0; 0.53; 0.0; 8.372; 0.0; 0.0; 
- 92419.0; 0.53; 0.0; 8.421; 0.0; 0.0; 
- 92420.0; 0.53; 0.0; 8.364; 0.0; 0.0; 
- 92421.0; 0.53; 0.0; 8.434; 0.0; 0.0; 
- 92422.0; 0.53; 0.0; 8.392; 0.0; 0.0; 
- 92423.0; 0.53; 0.0; 8.336; 0.0; 0.0; 
- 92424.0; 0.53; 0.0; 8.47; 0.0; 0.0; 
- 92425.0; 0.53; 0.0; 8.34; 0.0; 0.0; 
- 92426.0; 0.53; 0.0; 8.52; 0.0; 0.0; 
- 92427.0; 0.53; 0.0; 8.338; 0.0; 0.0; 
- 92428.0; 0.53; 0.0; 8.412; 0.0; 0.0; 
- 92429.0; 0.53; 0.0; 8.414; 0.0; 0.0; 
- 92430.0; 0.53; 0.0; 8.356; 0.0; 0.0; 
- 92431.0; 0.53; 0.0; 8.438; 0.0; 0.0; 
- 92432.0; 0.53; 0.0; 8.455; 0.0; 0.0; 
- 92433.0; 0.53; 0.0; 8.323; 0.0; 0.0; 
- 92434.0; 0.53; 0.0; 8.503; 0.0; 0.0; 
- 92435.0; 0.53; 0.0; 8.326; 0.0; 0.0; 
- 92436.0; 0.53; 0.0; 8.436; 0.0; 0.0; 
- 92437.0; 0.53; 0.0; 8.406; 0.0; 0.0; 
- 92438.0; 0.53; 0.0; 8.365; 0.0; 0.0; 
- 92439.0; 0.53; 0.0; 8.457; 0.0; 0.0; 
- 92440.0; 0.53; 0.0; 8.36; 0.0; 0.0; 
- 92441.0; 0.53; 0.0; 8.411; 0.0; 0.0; 
- 92442.0; 0.53; 0.0; 8.405; 0.0; 0.0; 
- 92443.0; 0.53; 0.0; 8.355; 0.0; 0.0; 
- 92444.0; 0.53; 0.0; 8.442; 0.0; 0.0; 
- 92445.0; 0.53; 0.0; 8.324; 0.0; 0.0; 
- 92446.0; 0.53; 0.0; 8.389; 0.0; 0.0; 
- 92447.0; 0.53; 0.0; 8.353; 0.0; 0.0; 
- 92448.0; 0.53; 0.0; 8.376; 0.0; 0.0; 
- 92449.0; 0.53; 0.0; 8.401; 0.0; 0.0; 
- 92450.0; 0.53; 0.0; 8.341; 0.0; 0.0; 
- 92451.0; 0.53; 0.0; 8.405; 0.0; 0.0; 
- 92452.0; 0.53; 0.0; 8.403; 0.0; 0.0; 
- 92453.0; 0.53; 0.0; 8.394; 0.0; 0.0; 
- 92454.0; 0.529; 0.0; 8.481; 0.0; 0.0; 
- 92455.0; 0.53; 0.0; 8.303; 0.0; 0.0; 
- 92456.0; 0.529; 0.0; 8.407; 0.0; 0.0; 
- 92457.0; 0.529; 0.0; 8.412; 0.0; 0.0; 
- 92458.0; 0.529; 0.0; 8.352; 0.0; 0.0; 
- 92459.0; 0.529; 0.0; 8.483; 0.0; 0.0; 
- 92460.0; 0.529; 0.0; 8.371; 0.0; 0.0; 
- 92461.0; 0.53; 0.0; 8.416; 0.0; 0.0; 
- 92462.0; 0.529; 0.0; 8.408; 0.0; 0.0; 
- 92463.0; 0.529; 0.0; 8.362; 0.0; 0.0; 
- 92464.0; 0.53; 0.0; 8.472; 0.0; 0.0; 
- 92465.0; 0.529; 0.0; 8.357; 0.0; 0.0; 
- 92466.0; 0.529; 0.0; 8.415; 0.0; 0.0; 
- 92467.0; 0.529; 0.0; 8.376; 0.0; 0.0; 
- 92468.0; 0.529; 0.0; 8.375; 0.0; 0.0; 
- 92469.0; 0.529; 0.0; 8.412; 0.0; 0.0; 
- 92470.0; 0.529; 0.0; 8.335; 0.0; 0.0; 
- 92471.0; 0.529; 0.0; 8.401; 0.0; 0.0; 
- 92472.0; 0.529; 0.0; 8.39; 0.0; 0.0; 
- 92473.0; 0.529; 0.0; 8.326; 0.0; 0.0; 
- 92474.0; 0.529; 0.0; 8.426; 0.0; 0.0; 
- 92475.0; 0.529; 0.0; 8.321; 0.0; 0.0; 
- 92476.0; 0.529; 0.0; 8.408; 0.0; 0.0; 
- 92477.0; 0.529; 0.0; 8.378; 0.0; 0.0; 
- 92478.0; 0.53; 0.0; 8.383; 0.0; 0.0; 
- 92479.0; 0.529; 0.0; 8.429; 0.0; 0.0; 
- 92480.0; 0.529; 0.0; 8.35; 0.0; 0.0; 
- 92481.0; 0.529; 0.0; 8.422; 0.0; 0.0; 
- 92482.0; 0.529; 0.0; 8.433; 0.0; 0.0; 
- 92483.0; 0.529; 0.0; 8.332; 0.0; 0.0; 
- 92484.0; 0.529; 0.0; 8.522; 0.0; 0.0; 
- 92485.0; 0.529; 0.0; 8.324; 0.0; 0.0; 
- 92486.0; 0.529; 0.0; 8.481; 0.0; 0.0; 
- 92487.0; 0.529; 0.0; 8.352; 0.0; 0.0; 
- 92488.0; 0.529; 0.0; 8.404; 0.0; 0.0; 
- 92489.0; 0.529; 0.0; 8.43; 0.0; 0.0; 
- 92490.0; 0.529; 0.0; 8.4; 0.0; 0.0; 
- 92491.0; 0.529; 0.0; 8.392; 0.0; 0.0; 
- 92492.0; 0.529; 0.0; 8.417; 0.0; 0.0; 
- 92493.0; 0.53; 0.0; 8.352; 0.0; 0.0; 
- 92494.0; 0.529; 0.0; 8.442; 0.0; 0.0; 
- 92495.0; 0.529; 0.0; 8.333; 0.0; 0.0; 
- 92496.0; 0.529; 0.0; 8.46; 0.0; 0.0; 
- 92497.0; 0.529; 0.0; 8.409; 0.0; 0.0; 
- 92498.0; 0.529; 0.0; 8.364; 0.0; 0.0; 
- 92499.0; 0.529; 0.0; 8.492; 0.0; 0.0; 
- 92500.0; 0.53; 0.0; 8.372; 0.0; 0.0; 
- 92501.0; 0.529; 0.0; 8.399; 0.0; 0.0; 
- 92502.0; 0.53; 0.0; 8.406; 0.0; 0.0; 
- 92503.0; 0.53; 0.0; 8.334; 0.0; 0.0; 
- 92504.0; 0.529; 0.0; 8.472; 0.0; 0.0; 
- 92505.0; 0.529; 0.0; 8.332; 0.0; 0.0; 
- 92506.0; 0.53; 0.0; 8.396; 0.0; 0.0; 
- 92507.0; 0.529; 0.0; 8.383; 0.0; 0.0; 
- 92508.0; 0.529; 0.0; 8.347; 0.0; 0.0; 
- 92509.0; 0.529; 0.0; 8.388; 0.0; 0.0; 
- 92510.0; 0.529; 0.0; 8.355; 0.0; 0.0; 
- 92511.0; 0.53; 0.0; 8.377; 0.0; 0.0; 
- 92512.0; 0.53; 0.0; 8.396; 0.0; 0.0; 
- 92513.0; 0.53; 0.0; 8.35; 0.0; 0.0; 
- 92514.0; 0.53; 0.0; 8.463; 0.0; 0.0; 
- 92515.0; 0.529; 0.0; 8.331; 0.0; 0.0; 
- 92516.0; 0.529; 0.0; 8.399; 0.0; 0.0; 
- 92517.0; 0.529; 0.0; 8.435; 0.0; 0.0; 
- 92518.0; 0.53; 0.0; 8.373; 0.0; 0.0; 
- 92519.0; 0.53; 0.0; 8.467; 0.0; 0.0; 
- 92520.0; 0.53; 0.0; 8.373; 0.0; 0.0; 
- 92521.0; 0.529; 0.0; 8.442; 0.0; 0.0; 
- 92522.0; 0.53; 0.0; 8.385; 0.0; 0.0; 
- 92523.0; 0.53; 0.0; 8.339; 0.0; 0.0; 
- 92524.0; 0.529; 0.0; 8.462; 0.0; 0.0; 
- 92525.0; 0.529; 0.0; 8.296; 0.0; 0.0; 
- 92526.0; 0.53; 0.0; 8.363; 0.0; 0.0; 
- 92527.0; 0.529; 0.0; 8.37; 0.0; 0.0; 
- 92528.0; 0.53; 0.0; 8.348; 0.0; 0.0; 
- 92529.0; 0.53; 0.0; 8.382; 0.0; 0.0; 
- 92530.0; 0.53; 0.0; 8.35; 0.0; 0.0; 
- 92531.0; 0.53; 0.0; 8.39; 0.0; 0.0; 
- 92532.0; 0.53; 0.0; 8.373; 0.0; 0.0; 
- 92533.0; 0.53; 0.0; 8.324; 0.0; 0.0; 
- 92534.0; 0.53; 0.0; 8.4; 0.0; 0.0; 
- 92535.0; 0.53; 0.0; 8.313; 0.0; 0.0; 
- 92536.0; 0.53; 0.0; 8.397; 0.0; 0.0; 
- 92537.0; 0.53; 0.0; 8.389; 0.0; 0.0; 
- 92538.0; 0.53; 0.0; 8.341; 0.0; 0.0; 
- 92539.0; 0.53; 0.0; 8.421; 0.0; 0.0; 
- 92540.0; 0.53; 0.0; 8.364; 0.0; 0.0; 
- 92541.0; 0.53; 0.0; 8.441; 0.0; 0.0; 
- 92542.0; 0.53; 0.0; 8.456; 0.0; 0.0; 
- 92543.0; 0.53; 0.0; 8.334; 0.0; 0.0; 
- 92544.0; 0.53; 0.0; 8.494; 0.0; 0.0; 
- 92545.0; 0.53; 0.0; 8.363; 0.0; 0.0; 
- 92546.0; 0.53; 0.0; 8.505; 0.0; 0.0; 
- 92547.0; 0.53; 0.0; 8.369; 0.0; 0.0; 
- 92548.0; 0.53; 0.0; 8.373; 0.0; 0.0; 
- 92549.0; 0.53; 0.0; 8.425; 0.0; 0.0; 
- 92550.0; 0.53; 0.0; 8.364; 0.0; 0.0; 
- 92551.0; 0.53; 0.0; 8.34; 0.0; 0.0; 
- 92552.0; 0.53; 0.0; 8.458; 0.0; 0.0; 
- 92553.0; 0.53; 0.0; 8.315; 0.0; 0.0; 
- 92554.0; 0.53; 0.0; 8.473; 0.0; 0.0; 
- 92555.0; 0.53; 0.0; 8.329; 0.0; 0.0; 
- 92556.0; 0.53; 0.0; 8.443; 0.0; 0.0; 
- 92557.0; 0.53; 0.0; 8.41; 0.0; 0.0; 
- 92558.0; 0.53; 0.0; 8.363; 0.0; 0.0; 
- 92559.0; 0.53; 0.0; 8.461; 0.0; 0.0; 
- 92560.0; 0.53; 0.0; 8.331; 0.0; 0.0; 
- 92561.0; 0.53; 0.0; 8.341; 0.0; 0.0; 
- 92562.0; 0.53; 0.0; 8.412; 0.0; 0.0; 
- 92563.0; 0.53; 0.0; 8.347; 0.0; 0.0; 
- 92564.0; 0.53; 0.0; 8.426; 0.0; 0.0; 
- 92565.0; 0.53; 0.0; 8.319; 0.0; 0.0; 
- 92566.0; 0.53; 0.0; 8.38; 0.0; 0.0; 
- 92567.0; 0.53; 0.0; 8.39; 0.0; 0.0; 
- 92568.0; 0.53; 0.0; 8.344; 0.0; 0.0; 
- 92569.0; 0.53; 0.0; 8.414; 0.0; 0.0; 
- 92570.0; 0.53; 0.0; 8.359; 0.0; 0.0; 
- 92571.0; 0.53; 0.0; 8.376; 0.0; 0.0; 
- 92572.0; 0.53; 0.0; 8.436; 0.0; 0.0; 
- 92573.0; 0.53; 0.0; 8.327; 0.0; 0.0; 
- 92574.0; 0.53; 0.0; 8.471; 0.0; 0.0; 
- 92575.0; 0.53; 0.0; 8.342; 0.0; 0.0; 
- 92576.0; 0.53; 0.0; 8.395; 0.0; 0.0; 
- 92577.0; 0.53; 0.0; 8.437; 0.0; 0.0; 
- 92578.0; 0.53; 0.0; 8.366; 0.0; 0.0; 
- 92579.0; 0.53; 0.0; 8.482; 0.0; 0.0; 
- 92580.0; 0.53; 0.0; 8.362; 0.0; 0.0; 
- 92581.0; 0.53; 0.0; 8.439; 0.0; 0.0; 
- 92582.0; 0.53; 0.0; 8.433; 0.0; 0.0; 
- 92583.0; 0.53; 0.0; 8.333; 0.0; 0.0; 
- 92584.0; 0.53; 0.0; 8.456; 0.0; 0.0; 
- 92585.0; 0.53; 0.0; 8.333; 0.0; 0.0; 
- 92586.0; 0.53; 0.0; 8.388; 0.0; 0.0; 
- 92587.0; 0.53; 0.0; 8.394; 0.0; 0.0; 
- 92588.0; 0.53; 0.0; 8.372; 0.0; 0.0; 
- 92589.0; 0.53; 0.0; 8.398; 0.0; 0.0; 
- 92590.0; 0.529; 0.0; 8.347; 0.0; 0.0; 
- 92591.0; 0.529; 0.0; 8.382; 0.0; 0.0; 
- 92592.0; 0.53; 0.0; 8.397; 0.0; 0.0; 
- 92593.0; 0.529; 0.0; 8.349; 0.0; 0.0; 
- 92594.0; 0.53; 0.0; 8.435; 0.0; 0.0; 
- 92595.0; 0.529; 0.0; 8.361; 0.0; 0.0; 
- 92596.0; 0.529; 0.0; 8.418; 0.0; 0.0; 
- 92597.0; 0.529; 0.0; 8.449; 0.0; 0.0; 
- 92598.0; 0.529; 0.0; 8.384; 0.0; 0.0; 
- 92599.0; 0.529; 0.0; 8.462; 0.0; 0.0; 
- 92600.0; 0.529; 0.0; 8.381; 0.0; 0.0; 
- 92601.0; 0.529; 0.0; 8.416; 0.0; 0.0; 
- 92602.0; 0.529; 0.0; 8.425; 0.0; 0.0; 
- 92603.0; 0.529; 0.0; 8.329; 0.0; 0.0; 
- 92604.0; 0.529; 0.0; 8.492; 0.0; 0.0; 
- 92605.0; 0.529; 0.0; 8.326; 0.0; 0.0; 
- 92606.0; 0.529; 0.0; 8.402; 0.0; 0.0; 
- 92607.0; 0.529; 0.0; 8.413; 0.0; 0.0; 
- 92608.0; 0.529; 0.0; 8.365; 0.0; 0.0; 
- 92609.0; 0.529; 0.0; 8.417; 0.0; 0.0; 
- 92610.0; 0.529; 0.0; 8.375; 0.0; 0.0; 
- 92611.0; 0.529; 0.0; 8.363; 0.0; 0.0; 
- 92612.0; 0.529; 0.0; 8.405; 0.0; 0.0; 
- 92613.0; 0.529; 0.0; 8.348; 0.0; 0.0; 
- 92614.0; 0.529; 0.0; 8.434; 0.0; 0.0; 
- 92615.0; 0.529; 0.0; 8.336; 0.0; 0.0; 
- 92616.0; 0.529; 0.0; 8.407; 0.0; 0.0; 
- 92617.0; 0.529; 0.0; 8.4; 0.0; 0.0; 
- 92618.0; 0.529; 0.0; 8.361; 0.0; 0.0; 
- 92619.0; 0.529; 0.0; 8.453; 0.0; 0.0; 
- 92620.0; 0.529; 0.0; 8.367; 0.0; 0.0; 
- 92621.0; 0.529; 0.0; 8.422; 0.0; 0.0; 
- 92622.0; 0.529; 0.0; 8.444; 0.0; 0.0; 
- 92623.0; 0.529; 0.0; 8.337; 0.0; 0.0; 
- 92624.0; 0.529; 0.0; 8.51; 0.0; 0.0; 
- 92625.0; 0.529; 0.0; 8.308; 0.0; 0.0; 
- 92626.0; 0.529; 0.0; 8.435; 0.0; 0.0; 
- 92627.0; 0.529; 0.0; 8.398; 0.0; 0.0; 
- 92628.0; 0.529; 0.0; 8.355; 0.0; 0.0; 
- 92629.0; 0.529; 0.0; 8.447; 0.0; 0.0; 
- 92630.0; 0.529; 0.0; 8.354; 0.0; 0.0; 
- 92631.0; 0.529; 0.0; 8.37; 0.0; 0.0; 
- 92632.0; 0.529; 0.0; 8.491; 0.0; 0.0; 
- 92633.0; 0.529; 0.0; 8.336; 0.0; 0.0; 
- 92634.0; 0.529; 0.0; 8.532; 0.0; 0.0; 
- 92635.0; 0.529; 0.0; 8.328; 0.0; 0.0; 
- 92636.0; 0.529; 0.0; 8.438; 0.0; 0.0; 
- 92637.0; 0.529; 0.0; 8.442; 0.0; 0.0; 
- 92638.0; 0.529; 0.0; 8.37; 0.0; 0.0; 
- 92639.0; 0.53; 0.0; 8.455; 0.0; 0.0; 
- 92640.0; 0.529; 0.0; 8.365; 0.0; 0.0; 
- 92641.0; 0.529; 0.0; 8.402; 0.0; 0.0; 
- 92642.0; 0.53; 0.0; 8.459; 0.0; 0.0; 
- 92643.0; 0.529; 0.0; 8.348; 0.0; 0.0; 
- 92644.0; 0.529; 0.0; 8.492; 0.0; 0.0; 
- 92645.0; 0.529; 0.0; 8.335; 0.0; 0.0; 
- 92646.0; 0.529; 0.0; 8.432; 0.0; 0.0; 
- 92647.0; 0.53; 0.0; 8.435; 0.0; 0.0; 
- 92648.0; 0.529; 0.0; 8.373; 0.0; 0.0; 
- 92649.0; 0.529; 0.0; 8.462; 0.0; 0.0; 
- 92650.0; 0.53; 0.0; 8.386; 0.0; 0.0; 
- 92651.0; 0.53; 0.0; 8.425; 0.0; 0.0; 
- 92652.0; 0.529; 0.0; 8.452; 0.0; 0.0; 
- 92653.0; 0.53; 0.0; 8.345; 0.0; 0.0; 
- 92654.0; 0.53; 0.0; 8.536; 0.0; 0.0; 
- 92655.0; 0.53; 0.0; 8.37; 0.0; 0.0; 
- 92656.0; 0.53; 0.0; 8.404; 0.0; 0.0; 
- 92657.0; 0.53; 0.0; 8.484; 0.0; 0.0; 
- 92658.0; 0.53; 0.0; 8.368; 0.0; 0.0; 
- 92659.0; 0.53; 0.0; 8.456; 0.0; 0.0; 
- 92660.0; 0.53; 0.0; 8.349; 0.0; 0.0; 
- 92661.0; 0.53; 0.0; 8.413; 0.0; 0.0; 
- 92662.0; 0.529; 0.0; 8.458; 0.0; 0.0; 
- 92663.0; 0.53; 0.0; 8.337; 0.0; 0.0; 
- 92664.0; 0.53; 0.0; 8.488; 0.0; 0.0; 
- 92665.0; 0.53; 0.0; 8.33; 0.0; 0.0; 
- 92666.0; 0.53; 0.0; 8.394; 0.0; 0.0; 
- 92667.0; 0.53; 0.0; 8.406; 0.0; 0.0; 
- 92668.0; 0.53; 0.0; 8.382; 0.0; 0.0; 
- 92669.0; 0.53; 0.0; 8.425; 0.0; 0.0; 
- 92670.0; 0.53; 0.0; 8.351; 0.0; 0.0; 
- 92671.0; 0.53; 0.0; 8.377; 0.0; 0.0; 
- 92672.0; 0.53; 0.0; 8.442; 0.0; 0.0; 
- 92673.0; 0.53; 0.0; 8.365; 0.0; 0.0; 
- 92674.0; 0.529; 0.0; 8.439; 0.0; 0.0; 
- 92675.0; 0.53; 0.0; 8.357; 0.0; 0.0; 
- 92676.0; 0.53; 0.0; 8.397; 0.0; 0.0; 
- 92677.0; 0.53; 0.0; 8.453; 0.0; 0.0; 
- 92678.0; 0.53; 0.0; 8.362; 0.0; 0.0; 
- 92679.0; 0.53; 0.0; 8.448; 0.0; 0.0; 
- 92680.0; 0.53; 0.0; 8.341; 0.0; 0.0; 
- 92681.0; 0.53; 0.0; 8.393; 0.0; 0.0; 
- 92682.0; 0.53; 0.0; 8.47; 0.0; 0.0; 
- 92683.0; 0.53; 0.0; 8.357; 0.0; 0.0; 
- 92684.0; 0.53; 0.0; 8.522; 0.0; 0.0; 
- 92685.0; 0.53; 0.0; 8.34; 0.0; 0.0; 
- 92686.0; 0.53; 0.0; 8.44; 0.0; 0.0; 
- 92687.0; 0.53; 0.0; 8.39; 0.0; 0.0; 
- 92688.0; 0.53; 0.0; 8.362; 0.0; 0.0; 
- 92689.0; 0.53; 0.0; 8.447; 0.0; 0.0; 
- 92690.0; 0.53; 0.0; 8.356; 0.0; 0.0; 
- 92691.0; 0.53; 0.0; 8.333; 0.0; 0.0; 
- 92692.0; 0.53; 0.0; 8.487; 0.0; 0.0; 
- 92693.0; 0.53; 0.0; 8.357; 0.0; 0.0; 
- 92694.0; 0.53; 0.0; 8.421; 0.0; 0.0; 
- 92695.0; 0.53; 0.0; 8.345; 0.0; 0.0; 
- 92696.0; 0.53; 0.0; 8.428; 0.0; 0.0; 
- 92697.0; 0.53; 0.0; 8.353; 0.0; 0.0; 
- 92698.0; 0.53; 0.0; 8.36; 0.0; 0.0; 
- 92699.0; 0.53; 0.0; 8.42; 0.0; 0.0; 
- 92700.0; 0.53; 0.0; 8.378; 0.0; 0.0; 
- 92701.0; 0.53; 0.0; 8.38; 0.0; 0.0; 
- 92702.0; 0.53; 0.0; 8.477; 0.0; 0.0; 
- 92703.0; 0.53; 0.0; 8.345; 0.0; 0.0; 
- 92704.0; 0.53; 0.0; 8.485; 0.0; 0.0; 
- 92705.0; 0.53; 0.0; 8.356; 0.0; 0.0; 
- 92706.0; 0.53; 0.0; 8.429; 0.0; 0.0; 
- 92707.0; 0.53; 0.0; 8.446; 0.0; 0.0; 
- 92708.0; 0.53; 0.0; 8.393; 0.0; 0.0; 
- 92709.0; 0.53; 0.0; 8.45; 0.0; 0.0; 
- 92710.0; 0.53; 0.0; 8.35; 0.0; 0.0; 
- 92711.0; 0.53; 0.0; 8.401; 0.0; 0.0; 
- 92712.0; 0.53; 0.0; 8.49; 0.0; 0.0; 
- 92713.0; 0.53; 0.0; 8.35; 0.0; 0.0; 
- 92714.0; 0.53; 0.0; 8.477; 0.0; 0.0; 
- 92715.0; 0.53; 0.0; 8.393; 0.0; 0.0; 
- 92716.0; 0.53; 0.0; 8.405; 0.0; 0.0; 
- 92717.0; 0.53; 0.0; 8.487; 0.0; 0.0; 
- 92718.0; 0.53; 0.0; 8.37; 0.0; 0.0; 
- 92719.0; 0.53; 0.0; 8.481; 0.0; 0.0; 
- 92720.0; 0.53; 0.0; 8.369; 0.0; 0.0; 
- 92721.0; 0.529; 0.0; 8.398; 0.0; 0.0; 
- 92722.0; 0.53; 0.0; 8.432; 0.0; 0.0; 
- 92723.0; 0.529; 0.0; 8.344; 0.0; 0.0; 
- 92724.0; 0.53; 0.0; 8.463; 0.0; 0.0; 
- 92725.0; 0.53; 0.0; 8.341; 0.0; 0.0; 
- 92726.0; 0.53; 0.0; 8.354; 0.0; 0.0; 
- 92727.0; 0.53; 0.0; 8.418; 0.0; 0.0; 
- 92728.0; 0.529; 0.0; 8.348; 0.0; 0.0; 
- 92729.0; 0.529; 0.0; 8.398; 0.0; 0.0; 
- 92730.0; 0.529; 0.0; 8.367; 0.0; 0.0; 
- 92731.0; 0.529; 0.0; 8.372; 0.0; 0.0; 
- 92732.0; 0.529; 0.0; 8.423; 0.0; 0.0; 
- 92733.0; 0.529; 0.0; 8.339; 0.0; 0.0; 
- 92734.0; 0.529; 0.0; 8.442; 0.0; 0.0; 
- 92735.0; 0.529; 0.0; 8.324; 0.0; 0.0; 
- 92736.0; 0.529; 0.0; 8.357; 0.0; 0.0; 
- 92737.0; 0.529; 0.0; 8.469; 0.0; 0.0; 
- 92738.0; 0.529; 0.0; 8.366; 0.0; 0.0; 
- 92739.0; 0.529; 0.0; 8.466; 0.0; 0.0; 
- 92740.0; 0.529; 0.0; 8.351; 0.0; 0.0; 
- 92741.0; 0.529; 0.0; 8.389; 0.0; 0.0; 
- 92742.0; 0.529; 0.0; 8.437; 0.0; 0.0; 
- 92743.0; 0.529; 0.0; 8.316; 0.0; 0.0; 
- 92744.0; 0.529; 0.0; 8.484; 0.0; 0.0; 
- 92745.0; 0.529; 0.0; 8.33; 0.0; 0.0; 
- 92746.0; 0.529; 0.0; 8.39; 0.0; 0.0; 
- 92747.0; 0.529; 0.0; 8.395; 0.0; 0.0; 
- 92748.0; 0.529; 0.0; 8.319; 0.0; 0.0; 
- 92749.0; 0.529; 0.0; 8.405; 0.0; 0.0; 
- 92750.0; 0.529; 0.0; 8.376; 0.0; 0.0; 
- 92751.0; 0.529; 0.0; 8.329; 0.0; 0.0; 
- 92752.0; 0.529; 0.0; 8.444; 0.0; 0.0; 
- 92753.0; 0.529; 0.0; 8.335; 0.0; 0.0; 
- 92754.0; 0.529; 0.0; 8.41; 0.0; 0.0; 
- 92755.0; 0.529; 0.0; 8.344; 0.0; 0.0; 
- 92756.0; 0.529; 0.0; 8.382; 0.0; 0.0; 
- 92757.0; 0.529; 0.0; 8.4; 0.0; 0.0; 
- 92758.0; 0.529; 0.0; 8.361; 0.0; 0.0; 
- 92759.0; 0.529; 0.0; 8.424; 0.0; 0.0; 
- 92760.0; 0.529; 0.0; 8.394; 0.0; 0.0; 
- 92761.0; 0.529; 0.0; 8.33; 0.0; 0.0; 
- 92762.0; 0.528; 0.0; 8.479; 0.0; 0.0; 
- 92763.0; 0.528; 0.0; 8.335; 0.0; 0.0; 
- 92764.0; 0.529; 0.0; 8.485; 0.0; 0.0; 
- 92765.0; 0.528; 0.0; 8.322; 0.0; 0.0; 
- 92766.0; 0.529; 0.0; 8.391; 0.0; 0.0; 
- 92767.0; 0.529; 0.0; 8.407; 0.0; 0.0; 
- 92768.0; 0.528; 0.0; 8.34; 0.0; 0.0; 
- 92769.0; 0.529; 0.0; 8.443; 0.0; 0.0; 
- 92770.0; 0.528; 0.0; 8.34; 0.0; 0.0; 
- 92771.0; 0.528; 0.0; 8.341; 0.0; 0.0; 
- 92772.0; 0.527; 0.0; 8.493; 0.0; 0.0; 
- 92773.0; 0.526; 0.0; 8.38; 0.0; 0.0; 
- 92774.0; 0.527; 0.0; 8.473; 0.0; 0.0; 
- 92775.0; 0.526; 0.0; 8.339; 0.0; 0.0; 
- 92776.0; 0.526; 0.0; 8.386; 0.0; 0.0; 
- 92777.0; 0.526; 0.0; 8.455; 0.0; 0.0; 
- 92778.0; 0.527; 0.0; 8.334; 0.0; 0.0; 
- 92779.0; 0.527; 0.0; 8.438; 0.0; 0.0; 
- 92780.0; 0.527; 0.0; 8.363; 0.0; 0.0; 
- 92781.0; 0.526; 0.0; 8.33; 0.0; 0.0; 
- 92782.0; 0.526; 0.0; 8.392; 0.0; 0.0; 
- 92783.0; 0.526; 0.0; 8.322; 0.0; 0.0; 
- 92784.0; 0.525; 0.0; 8.402; 0.0; 0.0; 
- 92785.0; 0.525; 0.0; 8.339; 0.0; 0.0; 
- 92786.0; 0.525; 0.0; 8.366; 0.0; 0.0; 
- 92787.0; 0.525; 0.0; 8.404; 0.0; 0.0; 
- 92788.0; 0.525; 0.0; 8.365; 0.0; 0.0; 
- 92789.0; 0.526; 0.0; 8.384; 0.0; 0.0; 
- 92790.0; 0.525; 0.0; 8.329; 0.0; 0.0; 
- 92791.0; 0.525; 0.0; 8.341; 0.0; 0.0; 
- 92792.0; 0.525; 0.0; 8.432; 0.0; 0.0; 
- 92793.0; 0.525; 0.0; 8.323; 0.0; 0.0; 
- 92794.0; 0.525; 0.0; 8.424; 0.0; 0.0; 
- 92795.0; 0.525; 0.0; 8.347; 0.0; 0.0; 
- 92796.0; 0.525; 0.0; 8.321; 0.0; 0.0; 
- 92797.0; 0.524; 0.0; 8.471; 0.0; 0.0; 
- 92798.0; 0.525; 0.0; 8.329; 0.0; 0.0; 
- 92799.0; 0.525; 0.0; 8.438; 0.0; 0.0; 
- 92800.0; 0.524; 0.0; 8.332; 0.0; 0.0; 
- 92801.0; 0.524; 0.0; 8.348; 0.0; 0.0; 
- 92802.0; 0.525; 0.0; 8.41; 0.0; 0.0; 
- 92803.0; 0.525; 0.0; 8.311; 0.0; 0.0; 
- 92804.0; 0.525; 0.0; 8.44; 0.0; 0.0; 
- 92805.0; 0.524; 0.0; 8.278; 0.0; 0.0; 
- 92806.0; 0.525; 0.0; 8.312; 0.0; 0.0; 
- 92807.0; 0.524; 0.0; 8.418; 0.0; 0.0; 
- 92808.0; 0.524; 0.0; 8.336; 0.0; 0.0; 
- 92809.0; 0.524; 0.0; 8.374; 0.0; 0.0; 
- 92810.0; 0.524; 0.0; 8.321; 0.0; 0.0; 
- 92811.0; 0.524; 0.0; 8.303; 0.0; 0.0; 
- 92812.0; 0.524; 0.0; 8.422; 0.0; 0.0; 
- 92813.0; 0.524; 0.0; 8.309; 0.0; 0.0; 
- 92814.0; 0.524; 0.0; 8.414; 0.0; 0.0; 
- 92815.0; 0.524; 0.0; 8.323; 0.0; 0.0; 
- 92816.0; 0.524; 0.0; 8.366; 0.0; 0.0; 
- 92817.0; 0.525; 0.0; 8.411; 0.0; 0.0; 
- 92818.0; 0.524; 0.0; 8.348; 0.0; 0.0; 
- 92819.0; 0.524; 0.0; 8.437; 0.0; 0.0; 
- 92820.0; 0.524; 0.0; 8.394; 0.0; 0.0; 
- 92821.0; 0.524; 0.0; 8.352; 0.0; 0.0; 
- 92822.0; 0.524; 0.0; 8.427; 0.0; 0.0; 
- 92823.0; 0.524; 0.0; 8.334; 0.0; 0.0; 
- 92824.0; 0.524; 0.0; 8.466; 0.0; 0.0; 
- 92825.0; 0.524; 0.0; 8.325; 0.0; 0.0; 
- 92826.0; 0.524; 0.0; 8.411; 0.0; 0.0; 
- 92827.0; 0.524; 0.0; 8.432; 0.0; 0.0; 
- 92828.0; 0.524; 0.0; 8.337; 0.0; 0.0; 
- 92829.0; 0.524; 0.0; 8.406; 0.0; 0.0; 
- 92830.0; 0.524; 0.0; 8.387; 0.0; 0.0; 
- 92831.0; 0.524; 0.0; 8.312; 0.0; 0.0; 
- 92832.0; 0.524; 0.0; 8.474; 0.0; 0.0; 
- 92833.0; 0.524; 0.0; 8.29; 0.0; 0.0; 
- 92834.0; 0.524; 0.0; 8.466; 0.0; 0.0; 
- 92835.0; 0.524; 0.0; 8.348; 0.0; 0.0; 
- 92836.0; 0.524; 0.0; 8.373; 0.0; 0.0; 
- 92837.0; 0.524; 0.0; 8.461; 0.0; 0.0; 
- 92838.0; 0.524; 0.0; 8.338; 0.0; 0.0; 
- 92839.0; 0.524; 0.0; 8.431; 0.0; 0.0; 
- 92840.0; 0.524; 0.0; 8.344; 0.0; 0.0; 
- 92841.0; 0.524; 0.0; 8.315; 0.0; 0.0; 
- 92842.0; 0.524; 0.0; 8.413; 0.0; 0.0; 
- 92843.0; 0.524; 0.0; 8.299; 0.0; 0.0; 
- 92844.0; 0.524; 0.0; 8.399; 0.0; 0.0; 
- 92845.0; 0.524; 0.0; 8.322; 0.0; 0.0; 
- 92846.0; 0.524; 0.0; 8.32; 0.0; 0.0; 
- 92847.0; 0.524; 0.0; 8.372; 0.0; 0.0; 
- 92848.0; 0.524; 0.0; 8.36; 0.0; 0.0; 
- 92849.0; 0.524; 0.0; 8.41; 0.0; 0.0; 
- 92850.0; 0.524; 0.0; 8.361; 0.0; 0.0; 
- 92851.0; 0.524; 0.0; 8.337; 0.0; 0.0; 
- 92852.0; 0.524; 0.0; 8.452; 0.0; 0.0; 
- 92853.0; 0.524; 0.0; 8.314; 0.0; 0.0; 
- 92854.0; 0.524; 0.0; 8.446; 0.0; 0.0; 
- 92855.0; 0.524; 0.0; 8.355; 0.0; 0.0; 
- 92856.0; 0.524; 0.0; 8.323; 0.0; 0.0; 
- 92857.0; 0.524; 0.0; 8.473; 0.0; 0.0; 
- 92858.0; 0.524; 0.0; 8.336; 0.0; 0.0; 
- 92859.0; 0.524; 0.0; 8.455; 0.0; 0.0; 
- 92860.0; 0.524; 0.0; 8.357; 0.0; 0.0; 
- 92861.0; 0.524; 0.0; 8.387; 0.0; 0.0; 
- 92862.0; 0.524; 0.0; 8.463; 0.0; 0.0; 
- 92863.0; 0.524; 0.0; 8.333; 0.0; 0.0; 
- 92864.0; 0.524; 0.0; 8.463; 0.0; 0.0; 
- 92865.0; 0.524; 0.0; 8.313; 0.0; 0.0; 
- 92866.0; 0.524; 0.0; 8.308; 0.0; 0.0; 
- 92867.0; 0.524; 0.0; 8.38; 0.0; 0.0; 
- 92868.0; 0.524; 0.0; 8.348; 0.0; 0.0; 
- 92869.0; 0.524; 0.0; 8.402; 0.0; 0.0; 
- 92870.0; 0.524; 0.0; 8.343; 0.0; 0.0; 
- 92871.0; 0.524; 0.0; 8.326; 0.0; 0.0; 
- 92872.0; 0.524; 0.0; 8.451; 0.0; 0.0; 
- 92873.0; 0.524; 0.0; 8.351; 0.0; 0.0; 
- 92874.0; 0.524; 0.0; 8.42; 0.0; 0.0; 
- 92875.0; 0.524; 0.0; 8.339; 0.0; 0.0; 
- 92876.0; 0.524; 0.0; 8.353; 0.0; 0.0; 
- 92877.0; 0.524; 0.0; 8.44; 0.0; 0.0; 
- 92878.0; 0.524; 0.0; 8.352; 0.0; 0.0; 
- 92879.0; 0.524; 0.0; 8.419; 0.0; 0.0; 
- 92880.0; 0.524; 0.0; 8.365; 0.0; 0.0; 
- 92881.0; 0.524; 0.0; 8.342; 0.0; 0.0; 
- 92882.0; 0.524; 0.0; 8.459; 0.0; 0.0; 
- 92883.0; 0.524; 0.0; 8.364; 0.0; 0.0; 
- 92884.0; 0.524; 0.0; 8.492; 0.0; 0.0; 
- 92885.0; 0.525; 0.0; 8.343; 0.0; 0.0; 
- 92886.0; 0.524; 0.0; 8.37; 0.0; 0.0; 
- 92887.0; 0.524; 0.0; 8.429; 0.0; 0.0; 
- 92888.0; 0.524; 0.0; 8.367; 0.0; 0.0; 
- 92889.0; 0.524; 0.0; 8.406; 0.0; 0.0; 
- 92890.0; 0.524; 0.0; 8.378; 0.0; 0.0; 
- 92891.0; 0.524; 0.0; 8.331; 0.0; 0.0; 
- 92892.0; 0.524; 0.0; 8.491; 0.0; 0.0; 
- 92893.0; 0.524; 0.0; 8.352; 0.0; 0.0; 
- 92894.0; 0.524; 0.0; 8.47; 0.0; 0.0; 
- 92895.0; 0.524; 0.0; 8.363; 0.0; 0.0; 
- 92896.0; 0.524; 0.0; 8.354; 0.0; 0.0; 
- 92897.0; 0.524; 0.0; 8.463; 0.0; 0.0; 
- 92898.0; 0.524; 0.0; 8.347; 0.0; 0.0; 
- 92899.0; 0.524; 0.0; 8.424; 0.0; 0.0; 
- 92900.0; 0.524; 0.0; 8.363; 0.0; 0.0; 
- 92901.0; 0.524; 0.0; 8.303; 0.0; 0.0; 
- 92902.0; 0.524; 0.0; 8.425; 0.0; 0.0; 
- 92903.0; 0.524; 0.0; 8.342; 0.0; 0.0; 
- 92904.0; 0.524; 0.0; 8.473; 0.0; 0.0; 
- 92905.0; 0.524; 0.0; 8.335; 0.0; 0.0; 
- 92906.0; 0.524; 0.0; 8.38; 0.0; 0.0; 
- 92907.0; 0.524; 0.0; 8.439; 0.0; 0.0; 
- 92908.0; 0.524; 0.0; 8.351; 0.0; 0.0; 
- 92909.0; 0.524; 0.0; 8.426; 0.0; 0.0; 
- 92910.0; 0.524; 0.0; 8.359; 0.0; 0.0; 
- 92911.0; 0.524; 0.0; 8.357; 0.0; 0.0; 
- 92912.0; 0.524; 0.0; 8.495; 0.0; 0.0; 
- 92913.0; 0.524; 0.0; 8.316; 0.0; 0.0; 
- 92914.0; 0.524; 0.0; 8.448; 0.0; 0.0; 
- 92915.0; 0.524; 0.0; 8.381; 0.0; 0.0; 
- 92916.0; 0.524; 0.0; 8.361; 0.0; 0.0; 
- 92917.0; 0.524; 0.0; 8.474; 0.0; 0.0; 
- 92918.0; 0.524; 0.0; 8.358; 0.0; 0.0; 
- 92919.0; 0.524; 0.0; 8.46; 0.0; 0.0; 
- 92920.0; 0.524; 0.0; 8.35; 0.0; 0.0; 
- 92921.0; 0.524; 0.0; 8.358; 0.0; 0.0; 
- 92922.0; 0.524; 0.0; 8.45; 0.0; 0.0; 
- 92923.0; 0.524; 0.0; 8.331; 0.0; 0.0; 
- 92924.0; 0.524; 0.0; 8.427; 0.0; 0.0; 
- 92925.0; 0.524; 0.0; 8.34; 0.0; 0.0; 
- 92926.0; 0.524; 0.0; 8.344; 0.0; 0.0; 
- 92927.0; 0.524; 0.0; 8.412; 0.0; 0.0; 
- 92928.0; 0.524; 0.0; 8.364; 0.0; 0.0; 
- 92929.0; 0.524; 0.0; 8.401; 0.0; 0.0; 
- 92930.0; 0.524; 0.0; 8.364; 0.0; 0.0; 
- 92931.0; 0.524; 0.0; 8.298; 0.0; 0.0; 
- 92932.0; 0.524; 0.0; 8.429; 0.0; 0.0; 
- 92933.0; 0.524; 0.0; 8.35; 0.0; 0.0; 
- 92934.0; 0.524; 0.0; 8.416; 0.0; 0.0; 
- 92935.0; 0.524; 0.0; 8.37; 0.0; 0.0; 
- 92936.0; 0.524; 0.0; 8.355; 0.0; 0.0; 
- 92937.0; 0.524; 0.0; 8.501; 0.0; 0.0; 
- 92938.0; 0.524; 0.0; 8.361; 0.0; 0.0; 
- 92939.0; 0.524; 0.0; 8.42; 0.0; 0.0; 
- 92940.0; 0.524; 0.0; 8.362; 0.0; 0.0; 
- 92941.0; 0.524; 0.0; 8.368; 0.0; 0.0; 
- 92942.0; 0.524; 0.0; 8.498; 0.0; 0.0; 
- 92943.0; 0.524; 0.0; 8.316; 0.0; 0.0; 
- 92944.0; 0.524; 0.0; 8.473; 0.0; 0.0; 
- 92945.0; 0.524; 0.0; 8.323; 0.0; 0.0; 
- 92946.0; 0.524; 0.0; 8.362; 0.0; 0.0; 
- 92947.0; 0.524; 0.0; 8.413; 0.0; 0.0; 
- 92948.0; 0.524; 0.0; 8.321; 0.0; 0.0; 
- 92949.0; 0.524; 0.0; 8.376; 0.0; 0.0; 
- 92950.0; 0.524; 0.0; 8.395; 0.0; 0.0; 
- 92951.0; 0.524; 0.0; 8.297; 0.0; 0.0; 
- 92952.0; 0.524; 0.0; 8.501; 0.0; 0.0; 
- 92953.0; 0.524; 0.0; 8.335; 0.0; 0.0; 
- 92954.0; 0.524; 0.0; 8.453; 0.0; 0.0; 
- 92955.0; 0.524; 0.0; 8.346; 0.0; 0.0; 
- 92956.0; 0.524; 0.0; 8.365; 0.0; 0.0; 
- 92957.0; 0.524; 0.0; 8.461; 0.0; 0.0; 
- 92958.0; 0.524; 0.0; 8.35; 0.0; 0.0; 
- 92959.0; 0.524; 0.0; 8.384; 0.0; 0.0; 
- 92960.0; 0.524; 0.0; 8.363; 0.0; 0.0; 
- 92961.0; 0.524; 0.0; 8.316; 0.0; 0.0; 
- 92962.0; 0.524; 0.0; 8.41; 0.0; 0.0; 
- 92963.0; 0.524; 0.0; 8.323; 0.0; 0.0; 
- 92964.0; 0.524; 0.0; 8.403; 0.0; 0.0; 
- 92965.0; 0.524; 0.0; 8.333; 0.0; 0.0; 
- 92966.0; 0.524; 0.0; 8.353; 0.0; 0.0; 
- 92967.0; 0.524; 0.0; 8.405; 0.0; 0.0; 
- 92968.0; 0.524; 0.0; 8.362; 0.0; 0.0; 
- 92969.0; 0.524; 0.0; 8.412; 0.0; 0.0; 
- 92970.0; 0.524; 0.0; 8.378; 0.0; 0.0; 
- 92971.0; 0.524; 0.0; 8.31; 0.0; 0.0; 
- 92972.0; 0.524; 0.0; 8.471; 0.0; 0.0; 
- 92973.0; 0.524; 0.0; 8.33; 0.0; 0.0; 
- 92974.0; 0.524; 0.0; 8.44; 0.0; 0.0; 
- 92975.0; 0.524; 0.0; 8.375; 0.0; 0.0; 
- 92976.0; 0.524; 0.0; 8.339; 0.0; 0.0; 
- 92977.0; 0.524; 0.0; 8.479; 0.0; 0.0; 
- 92978.0; 0.524; 0.0; 8.324; 0.0; 0.0; 
- 92979.0; 0.524; 0.0; 8.444; 0.0; 0.0; 
- 92980.0; 0.524; 0.0; 8.363; 0.0; 0.0; 
- 92981.0; 0.524; 0.0; 8.371; 0.0; 0.0; 
- 92982.0; 0.524; 0.0; 8.406; 0.0; 0.0; 
- 92983.0; 0.524; 0.0; 8.328; 0.0; 0.0; 
- 92984.0; 0.524; 0.0; 8.419; 0.0; 0.0; 
- 92985.0; 0.524; 0.0; 8.366; 0.0; 0.0; 
- 92986.0; 0.524; 0.0; 8.352; 0.0; 0.0; 
- 92987.0; 0.524; 0.0; 8.399; 0.0; 0.0; 
- 92988.0; 0.524; 0.0; 8.339; 0.0; 0.0; 
- 92989.0; 0.524; 0.0; 8.383; 0.0; 0.0; 
- 92990.0; 0.524; 0.0; 8.343; 0.0; 0.0; 
- 92991.0; 0.524; 0.0; 8.329; 0.0; 0.0; 
- 92992.0; 0.524; 0.0; 8.448; 0.0; 0.0; 
- 92993.0; 0.524; 0.0; 8.344; 0.0; 0.0; 
- 92994.0; 0.524; 0.0; 8.369; 0.0; 0.0; 
- 92995.0; 0.524; 0.0; 8.35; 0.0; 0.0; 
- 92996.0; 0.524; 0.0; 8.336; 0.0; 0.0; 
- 92997.0; 0.524; 0.0; 8.482; 0.0; 0.0; 
- 92998.0; 0.524; 0.0; 8.368; 0.0; 0.0; 
- 92999.0; 0.524; 0.0; 8.429; 0.0; 0.0; 
- 93000.0; 0.524; 0.0; 8.368; 0.0; 0.0; 
- 93001.0; 0.524; 0.0; 8.353; 0.0; 0.0; 
- 93002.0; 0.524; 0.0; 8.476; 0.0; 0.0; 
- 93003.0; 0.524; 0.0; 8.314; 0.0; 0.0; 
- 93004.0; 0.524; 0.0; 8.451; 0.0; 0.0; 
- 93005.0; 0.524; 0.0; 8.34; 0.0; 0.0; 
- 93006.0; 0.524; 0.0; 8.349; 0.0; 0.0; 
- 93007.0; 0.524; 0.0; 8.406; 0.0; 0.0; 
- 93008.0; 0.524; 0.0; 8.349; 0.0; 0.0; 
- 93009.0; 0.524; 0.0; 8.366; 0.0; 0.0; 
- 93010.0; 0.524; 0.0; 8.364; 0.0; 0.0; 
- 93011.0; 0.524; 0.0; 8.351; 0.0; 0.0; 
- 93012.0; 0.524; 0.0; 8.45; 0.0; 0.0; 
- 93013.0; 0.524; 0.0; 8.318; 0.0; 0.0; 
- 93014.0; 0.524; 0.0; 8.434; 0.0; 0.0; 
- 93015.0; 0.524; 0.0; 8.337; 0.0; 0.0; 
- 93016.0; 0.524; 0.0; 8.319; 0.0; 0.0; 
- 93017.0; 0.524; 0.0; 8.423; 0.0; 0.0; 
- 93018.0; 0.524; 0.0; 8.348; 0.0; 0.0; 
- 93019.0; 0.524; 0.0; 8.408; 0.0; 0.0; 
- 93020.0; 0.524; 0.0; 8.376; 0.0; 0.0; 
- 93021.0; 0.524; 0.0; 8.317; 0.0; 0.0; 
- 93022.0; 0.524; 0.0; 8.473; 0.0; 0.0; 
- 93023.0; 0.524; 0.0; 8.322; 0.0; 0.0; 
- 93024.0; 0.524; 0.0; 8.473; 0.0; 0.0; 
- 93025.0; 0.524; 0.0; 8.338; 0.0; 0.0; 
- 93026.0; 0.524; 0.0; 8.369; 0.0; 0.0; 
- 93027.0; 0.524; 0.0; 8.429; 0.0; 0.0; 
- 93028.0; 0.524; 0.0; 8.334; 0.0; 0.0; 
- 93029.0; 0.524; 0.0; 8.42; 0.0; 0.0; 
- 93030.0; 0.524; 0.0; 8.367; 0.0; 0.0; 
- 93031.0; 0.524; 0.0; 8.316; 0.0; 0.0; 
- 93032.0; 0.524; 0.0; 8.47; 0.0; 0.0; 
- 93033.0; 0.524; 0.0; 8.312; 0.0; 0.0; 
- 93034.0; 0.524; 0.0; 8.408; 0.0; 0.0; 
- 93035.0; 0.524; 0.0; 8.348; 0.0; 0.0; 
- 93036.0; 0.524; 0.0; 8.339; 0.0; 0.0; 
- 93037.0; 0.524; 0.0; 8.462; 0.0; 0.0; 
- 93038.0; 0.524; 0.0; 8.339; 0.0; 0.0; 
- 93039.0; 0.524; 0.0; 8.437; 0.0; 0.0; 
- 93040.0; 0.524; 0.0; 8.374; 0.0; 0.0; 
- 93041.0; 0.524; 0.0; 8.294; 0.0; 0.0; 
- 93042.0; 0.524; 0.0; 8.423; 0.0; 0.0; 
- 93043.0; 0.524; 0.0; 8.328; 0.0; 0.0; 
- 93044.0; 0.524; 0.0; 8.363; 0.0; 0.0; 
- 93045.0; 0.524; 0.0; 8.346; 0.0; 0.0; 
- 93046.0; 0.524; 0.0; 8.341; 0.0; 0.0; 
- 93047.0; 0.524; 0.0; 8.399; 0.0; 0.0; 
- 93048.0; 0.524; 0.0; 8.369; 0.0; 0.0; 
- 93049.0; 0.524; 0.0; 8.383; 0.0; 0.0; 
- 93050.0; 0.524; 0.0; 8.349; 0.0; 0.0; 
- 93051.0; 0.524; 0.0; 8.32; 0.0; 0.0; 
- 93052.0; 0.524; 0.0; 8.462; 0.0; 0.0; 
- 93053.0; 0.524; 0.0; 8.318; 0.0; 0.0; 
- 93054.0; 0.524; 0.0; 8.382; 0.0; 0.0; 
- 93055.0; 0.524; 0.0; 8.377; 0.0; 0.0; 
- 93056.0; 0.524; 0.0; 8.362; 0.0; 0.0; 
- 93057.0; 0.524; 0.0; 8.461; 0.0; 0.0; 
- 93058.0; 0.524; 0.0; 8.346; 0.0; 0.0; 
- 93059.0; 0.524; 0.0; 8.432; 0.0; 0.0; 
- 93060.0; 0.524; 0.0; 8.377; 0.0; 0.0; 
- 93061.0; 0.524; 0.0; 8.344; 0.0; 0.0; 
- 93062.0; 0.524; 0.0; 8.556; 0.0; 0.0; 
- 93063.0; 0.524; 0.0; 8.363; 0.0; 0.0; 
- 93064.0; 0.524; 0.0; 8.434; 0.0; 0.0; 
- 93065.0; 0.524; 0.0; 8.355; 0.0; 0.0; 
- 93066.0; 0.524; 0.0; 8.349; 0.0; 0.0; 
- 93067.0; 0.524; 0.0; 8.435; 0.0; 0.0; 
- 93068.0; 0.524; 0.0; 8.33; 0.0; 0.0; 
- 93069.0; 0.524; 0.0; 8.382; 0.0; 0.0; 
- 93070.0; 0.524; 0.0; 8.391; 0.0; 0.0; 
- 93071.0; 0.524; 0.0; 8.331; 0.0; 0.0; 
- 93072.0; 0.524; 0.0; 8.408; 0.0; 0.0; 
- 93073.0; 0.524; 0.0; 8.323; 0.0; 0.0; 
- 93074.0; 0.524; 0.0; 8.426; 0.0; 0.0; 
- 93075.0; 0.524; 0.0; 8.33; 0.0; 0.0; 
- 93076.0; 0.524; 0.0; 8.347; 0.0; 0.0; 
- 93077.0; 0.524; 0.0; 8.467; 0.0; 0.0; 
- 93078.0; 0.524; 0.0; 8.311; 0.0; 0.0; 
- 93079.0; 0.524; 0.0; 8.377; 0.0; 0.0; 
- 93080.0; 0.524; 0.0; 8.417; 0.0; 0.0; 
- 93081.0; 0.524; 0.0; 8.309; 0.0; 0.0; 
- 93082.0; 0.524; 0.0; 8.511; 0.0; 0.0; 
- 93083.0; 0.524; 0.0; 8.37; 0.0; 0.0; 
- 93084.0; 0.524; 0.0; 8.48; 0.0; 0.0; 
- 93085.0; 0.524; 0.0; 8.369; 0.0; 0.0; 
- 93086.0; 0.524; 0.0; 8.354; 0.0; 0.0; 
- 93087.0; 0.524; 0.0; 8.455; 0.0; 0.0; 
- 93088.0; 0.524; 0.0; 8.359; 0.0; 0.0; 
- 93089.0; 0.524; 0.0; 8.394; 0.0; 0.0; 
- 93090.0; 0.524; 0.0; 8.406; 0.0; 0.0; 
- 93091.0; 0.524; 0.0; 8.308; 0.0; 0.0; 
- 93092.0; 0.524; 0.0; 8.507; 0.0; 0.0; 
- 93093.0; 0.524; 0.0; 8.328; 0.0; 0.0; 
- 93094.0; 0.524; 0.0; 8.415; 0.0; 0.0; 
- 93095.0; 0.524; 0.0; 8.377; 0.0; 0.0; 
- 93096.0; 0.524; 0.0; 8.324; 0.0; 0.0; 
- 93097.0; 0.524; 0.0; 8.459; 0.0; 0.0; 
- 93098.0; 0.524; 0.0; 8.323; 0.0; 0.0; 
- 93099.0; 0.524; 0.0; 8.422; 0.0; 0.0; 
- 93100.0; 0.524; 0.0; 8.358; 0.0; 0.0; 
- 93101.0; 0.524; 0.0; 8.321; 0.0; 0.0; 
- 93102.0; 0.524; 0.0; 8.37; 0.0; 0.0; 
- 93103.0; 0.524; 0.0; 8.327; 0.0; 0.0; 
- 93104.0; 0.524; 0.0; 8.366; 0.0; 0.0; 
- 93105.0; 0.524; 0.0; 8.357; 0.0; 0.0; 
- 93106.0; 0.524; 0.0; 8.358; 0.0; 0.0; 
- 93107.0; 0.524; 0.0; 8.429; 0.0; 0.0; 
- 93108.0; 0.524; 0.0; 8.348; 0.0; 0.0; 
- 93109.0; 0.524; 0.0; 8.398; 0.0; 0.0; 
- 93110.0; 0.524; 0.0; 8.334; 0.0; 0.0; 
- 93111.0; 0.524; 0.0; 8.33; 0.0; 0.0; 
- 93112.0; 0.524; 0.0; 8.479; 0.0; 0.0; 
- 93113.0; 0.524; 0.0; 8.328; 0.0; 0.0; 
- 93114.0; 0.524; 0.0; 8.385; 0.0; 0.0; 
- 93115.0; 0.524; 0.0; 8.406; 0.0; 0.0; 
- 93116.0; 0.524; 0.0; 8.352; 0.0; 0.0; 
- 93117.0; 0.524; 0.0; 8.481; 0.0; 0.0; 
- 93118.0; 0.524; 0.0; 8.329; 0.0; 0.0; 
- 93119.0; 0.524; 0.0; 8.387; 0.0; 0.0; 
- 93120.0; 0.524; 0.0; 8.374; 0.0; 0.0; 
- 93121.0; 0.524; 0.0; 8.356; 0.0; 0.0; 
- 93122.0; 0.524; 0.0; 8.472; 0.0; 0.0; 
- 93123.0; 0.524; 0.0; 8.32; 0.0; 0.0; 
- 93124.0; 0.524; 0.0; 8.39; 0.0; 0.0; 
- 93125.0; 0.524; 0.0; 8.421; 0.0; 0.0; 
- 93126.0; 0.524; 0.0; 8.327; 0.0; 0.0; 
- 93127.0; 0.524; 0.0; 8.41; 0.0; 0.0; 
- 93128.0; 0.524; 0.0; 8.347; 0.0; 0.0; 
- 93129.0; 0.524; 0.0; 8.387; 0.0; 0.0; 
- 93130.0; 0.524; 0.0; 8.366; 0.0; 0.0; 
- 93131.0; 0.524; 0.0; 8.327; 0.0; 0.0; 
- 93132.0; 0.524; 0.0; 8.454; 0.0; 0.0; 
- 93133.0; 0.524; 0.0; 8.321; 0.0; 0.0; 
- 93134.0; 0.524; 0.0; 8.42; 0.0; 0.0; 
- 93135.0; 0.524; 0.0; 8.379; 0.0; 0.0; 
- 93136.0; 0.524; 0.0; 8.354; 0.0; 0.0; 
- 93137.0; 0.524; 0.0; 8.461; 0.0; 0.0; 
- 93138.0; 0.524; 0.0; 8.313; 0.0; 0.0; 
- 93139.0; 0.524; 0.0; 8.371; 0.0; 0.0; 
- 93140.0; 0.524; 0.0; 8.39; 0.0; 0.0; 
- 93141.0; 0.524; 0.0; 8.36; 0.0; 0.0; 
- 93142.0; 0.524; 0.0; 8.414; 0.0; 0.0; 
- 93143.0; 0.524; 0.0; 8.334; 0.0; 0.0; 
- 93144.0; 0.524; 0.0; 8.418; 0.0; 0.0; 
- 93145.0; 0.524; 0.0; 8.374; 0.0; 0.0; 
- 93146.0; 0.524; 0.0; 8.359; 0.0; 0.0; 
- 93147.0; 0.524; 0.0; 8.481; 0.0; 0.0; 
- 93148.0; 0.524; 0.0; 8.354; 0.0; 0.0; 
- 93149.0; 0.524; 0.0; 8.376; 0.0; 0.0; 
- 93150.0; 0.524; 0.0; 8.438; 0.0; 0.0; 
- 93151.0; 0.524; 0.0; 8.342; 0.0; 0.0; 
- 93152.0; 0.524; 0.0; 8.502; 0.0; 0.0; 
- 93153.0; 0.524; 0.0; 8.34; 0.0; 0.0; 
- 93154.0; 0.524; 0.0; 8.407; 0.0; 0.0; 
- 93155.0; 0.524; 0.0; 8.385; 0.0; 0.0; 
- 93156.0; 0.524; 0.0; 8.363; 0.0; 0.0; 
- 93157.0; 0.524; 0.0; 8.469; 0.0; 0.0; 
- 93158.0; 0.524; 0.0; 8.35; 0.0; 0.0; 
- 93159.0; 0.524; 0.0; 8.364; 0.0; 0.0; 
- 93160.0; 0.524; 0.0; 8.39; 0.0; 0.0; 
- 93161.0; 0.524; 0.0; 8.337; 0.0; 0.0; 
- 93162.0; 0.524; 0.0; 8.43; 0.0; 0.0; 
- 93163.0; 0.524; 0.0; 8.328; 0.0; 0.0; 
- 93164.0; 0.524; 0.0; 8.367; 0.0; 0.0; 
- 93165.0; 0.524; 0.0; 8.373; 0.0; 0.0; 
- 93166.0; 0.524; 0.0; 8.349; 0.0; 0.0; 
- 93167.0; 0.524; 0.0; 8.42; 0.0; 0.0; 
- 93168.0; 0.524; 0.0; 8.364; 0.0; 0.0; 
- 93169.0; 0.524; 0.0; 8.393; 0.0; 0.0; 
- 93170.0; 0.524; 0.0; 8.403; 0.0; 0.0; 
- 93171.0; 0.524; 0.0; 8.314; 0.0; 0.0; 
- 93172.0; 0.524; 0.0; 8.482; 0.0; 0.0; 
- 93173.0; 0.524; 0.0; 8.325; 0.0; 0.0; 
- 93174.0; 0.524; 0.0; 8.395; 0.0; 0.0; 
- 93175.0; 0.524; 0.0; 8.428; 0.0; 0.0; 
- 93176.0; 0.524; 0.0; 8.361; 0.0; 0.0; 
- 93177.0; 0.524; 0.0; 8.503; 0.0; 0.0; 
- 93178.0; 0.524; 0.0; 8.337; 0.0; 0.0; 
- 93179.0; 0.524; 0.0; 8.412; 0.0; 0.0; 
- 93180.0; 0.524; 0.0; 8.391; 0.0; 0.0; 
- 93181.0; 0.524; 0.0; 8.357; 0.0; 0.0; 
- 93182.0; 0.524; 0.0; 8.456; 0.0; 0.0; 
- 93183.0; 0.524; 0.0; 8.353; 0.0; 0.0; 
- 93184.0; 0.524; 0.0; 8.369; 0.0; 0.0; 
- 93185.0; 0.524; 0.0; 8.466; 0.0; 0.0; 
- 93186.0; 0.524; 0.0; 8.358; 0.0; 0.0; 
- 93187.0; 0.524; 0.0; 8.513; 0.0; 0.0; 
- 93188.0; 0.524; 0.0; 8.352; 0.0; 0.0; 
- 93189.0; 0.524; 0.0; 8.399; 0.0; 0.0; 
- 93190.0; 0.524; 0.0; 8.369; 0.0; 0.0; 
- 93191.0; 0.524; 0.0; 8.302; 0.0; 0.0; 
- 93192.0; 0.524; 0.0; 8.437; 0.0; 0.0; 
- 93193.0; 0.524; 0.0; 8.364; 0.0; 0.0; 
- 93194.0; 0.524; 0.0; 8.402; 0.0; 0.0; 
- 93195.0; 0.524; 0.0; 8.366; 0.0; 0.0; 
- 93196.0; 0.524; 0.0; 8.338; 0.0; 0.0; 
- 93197.0; 0.524; 0.0; 8.479; 0.0; 0.0; 
- 93198.0; 0.524; 0.0; 8.356; 0.0; 0.0; 
- 93199.0; 0.524; 0.0; 8.393; 0.0; 0.0; 
- 93200.0; 0.524; 0.0; 8.407; 0.0; 0.0; 
- 93201.0; 0.524; 0.0; 8.313; 0.0; 0.0; 
- 93202.0; 0.524; 0.0; 8.485; 0.0; 0.0; 
- 93203.0; 0.524; 0.0; 8.358; 0.0; 0.0; 
- 93204.0; 0.524; 0.0; 8.457; 0.0; 0.0; 
- 93205.0; 0.524; 0.0; 8.374; 0.0; 0.0; 
- 93206.0; 0.524; 0.0; 8.361; 0.0; 0.0; 
- 93207.0; 0.524; 0.0; 8.464; 0.0; 0.0; 
- 93208.0; 0.524; 0.0; 8.374; 0.0; 0.0; 
- 93209.0; 0.524; 0.0; 8.39; 0.0; 0.0; 
- 93210.0; 0.524; 0.0; 8.46; 0.0; 0.0; 
- 93211.0; 0.524; 0.0; 8.35; 0.0; 0.0; 
- 93212.0; 0.524; 0.0; 8.507; 0.0; 0.0; 
- 93213.0; 0.524; 0.0; 8.334; 0.0; 0.0; 
- 93214.0; 0.524; 0.0; 8.438; 0.0; 0.0; 
- 93215.0; 0.524; 0.0; 8.397; 0.0; 0.0; 
- 93216.0; 0.524; 0.0; 8.371; 0.0; 0.0; 
- 93217.0; 0.524; 0.0; 8.443; 0.0; 0.0; 
- 93218.0; 0.524; 0.0; 8.367; 0.0; 0.0; 
- 93219.0; 0.524; 0.0; 8.334; 0.0; 0.0; 
- 93220.0; 0.524; 0.0; 8.446; 0.0; 0.0; 
- 93221.0; 0.524; 0.0; 8.358; 0.0; 0.0; 
- 93222.0; 0.524; 0.0; 8.404; 0.0; 0.0; 
- 93223.0; 0.524; 0.0; 8.342; 0.0; 0.0; 
- 93224.0; 0.524; 0.0; 8.386; 0.0; 0.0; 
- 93225.0; 0.524; 0.0; 8.409; 0.0; 0.0; 
- 93226.0; 0.524; 0.0; 8.354; 0.0; 0.0; 
- 93227.0; 0.524; 0.0; 8.408; 0.0; 0.0; 
- 93228.0; 0.524; 0.0; 8.371; 0.0; 0.0; 
- 93229.0; 0.524; 0.0; 8.374; 0.0; 0.0; 
- 93230.0; 0.524; 0.0; 8.438; 0.0; 0.0; 
- 93231.0; 0.524; 0.0; 8.338; 0.0; 0.0; 
- 93232.0; 0.524; 0.0; 8.508; 0.0; 0.0; 
- 93233.0; 0.524; 0.0; 8.365; 0.0; 0.0; 
- 93234.0; 0.524; 0.0; 8.382; 0.0; 0.0; 
- 93235.0; 0.524; 0.0; 8.413; 0.0; 0.0; 
- 93236.0; 0.524; 0.0; 8.375; 0.0; 0.0; 
- 93237.0; 0.524; 0.0; 8.503; 0.0; 0.0; 
- 93238.0; 0.524; 0.0; 8.371; 0.0; 0.0; 
- 93239.0; 0.524; 0.0; 8.423; 0.0; 0.0; 
- 93240.0; 0.524; 0.0; 8.392; 0.0; 0.0; 
- 93241.0; 0.524; 0.0; 8.378; 0.0; 0.0; 
- 93242.0; 0.524; 0.0; 8.474; 0.0; 0.0; 
- 93243.0; 0.524; 0.0; 8.418; 0.0; 0.0; 
- 93244.0; 0.524; 0.0; 8.352; 0.0; 0.0; 
- 93245.0; 0.524; 0.0; 8.482; 0.0; 0.0; 
- 93246.0; 0.524; 0.0; 8.359; 0.0; 0.0; 
- 93247.0; 0.524; 0.0; 8.504; 0.0; 0.0; 
- 93248.0; 0.524; 0.0; 8.357; 0.0; 0.0; 
- 93249.0; 0.524; 0.0; 8.38; 0.0; 0.0; 
- 93250.0; 0.524; 0.0; 8.448; 0.0; 0.0; 
- 93251.0; 0.524; 0.0; 8.354; 0.0; 0.0; 
- 93252.0; 0.524; 0.0; 8.437; 0.0; 0.0; 
- 93253.0; 0.524; 0.0; 8.344; 0.0; 0.0; 
- 93254.0; 0.524; 0.0; 8.399; 0.0; 0.0; 
- 93255.0; 0.524; 0.0; 8.425; 0.0; 0.0; 
- 93256.0; 0.524; 0.0; 8.366; 0.0; 0.0; 
- 93257.0; 0.524; 0.0; 8.426; 0.0; 0.0; 
- 93258.0; 0.524; 0.0; 8.36; 0.0; 0.0; 
- 93259.0; 0.524; 0.0; 8.357; 0.0; 0.0; 
- 93260.0; 0.524; 0.0; 8.411; 0.0; 0.0; 
- 93261.0; 0.524; 0.0; 8.352; 0.0; 0.0; 
- 93262.0; 0.524; 0.0; 8.425; 0.0; 0.0; 
- 93263.0; 0.524; 0.0; 8.372; 0.0; 0.0; 
- 93264.0; 0.524; 0.0; 8.391; 0.0; 0.0; 
- 93265.0; 0.524; 0.0; 8.417; 0.0; 0.0; 
- 93266.0; 0.524; 0.0; 8.359; 0.0; 0.0; 
- 93267.0; 0.523; 0.0; 8.489; 0.0; 0.0; 
- 93268.0; 0.523; 0.0; 8.399; 0.0; 0.0; 
- 93269.0; 0.523; 0.0; 8.395; 0.0; 0.0; 
- 93270.0; 0.523; 0.0; 8.45; 0.0; 0.0; 
- 93271.0; 0.523; 0.0; 8.357; 0.0; 0.0; 
- 93272.0; 0.524; 0.0; 8.522; 0.0; 0.0; 
- 93273.0; 0.524; 0.0; 8.345; 0.0; 0.0; 
- 93274.0; 0.523; 0.0; 8.431; 0.0; 0.0; 
- 93275.0; 0.523; 0.0; 8.409; 0.0; 0.0; 
- 93276.0; 0.523; 0.0; 8.367; 0.0; 0.0; 
- 93277.0; 0.523; 0.0; 8.432; 0.0; 0.0; 
- 93278.0; 0.522; 0.0; 8.359; 0.0; 0.0; 
- 93279.0; 0.523; 0.0; 8.351; 0.0; 0.0; 
- 93280.0; 0.522; 0.0; 8.436; 0.0; 0.0; 
- 93281.0; 0.523; 0.0; 8.368; 0.0; 0.0; 
- 93282.0; 0.523; 0.0; 8.45; 0.0; 0.0; 
- 93283.0; 0.522; 0.0; 8.359; 0.0; 0.0; 
- 93284.0; 0.521; 0.0; 8.387; 0.0; 0.0; 
- 93285.0; 0.523; 0.0; 8.395; 0.0; 0.0; 
- 93286.0; 0.522; 0.0; 8.358; 0.0; 0.0; 
- 93287.0; 0.523; 0.0; 8.427; 0.0; 0.0; 
- 93288.0; 0.523; 0.0; 8.338; 0.0; 0.0; 
- 93289.0; 0.523; 0.0; 8.366; 0.0; 0.0; 
- 93290.0; 0.523; 0.0; 8.418; 0.0; 0.0; 
- 93291.0; 0.523; 0.0; 8.338; 0.0; 0.0; 
- 93292.0; 0.522; 0.0; 8.498; 0.0; 0.0; 
- 93293.0; 0.523; 0.0; 8.337; 0.0; 0.0; 
- 93294.0; 0.523; 0.0; 8.38; 0.0; 0.0; 
- 93295.0; 0.522; 0.0; 8.411; 0.0; 0.0; 
- 93296.0; 0.522; 0.0; 8.361; 0.0; 0.0; 
- 93297.0; 0.521; 0.0; 8.496; 0.0; 0.0; 
- 93298.0; 0.522; 0.0; 8.367; 0.0; 0
-	(0, 132, 0, 0, 0, 0),
-	(0, 133, 0, 0, 0, 0),
-	(0, 134, 0, 0, 0, 0),
-	(0, 140, 0, 0, 0, 0),
-	(0, 141, 0, 0, 0, 0),
-	(0, 142, 0, 0, 0, 0),
-	(0, 143, 0, 0, 0, 0),
-	(0, 150, 0, 0, 0, 0),
-	(0, 161, 0, 0, 0, 0),
-	(0, 162, 0, 0, 0, 0),
-	(0, 171, 0, 0, 0, 0),
-	(0, 172, 0, 0, 0, 0),
-	(0, 173, 0, 0, 0, 0),
-	(0, 174, 0, 0, 0, 0),
-	(0, 180, 0, 0, 0, 0),
-	(0, 192, 0, 0, 0, 0),
-	(0, 193, 0, 0, 0, 0),
-	(0, 194, 0, 0, 0, 0),
-	(0, 195, 0, 0, 0, 0),
-	(0, 200, 0, 0, 0, 0),
-	(0, 201, 0, 0, 0, 0),
-	(0, 202, 0, 0, 0, 0),
-	(0, 203, 0, 0, 0, 0),
-	(0, 205, 0, 0, 0, 0),
-	(0, 210, 0, 0, 0, 0),
-	(0, 211, 0, 0, 0, 0),
-	(0, 212, 0, 0, 0, 0),
-	(0, 213, 0, 0, 0, 0),
-	(0, 215, 0, 0, 0, 0),
-	(0, 216, 0, 0, 0, 0),
-	(0, 217, 0, 0, 0, 0),
-	(0, 218, 0, 0, 0, 0),
-	(0, 220, 0, 0, 0, 0),
-	(0, 300, 0, 0, 0, 0),
-	(0, 301, 0, 0, 0, 0),
-	(0, 302, 0, 0, 0, 0),
-	(0, 303, 0, 0, 0, 0),
-	(0, 304, 0, 0, 0, 0),
-	(0, 305, 0, 0, 0, 0),
-	(0, 310, 0, 0, 0, 0),
-	(0, 311, 0, 0, 0, 0),
-	(0, 316, 0, 0, 0, 0),
-	(0, 320, 0, 0, 0, 0),
-	(0, 321, 0, 0, 0, 0),
-	(0, 322, 0, 0, 0, 0),
-	(0, 323, 0, 0, 0, 0),
-	(0, 324, 0, 0, 0, 0),
-	(0, 325, 0, 0, 0, 0),
-	(0, 326, 0, 0, 0, 0),
-	(0, 327, 0, 0, 0, 0),
-	(0, 328, 0, 0, 0, 0),
-	(0, 329, 0, 0, 0, 0),
-	(0, 400, 0, 0, 0, 0),
-	(0, 401, 0, 0, 0, 0),
-	(0, 402, 0, 0, 0, 0),
-	(0, 403, 0, 0, 0, 0),
-	(0, 404, 0, 0, 0, 0),
-	(0, 405, 0, 0, 0, 0),
-	(0, 406, 0, 0, 0, 0),
-	(0, 407, 0, 0, 0, 0),
-	(0, 410, 0, 0, 0, 0),
-	(0, 420, 0, 0, 0, 0),
-	(0, 430, 0, 0, 0, 0),
-	(0, 452, 0, 0, 0, 0),
-	(0, 500, 0, 0, 0, 0),
-	(0, 501, 0, 0, 0, 0),
-	(0, 502, 0, 0, 0, 0),
-	(0, 503, 0, 0, 0, 0),
-	(0, 504, 0, 0, 0, 0),
-	(0, 505, 0, 0, 0, 0),
-	(0, 506, 0, 0, 0, 0),
-	(0, 510, 0, 0, 0, 0),
-	(0, 511, 0, 0, 0, 0),
-	(0, 512, 0, 0, 0, 0),
-	(0, 600, 0, 0, 0, 0),
-	(0, 601, 0, 0, 0, 0),
-	(0, 610, 0, 0, 0, 0),
-	(0, 654, 0, 0, 0, 0),
-	(0, 1001, 0, 0, 0, 0),
-	(0, 1002, 0, 0, 0, 0),
-	(0, 1003, 0, 0, 0, 0),
-	(0, 1004, 0, 0, 0, 0),
-	(0, 1005, 0, 0, 0, 0),
-	(0, 1010, 0, 0, 0, 0),
-	(0, 1020, 0, 0, 0, 0),
-	(0, 1030, 0, 0, 0, 0),
-	(0, 1040, 0, 0, 0, 0),
-	(0, 1100, 0, 0, 0, 0),
-	(0, 1101, 0, 0, 0, 0),
-	(0, 1102, 0, 0, 0, 0),
-	(0, 1103, 0, 0, 0, 0),
-	(0, 1104, 0, 0, 0, 0),
-	(0, 1105, 0, 0, 0, 0),
-	(0, 1106, 0, 0, 0, 0),
-	(0, 1107, 0, 0, 0, 0),
-	(0, 1108, 0, 0, 0, 0),
-	(0, 1109, 0, 0, 0, 0),
-	(0, 1110, 0, 0, 0, 0),
-	(0, 1111, 0, 0, 0, 0),
-	(0, 1112, 0, 0, 0, 0),
-	(0, 1113, 0, 0, 0, 0),
-	(0, 1120, 0, 0, 0, 0),
-	(1, 210, 20, 0, 0, 0),
-	(1, 211, 20, 0, 0, 0),
-	(1, 212, 20, 0, 0, 0),
-	(1, 213, 20, 0, 0, 0),
-	(2, 116, 15, 0, 0, 0),
-	(3, 400, 2, 0, 0, 0),
-	(4, 201, 3, 0, 1257000, 180),
-	(5, 111, 6, 0, 1837000, 151),
-	(6, 510, 6, 0, 0, 0),
-	(7, 215, 0, 0, 0, 0),
-	(7, 310, 10, 0, 0, 0),
-	(7, 311, 10, 0, 0, 0),
-	(8, 215, 10, 0, 0, 0),
-	(9, 502, 4, 0, 0, 0),
-	(9, 503, 4, 0, 0, 0),
-	(9, 510, 4, 0, 0, 0);
-
+-- Listage des donnÃ©es de la table mes4.tblpartsreport : ~1â€¯195 rows (environ)
 -- Listage de la structure de table mes4. tblresourcetype
 CREATE TABLE IF NOT EXISTS `tblresourcetype` (
   `Type` int(11) DEFAULT NULL,
   `Description` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblresourcetype : ~5 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblresourcetype : ~5 rows (environ)
 INSERT INTO `tblresourcetype` (`Type`, `Description`) VALUES
 	(0, 'Nothing'),
 	(1, 'Manual Docking'),
@@ -25714,7 +23650,7 @@ CREATE TABLE IF NOT EXISTS `tblservicetimetable` (
   KEY `ResourceID` (`ResourceID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblservicetimetable : ~0 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblservicetimetable : ~0 rows (environ)
 
 -- Listage de la structure de table mes4. tblsqlquery
 CREATE TABLE IF NOT EXISTS `tblsqlquery` (
@@ -25729,7 +23665,7 @@ CREATE TABLE IF NOT EXISTS `tblsqlquery` (
   PRIMARY KEY (`MClass`,`MNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblsqlquery : ~91 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblsqlquery : ~91 rows (environ)
 INSERT INTO `tblsqlquery` (`MClass`, `MNo`, `SqlString`, `QueryParameterList`, `AnswerParameterList`, `Description`, `Short`, `MaxRecords`) VALUES
 	(0, 0, NULL, 0, 0, 'no message', 'no message', 1),
 	(1, 1, '', 0, 26, 'get the actuall version number of MES4', 'GetVersion', 1),
@@ -25838,7 +23774,7 @@ CREATE TABLE IF NOT EXISTS `tblsqlqueryparameter` (
   KEY `ParameterListId` (`ParameterListId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblsqlqueryparameter : ~86 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblsqlqueryparameter : ~86 rows (environ)
 INSERT INTO `tblsqlqueryparameter` (`ParameterId`, `ParameterListId`, `ParameterName`, `Type`, `StringLength`, `CoDeSysV3_Address`, `Step7_Address`) VALUES
 	(1, 1, 'Parameter', 2, 0, 0, 0),
 	(1, 2, 'BufPos', 1, 0, 0, 0),
@@ -25934,7 +23870,7 @@ CREATE TABLE IF NOT EXISTS `tblsqlqueryparameterlist` (
   PRIMARY KEY (`ParameterListId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblsqlqueryparameterlist : ~26 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblsqlqueryparameterlist : ~26 rows (environ)
 INSERT INTO `tblsqlqueryparameterlist` (`ParameterListId`, `ParameterListName`) VALUES
 	(0, 'nothing'),
 	(1, 'GetParameter'),
@@ -25971,7 +23907,7 @@ CREATE TABLE IF NOT EXISTS `tblstates` (
   PRIMARY KEY (`State`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblstates : ~6 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblstates : ~6 rows (environ)
 INSERT INTO `tblstates` (`State`, `Description`, `Short`) VALUES
 	(0, ' not started yet', 'IDLE'),
 	(1, 'started and pending', 'PEND'),
@@ -26015,7 +23951,7 @@ CREATE TABLE IF NOT EXISTS `tblstep` (
   KEY `ONo` (`ONo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblstep : ~66 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblstep : ~66 rows (environ)
 INSERT INTO `tblstep` (`WPNo`, `StepNo`, `ONo`, `OPos`, `Description`, `OpNo`, `NextStepNo`, `FirstStep`, `ErrorStepNo`, `NewPNo`, `PlannedStart`, `PlannedEnd`, `Start`, `End`, `OpNoType`, `ResourceID`, `TransportTime`, `ErrorStep`, `ElectricEnergyCalc`, `ElectricEnergyReal`, `CompressedAirCalc`, `CompressedAirReal`, `FreeString`, `StaffId`, `ErrorRetVal`, `Active`) VALUES
 	(9005, 10, 2382, 1, 'release a defined part on stopper 2', 213, 20, 1, 0, 0, '2026-03-27 14:28:15', '2026-03-27 14:28:35', NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 0, '', 0, 0, 1),
 	(9005, 10, 2382, 2, 'release a defined part on stopper 2', 213, 20, 1, 0, 0, '2026-03-27 14:28:35', '2026-03-27 14:28:55', NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 0, '', 0, 0, 1),
@@ -26109,7 +24045,7 @@ CREATE TABLE IF NOT EXISTS `tblstepdef` (
   KEY `WPNo` (`WPNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblstepdef : ~89 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblstepdef : ~89 rows (environ)
 INSERT INTO `tblstepdef` (`WPNo`, `StepNo`, `Description`, `OpNo`, `NextStepNo`, `FirstStep`, `ErrorStepNo`, `NewPNo`, `OpNoType`, `ResourceID`, `TransportTime`, `ErrorStep`, `SqlWrite`, `ElectricEnergyCalc`, `CompressedAirCalc`, `WorkingTimeCalc`, `FreeString`) VALUES
 	(1214, 10, 'release a defined part on stopper 2', 213, 20, 1, 0, 25, 1, 1, 0, 0, '/* update buffer table */\nUPDATE tblbufferpos SET tblbufferpos.PNo = 0, tblbufferpos.ONo = 0, tblbufferpos.OPos = 0, tblbufferpos.TimeStamp = Null, tblbufferpos.Booked = 0\nWHERE tblbufferpos.BufPos = #Parameter1 AND tblbufferpos.BufNo = 1 AND tblbufferpos.ResourceId = #ResourceID;\n\n/*update buffer table when error */\nError(UPDATE tblbufferpos SET tblbufferpos.PNo = 26, tblbufferpos.TimeStamp = Now(), tblbufferpos.Booked = 0\nWHERE tblbufferpos.BufPos = #Parameter1 AND tblbufferpos.BufNo=1 AND tblbufferpos.ResourceId = #ResourceID);', 0, 0, 20, ''),
 	(1214, 20, 'place fuses', 116, 30, 0, 0, 0, 1, 2, 0, 0, '0', 0, 0, 15, 'http://172.21.0.90/I4.0/mes4/EN/mes4.php?content=manual&OpNo=116&program=#Parameter1'),
@@ -26214,7 +24150,7 @@ CREATE TABLE IF NOT EXISTS `tblstepparameter` (
   KEY `ONo` (`ONo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblstepparameter : ~176 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblstepparameter : ~176 rows (environ)
 INSERT INTO `tblstepparameter` (`WPNo`, `StepNo`, `ONo`, `OPos`, `ParameterNo`, `Parameter`, `ParameterType`) VALUES
 	(9005, 10, 2382, 1, 1, '0', 4),
 	(9005, 10, 2382, 1, 2, '91', 1),
@@ -26405,7 +24341,7 @@ CREATE TABLE IF NOT EXISTS `tblstepparameterdef` (
   KEY `WPNo` (`WPNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblstepparameterdef : ~332 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblstepparameterdef : ~332 rows (environ)
 INSERT INTO `tblstepparameterdef` (`WPNo`, `StepNo`, `ParameterNo`, `Parameter`, `ParameterType`, `QueryChooseParameter`) VALUES
 	(1214, 10, 1, '0', 4, '/* find buffer pos */\nSELECT tblBufferPos.BufPos AS Parameter, tblBufferPos.Booked, tblBufferPos.ONo, tblBufferPos.OPos \nFROM tblBufferPos \nLEFT JOIN tblPNoGroup ON tblBufferPos.Zone = tblPNoGroup.Id \nWHERE (((tblBufferPos.BufPos)>0) AND \n	((tblBufferPos.PNo)=#Parameter3) AND \n	((tblBufferPos.ResourceId)=#ResourceID) AND \n	((tblBufferPos.BufNo)=1) AND \n	((tblPNoGroup.PNo)=#Parameter3) AND \n	((tblBufferPos.Zone)>0) AND \n	((tblBufferPos.Booked)=True)) \n	OR\n	(((tblBufferPos.BufPos)>0) AND \n	((tblBufferPos.PNo)=#Parameter3) AND \n	((tblBufferPos.ResourceId)=#ResourceID) AND \n	((tblBufferPos.BufNo)=1) AND \n	((tblBufferPos.Zone)=0) AND \n	((tblBufferPos.Booked)=True)) \n	OR \n	(((tblBufferPos.BufPos)>0) AND \n	((tblBufferPos.PNo)=#Parameter3) AND \n	((tblBufferPos.ResourceId)=#ResourceID) AND \n	((tblBufferPos.BufNo)=1) AND \n	((tblPNoGroup.PNo)=#Parameter3) AND \n	((tblBufferPos.Zone)>0) AND \n	((tblBufferPos.Booked)=False)) \n	OR\n	(((tblBufferPos.BufPos)>0) AND \n	((tblBufferPos.PNo)=#Parameter3) AND \n	((tblBufferPos.ResourceId)=#ResourceID) AND \n	((tblBufferPos.BufNo)=1) AND \n	((tblBufferPos.Zone)=0) AND \n	((tblBufferPos.Booked)=False)); \n\n/* update tblbufpos */\nUPDATE tblBufferPos \nSET tblBufferPos.Booked = True, tblBufferPos.ONo = #ONo, tblBufferPos.OPos = #OPos \nWHERE (((tblBufferPos.ResourceId)=#ResourceID) AND ((tblBufferPos.BufNo)=1) AND ((tblBufferPos.BufPos=#Parameter1)) AND #ResourceID = #RequestID );'),
 	(1214, 10, 2, '91', 1, ''),
@@ -26747,7 +24683,7 @@ CREATE TABLE IF NOT EXISTS `tbltextlist` (
   `Description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tbltextlist : ~56 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tbltextlist : ~56 rows (environ)
 INSERT INTO `tbltextlist` (`ListID`, `ListPos`, `Description`) VALUES
 	(1, 0, 'no workpiece'),
 	(1, 1, 'front cover'),
@@ -26821,7 +24757,7 @@ CREATE TABLE IF NOT EXISTS `tbltopology` (
   KEY `TargetPositionId` (`TargetPositionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tbltopology : ~8 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tbltopology : ~8 rows (environ)
 INSERT INTO `tbltopology` (`SourceId`, `TargetId`, `SourcePositionId`, `ShuntId`, `TargetPositionId`) VALUES
 	(1, 6, 1, 1, 1),
 	(1, 2, 2, 1, 1),
@@ -26842,13 +24778,13 @@ CREATE TABLE IF NOT EXISTS `tbltopologytype` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tbltopologytype : ~8 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tbltopologytype : ~8 rows (environ)
 INSERT INTO `tbltopologytype` (`ID`, `TopologyName`, `Description`, `Picture`, `Branch`) VALUES
 	(0, 'No Topology', 'No Topology', 'Pictures\\Default\\empty.png', 1),
 	(1, '1 P; 1 Out', 'regular station', 'Pictures\\Default\\Topology\\1S_1Out.png', 1),
-	(2, '2 x (1 P; 1 Out)', 'ASRS, Robot, ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦', 'Pictures\\Default\\Topology\\2x_1S_1Out.png', 1),
-	(3, '(1 P; 1 Out) + (1 P; 2 Out)', 'Shunt, ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦', 'Pictures\\Default\\Topology\\1S_1Out_+_1S_2Out.png', 2),
-	(4, '1 P; x Out (AGV)', 'Robotino, ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦', 'Pictures\\Default\\Topology\\1S_XOut.png', 1),
+	(2, '2 x (1 P; 1 Out)', 'ASRS, Robot, ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦', 'Pictures\\Default\\Topology\\2x_1S_1Out.png', 1),
+	(3, '(1 P; 1 Out) + (1 P; 2 Out)', 'Shunt, ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦', 'Pictures\\Default\\Topology\\1S_1Out_+_1S_2Out.png', 2),
+	(4, '1 P; x Out (AGV)', 'Robotino, ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦', 'Pictures\\Default\\Topology\\1S_XOut.png', 1),
 	(5, '1 P; 2 Out', 'Shunt 2', 'Pictures\\Default\\Topology\\1S_2Out.png', 2),
 	(6, '1 P; 3 Out', 'Shunt 3', 'Pictures\\Default\\Topology\\1S_3Out.png', 3),
 	(7, '(1 P; 2 Out) + (1 P; 3 Out)', 'Shunt 2, Shunt 3', 'Pictures\\Default\\Topology\\1S_2Out_+_1S_3Out.png', 4);
@@ -26862,7 +24798,7 @@ CREATE TABLE IF NOT EXISTS `tblusercontrol` (
   PRIMARY KEY (`UserLevel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblusercontrol : ~4 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblusercontrol : ~4 rows (environ)
 INSERT INTO `tblusercontrol` (`UserLevel`, `RoleName`, `Description`, `Password`) VALUES
 	(0, 'Guest', 'A guest can inspect the hole data but can\'t change anything.', NULL),
 	(1, 'Operator', 'An operator can inspect the hole data and add orders.', 'Festo1'),
@@ -26881,7 +24817,7 @@ CREATE TABLE IF NOT EXISTS `tblworkplandef` (
   KEY `Type` (`Type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblworkplandef : ~18 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblworkplandef : ~18 rows (environ)
 INSERT INTO `tblworkplandef` (`WPNo`, `Description`, `Type`, `Short`, `PictureNo`, `PNo`) VALUES
 	(0, 'no workplan', 0, 'nothing', 2, 0),
 	(1214, 'Black cover both fuses', 1, 'Black cover both fuses', 2, 0),
@@ -26896,7 +24832,7 @@ INSERT INTO `tblworkplandef` (`WPNo`, `Description`, `Type`, `Short`, `PictureNo
 	(9001, 'un test IUT LUMIERE01', 2, 'test01', 2, 0),
 	(9005, 'Ligne sans Robotino', 1, 'Apres Midi', 2, 0),
 	(9008, 'une gamme complete', 2, 'gamme complete', 2, 0),
-	(9009, 'Gamme avec opérations en parallele', 2, 'Gamme parallele', 2, 0),
+	(9009, 'Gamme avec opÃ©rations en parallele', 2, 'Gamme parallele', 2, 0),
 	(9011, 'essai customer 24-11-25', 2, 'essai-24-11-25', 2, 0),
 	(9012, 'Essai le 17/11', 2, 'Essai Matthieu', 2, 0),
 	(9013, 'Essai avec le robotino', 1, 'Avec Robotino Matthieu', 2, 0),
@@ -26909,7 +24845,7 @@ CREATE TABLE IF NOT EXISTS `tblworkplantype` (
   PRIMARY KEY (`Type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table mes4.tblworkplantype : ~7 rows (environ)
+-- Listage des donnÃ©es de la table mes4.tblworkplantype : ~7 rows (environ)
 INSERT INTO `tblworkplantype` (`Type`, `Description`) VALUES
 	(0, 'all'),
 	(1, 'production'),
