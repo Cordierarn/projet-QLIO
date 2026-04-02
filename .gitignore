@@ -55,3 +55,8 @@ cookies.txt
 # Fichiers temporaires Microsoft Office
 ~$*
 *.tmp
+
+# Documents pédagogiques (consignes professeur)
+Stat & More*.pdf
+Maquette_Dashboard_TElefan*.pdf
+CdC_final.docx
