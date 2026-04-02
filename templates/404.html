@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Page introuvable – T'Elefan MES 4.0{% endblock %}
+{% block page_title %}Erreur 404{% endblock %}
+{% block page_sub %}Page introuvable{% endblock %}
+
+{% block content %}
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;gap:24px;">
+
+  <div style="font-size:96px;font-weight:800;color:var(--accent);opacity:0.25;line-height:1;">404</div>
+
+  <div>
+    <div style="font-size:24px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">
+      Cette page n'existe pas
+    </div>
+    <div style="color:var(--text-muted);font-size:14px;max-width:420px;">
+      L'URL demandée n'a pas été trouvée sur ce serveur.
+      Vérifiez l'adresse ou utilisez le menu de navigation.
+    </div>
+  </div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+    <a href="{{ url_for('dashboard') }}" class="btn-filter" style="padding:10px 20px;font-size:14px;">
+      <i data-lucide="home" style="width:15px;height:15px;margin-right:6px;vertical-align:middle"></i>
+      Accueil
+    </a>
+    <a href="javascript:history.back()" class="btn-filter-reset" style="padding:10px 20px;font-size:14px;">
+      <i data-lucide="arrow-left" style="width:15px;height:15px;margin-right:6px;vertical-align:middle"></i>
+      Retour
+    </a>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 # Dashboard MES 4.0 – Groupe n°7
 
-> Dashboard de pilotage industriel pour la plateforme **Festo MES 4.0**.
-> Backend **Flask (Python)**, frontend **HTML/CSS** avec icônes SVG Lucide et graphiques ApexCharts.
+> Dashboard de pilotage industriel pour la plateforme **Festo MES 4.0**.  
+> Backend **Flask (Python)**, frontend **HTML/CSS** avec icônes Lucide et graphiques ApexCharts.  
 > Données stockées dans **MariaDB** (Docker).
 
 ---
@@ -27,7 +27,8 @@
 | **Docker Desktop** | 4.0+ | https://www.docker.com/products/docker-desktop/ |
 | **Python** | 3.10+ | https://www.python.org/downloads/ |
 
-> Docker Desktop doit être **lancé** avant de continuer.
+> Docker Desktop doit être **lancé et en cours d'exécution** avant de continuer.  
+> Python doit être ajouté au PATH lors de l'installation (cocher *"Add Python to PATH"*).
 
 ---
 
@@ -40,12 +41,18 @@ git clone https://github.com/Cordierarn/projet-QLIO.git
 cd projet-QLIO
 ```
 
-### 2. Créer un environnement virtuel Python
+### 2. Créer et activer l'environnement virtuel Python
 
 ```powershell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
+
+> Si PowerShell bloque les scripts :
+> ```powershell
+> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+> ```
+> Le prompt doit afficher `(venv)` en début de ligne.
 
 ### 3. Installer les dépendances Python
 
@@ -53,87 +60,87 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-| Package | Rôle |
-|---------|------|
-| `flask` | Framework web backend |
-| `pandas` | Manipulation des données |
-| `sqlalchemy` | Connexion à la base de données |
-| `pymysql` | Driver MySQL/MariaDB |
-
-### 4. Démarrer les conteneurs Docker (MariaDB + phpMyAdmin)
+### 4. Démarrer les conteneurs Docker
 
 ```powershell
 docker compose up -d
 ```
 
-Vérifiez que les conteneurs tournent :
+Vérifier que les deux conteneurs sont actifs :
 
 ```powershell
 docker ps
 ```
 
+Résultat attendu :
+
 ```
-NAMES                      PORTS
-projetqlio-mariadb-1       0.0.0.0:3306->3306/tcp
-projetqlio-phpmyadmin-1    0.0.0.0:8080->80/tcp
+CONTAINER ID   IMAGE                   NAMES      PORTS
+xxxxxxxxxxxx   mariadb:latest          db_qlio    0.0.0.0:3306->3306/tcp
+xxxxxxxxxxxx   phpmyadmin/phpmyadmin   pma_qlio   0.0.0.0:8080->80/tcp
 ```
 
-### 5. Importer le dump SQL dans MariaDB
+### 5. Importer la base de données
 
 > Étape indispensable — la base est vide au premier démarrage.
 
-
-**Via PowerShell (recommandé — pas de limite de taille) :**
-
 ```powershell
-Get-Content "FestoMES-2026-03-31-2.sql" | docker exec -i db_qlio mariadb -u root -pexample_root_password
+# Étape 1 : copier le fichier SQL dans le conteneur
+docker cp FestoMES-2026-03-31-2.sql db_qlio:/tmp/mes4.sql
+
+# Étape 2 : importer (--binary-mode requis pour compatibilité HeidiSQL)
+docker exec db_qlio bash -c "mariadb -u root -pexample_root_password --binary-mode --force < /tmp/mes4.sql"
 ```
 
-> Le SQL crée automatiquement la base `mes4` et importe toutes les tables.
-
-**phpMyAdmin (fichiers < 2 MB seulement) :**
-
-1. Ouvrir http://localhost:8080
-2. Onglet **Importer** (sur la page d'accueil, sans sélectionner de base)
-3. Choisir `FestoMES-2026-03-31-2.sql` → **Exécuter**
-
-### 6. Vérifier l'import
+### 6. Créer l'utilisateur applicatif
 
 ```powershell
-docker exec projetqlio-mariadb-1 mariadb -u root -pexample_root_password MES4 -e "SHOW TABLES;"
+docker exec db_qlio mariadb -u root -pexample_root_password -e "CREATE USER IF NOT EXISTS 'qlio_user'@'%' IDENTIFIED BY 'Qlio_MES4@2026'; GRANT SELECT ON mes4.* TO 'qlio_user'@'%'; FLUSH PRIVILEGES;"
 ```
 
-Vous devez voir : `tblfinorder`, `tblfinorderpos`, `tblfinstep`, `tblmachinereport`, etc.
+> `qlio_user` dispose uniquement des droits `SELECT` — cela limite la surface d'attaque.
+
+### 7. Vérifier l'import
+
+```powershell
+docker exec db_qlio mariadb -u root -pexample_root_password mes4 -e "SELECT table_name, table_rows FROM information_schema.tables WHERE table_schema='mes4' ORDER BY table_rows DESC LIMIT 10;"
+```
+
+Tables critiques attendues : `tblmachinereport` (~13 000+ lignes), `tblfinstep` (~1 600+), `tblfinorder` (~200+).
 
 ---
 
 ## Lancement du projet
 
+Avec le venv activé et les conteneurs Docker en cours d'exécution :
+
 ```powershell
 python app.py
 ```
 
-Le dashboard est accessible à :
-**http://localhost:5000**
+Sortie attendue :
 
-**Identifiants par défaut :**
+```
+[T'Elefan MES 4.0] http://localhost:5000
+ * Serving Flask app 'app'
+ * Running on http://0.0.0.0:5000
+```
 
-| Champ | Valeur |
-|-------|--------|
-| Email | `admin@telefan.fr` |
-| Mot de passe | `telefan2026` |
+Le dashboard est accessible à : **http://localhost:5000**
 
-> Pour arrêter l'application : `Ctrl+C` dans le terminal.
+Pour arrêter : `Ctrl+C` dans le terminal.
 
 ---
 
 ## Accès aux interfaces
 
-| Service | URL | Identifiants |
-|---------|-----|-------------|
-| **Dashboard MES 4.0** | http://localhost:5000 | `admin@telefan.fr` / `telefan2026` |
-| **phpMyAdmin** | http://localhost:8080 | `root` / `example_root_password` |
-| **MariaDB** (direct) | `localhost:3306` | `root` / `example_root_password` |
+| Service | URL | Utilisateur | Mot de passe |
+|---------|-----|-------------|-------------|
+| **Dashboard – Administrateur** | http://localhost:5000 | `admin@telefan.fr` | `Admin@MES4_2026!` |
+| **Dashboard – Opérateur** | http://localhost:5000 | `operateur@telefan.fr` | `Oper@Prod_2026` |
+| **phpMyAdmin** | http://localhost:8080 | `root` | `example_root_password` |
+| **MariaDB (app)** | `localhost:3306` | `qlio_user` | `Qlio_MES4@2026` |
+| **MariaDB (admin)** | `localhost:3306` | `root` | `example_root_password` |
 
 ---
 
@@ -143,21 +150,22 @@ Le dashboard est accessible à :
 
 | Variable | Valeur par défaut | Description |
 |----------|------------------|-------------|
-| `DB_HOST` | `localhost` | Hôte de la base de données |
-| `DB_PORT` | `3306` | Port de MariaDB |
-| `DB_USER` | `root` | Utilisateur BDD |
-| `DB_PASSWORD` | `example_root_password` | Mot de passe BDD |
-| `DB_NAME` | `mes4` | Nom de la base (créée par le SQL) |
-| `ADMIN_EMAIL` | `admin@telefan.fr` | Email de connexion au dashboard |
-| `ADMIN_PASSWORD` | `telefan2026` | Mot de passe de connexion |
+| `DB_HOST` | `localhost` | Hôte MariaDB |
+| `DB_PORT` | `3306` | Port MariaDB |
+| `DB_USER` | `qlio_user` | Utilisateur BDD |
+| `DB_PASSWORD` | `Qlio_MES4@2026` | Mot de passe BDD |
+| `DB_NAME` | `mes4` | Nom de la base |
+| `ADMIN_EMAIL` | `admin@telefan.fr` | Email admin dashboard |
+| `ADMIN_PASSWORD` | `Admin@MES4_2026!` | Mot de passe admin |
+| `OPER_EMAIL` | `operateur@telefan.fr` | Email opérateur |
+| `OPER_PASSWORD` | `Oper@Prod_2026` | Mot de passe opérateur |
 | `SECRET_KEY` | `telefan-mes-4-secret-2026` | Clé de session Flask |
-| `PORT` | `5000` | Port d'écoute Flask |
+| `PORT` | `5000` | Port Flask |
 
 Exemple :
 
 ```powershell
-$env:DB_HOST = "192.168.1.100"
-$env:ADMIN_PASSWORD = "mon_mot_de_passe"
+$env:DB_PORT = "3307"
 python app.py
 ```
 
@@ -167,25 +175,28 @@ python app.py
 
 ```
 projet-QLIO/
-├── app.py                      # Backend Flask (routes, auth, données)
+├── app.py                      # Backend Flask (routes, auth, KPIs)
 ├── db.py                       # Requêtes SQL et fonctions KPI
-├── requirements.txt            # Dépendances Python
-├── docker-compose.yml          # MariaDB + phpMyAdmin
-├── FestoMES-2026-03-31-2.sql   # Dump base de données (version courante – 31/03/2026)
-├── FestoMES-2025-11-25-v2.sql  # Dump base de données (version précédente)
-├── data_all.csv                # Données capteurs complets (puissance, pression, débit)
-├── dataEnergy.csv              # Série temporelle longue (puissance phases L1/L2/L3)
+├── requirements.txt            # Dépendances Python (versions exactes)
+├── docker-compose.yml          # MariaDB (db_qlio) + phpMyAdmin (pma_qlio)
+├── FestoMES-2026-03-31-2.sql   # Dump complet Festo MES 4.0
+├── data_all.csv                # Données capteurs Robotino (puissance, pression, débit)
+├── dataEnergy.csv              # Série temporelle énergie (phases L1/L2/L3)
 ├── templates/
 │   ├── base.html               # Layout : sidebar, header, CDN JS
 │   ├── login.html              # Page de connexion
+│   ├── 404.html                # Page d'erreur 404
 │   ├── dashboard.html          # Accueil – Vue générale
 │   ├── production.html         # KPI 1 à 4 – Suivi des OF
 │   ├── qualite.html            # KPI 5 à 9 – TRS, erreurs
 │   ├── machines.html           # KPI 10 – Temps d'arrêt
-│   └── maintenance.html        # KPI 11-12 – Buffers, énergie
+│   ├── maintenance.html        # KPI 11-12 – Buffers, énergie
+│   └── geographie.html         # Site – Carte Leaflet + infos IUT
 └── static/
-    └── css/
-        └── style.css           # Thème sombre T'Elefan
+    ├── css/
+    │   └── style.css           # Thème sombre T'Elefan
+    └── img/
+        └── logo_telefan.png    # Logo T'Elefan
 ```
 
 ---
@@ -196,59 +207,69 @@ projet-QLIO/
 
 | KPI | Source | Description |
 |-----|--------|-------------|
-| **KPI 1** – Produits en cours | `tblstep` | Nombre de produits actifs (distinct ONo/OPos, `Active=1`) |
-| **KPI 2** – Lead Time | `tblfinorderpos` | Écart entre durée planifiée et réelle |
-| **KPI 3** – Taux d'avancement | `tblorderpos` | Produits terminés / total produits (top 3 FIFO) |
-| **KPI 4** – OF terminés | `tblfinorder` | Histogramme des ordres terminés/jour |
+| **KPI 1** – Produits en cours | `tblstep` | Produits actifs (distinct ONo/OPos, `Active=1`) |
+| **KPI 2** – Lead Time | `tblfinorderpos` | Écart durée planifiée vs réelle |
+| **KPI 3** – Avancement OF | `tblorderpos` | Produits terminés / total (top 3 FIFO) |
+| **KPI 4** – OF terminés/jour | `tblfinorder` | Histogramme journalier |
 
 ### Qualité (KPI 5–9)
 
 | KPI | Source | Description |
 |-----|--------|-------------|
 | **KPI 5** – TRS / OEE | `tblmachinereport` + `tblfinstep` | Disponibilité × Performance × Qualité |
-| **KPI 6** – Occupation | `tblmachinereport` | Taux Busy par ressource |
-| **KPI 7** – Erreurs | `tblfinstep` | Total d'erreurs détectées |
-| **KPI 8** – Pareto erreurs | `tblfinstep` + `tblmainterror` | Erreurs les plus fréquentes |
+| **KPI 6** – Occupation machines | `tblmachinereport` | Taux Busy par ressource |
+| **KPI 7** – Erreurs totales | `tblfinstep` | Nombre total d'erreurs détectées |
+| **KPI 8** – Pareto erreurs | `tblfinstep` + `tblmainterror` | Erreurs les plus fréquentes par étape |
 | **KPI 9** – First Pass Yield | `tblfinstep` | % d'ordres sans erreur au 1er passage |
 
 ### Machines (KPI 10)
 
 | KPI | Source | Description |
 |-----|--------|-------------|
-| **KPI 10** – Temps d'arrêt | `tblmachinereport` | MTBF, MTTR, arrêts par ressource |
+| **KPI 10** – Temps d'arrêt | `tblmachinereport` | MTBF, MTTR, pannes par ressource |
 
 ### Maintenance (KPI 11–12)
 
 | KPI | Source | Description |
 |-----|--------|-------------|
 | **KPI 11** – Buffers | `tblbufferpos` | Taux de remplissage par buffer |
-| **KPI 12** – Énergie | `tblfinstep` + `data_all.csv` + `dataEnergy.csv` | Consommation électrique réelle vs calculée + courbes capteurs |
+| **KPI 12** – Énergie | `tblfinstep` + `data_all.csv` + `dataEnergy.csv` | Consommation réelle vs calculée + courbes capteurs |
 
 ---
 
 ## Dépannage
 
-### Connexion BDD impossible
+### Erreur de connexion BDD
 
-1. Vérifier Docker : `docker ps`
-2. Vérifier l'import SQL (voir étape 5)
-3. Tester manuellement :
-   ```powershell
-   docker exec projetqlio-mariadb-1 mariadb -u root -pexample_root_password MES4 -e "SELECT 1;"
-   ```
+```
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server")
+```
 
-### Table 'xxx' doesn't exist
+Docker n'est pas démarré ou les conteneurs ne tournent pas :
 
-L'import SQL n'a pas été effectué. Refaire l'étape 5.
+```powershell
+docker ps
+docker compose up -d
+```
+
+### Page blanche / KPIs à zéro
+
+L'import SQL n'a pas été effectué. Reprendre l'étape 5.
+
+### `Activate.ps1 cannot be loaded`
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
 
 ### Port 3306 déjà utilisé
 
-Modifier `docker-compose.yml` :
-```yaml
-ports:
-  - "3307:3306"
+Modifier `docker-compose.yml` → `"3307:3306"`, puis :
+
+```powershell
+$env:DB_PORT = "3307"
+python app.py
 ```
-Puis : `$env:DB_PORT = "3307"`
 
 ### Port 5000 déjà utilisé
 
@@ -261,6 +282,5 @@ python app.py
 
 ## Auteurs
 
-**Arnaud Cordier** · **Corentin Seu** · **Alem Nadji** — Groupe n°7
-
-*Projet réalisé dans le cadre du BUT SD – IUT*
+**Arnaud Cordier** · **Corentin Seu** · **Alem Nadji** — Groupe n°7  
+*BUT Science des Données – IUT Lumière Lyon 2*

@@ -6,6 +6,42 @@
 
 {% block content %}
 
+<!-- ── Filtre temporel ───────────────────────────────────────────────── -->
+<form method="get" action="/maintenance" class="filter-bar mb-16">
+  <div class="filter-bar-inner">
+    <i data-lucide="calendar" style="color:var(--text-muted);flex-shrink:0"></i>
+    <label class="filter-label">Du</label>
+    <input type="date" name="from" id="f-from" class="filter-input"
+           value="{{ date_from }}"
+           {% if db_min %}min="{{ db_min }}" max="{{ db_max }}"{% endif %}>
+    <label class="filter-label">au</label>
+    <input type="date" name="to" id="f-to" class="filter-input"
+           value="{{ date_to }}"
+           {% if db_min %}min="{{ db_min }}" max="{{ db_max }}"{% endif %}>
+    <button type="submit" class="btn-filter">Appliquer</button>
+    {% if date_from or date_to %}
+    <a href="/maintenance" class="btn-filter-reset">
+      <i data-lucide="x" style="width:13px;height:13px"></i> Réinitialiser
+    </a>
+    {% endif %}
+    {% if db_min %}
+    <span class="filter-presets">
+      <button type="button" class="preset" data-days="7">7 j</button>
+      <button type="button" class="preset" data-days="30">30 j</button>
+      <button type="button" class="preset" data-days="90">90 j</button>
+      <button type="button" class="preset" data-days="0">Tout</button>
+    </span>
+    {% endif %}
+    {% if date_from or date_to %}
+    <span class="filter-active-hint">
+      {% if date_from and date_to %}{{ date_from }} → {{ date_to }}
+      {% elif date_from %}depuis {{ date_from }}
+      {% else %}jusqu'au {{ date_to }}{% endif %}
+    </span>
+    {% endif %}
+  </div>
+</form>
+
 <!-- ── 3 KPI Cards ───────────────────────────────────────────────────── -->
 <div class="grid-3 mb-16">
 
@@ -307,5 +343,29 @@ if (powerData.length > 0) {
 }
 
 lucide.createIcons();
+
+// ── Presets de période ──────────────────────────────────────────────
+(function () {
+  const dbMax  = "{{ db_max }}";
+  const fromEl = document.getElementById('f-from');
+  const toEl   = document.getElementById('f-to');
+  if (!fromEl) return;
+  document.querySelectorAll('.preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const days = parseInt(btn.dataset.days, 10);
+      if (days === 0) {
+        fromEl.value = '';
+        toEl.value   = '';
+      } else {
+        const end   = dbMax ? new Date(dbMax) : new Date();
+        const start = new Date(end);
+        start.setDate(start.getDate() - days + 1);
+        fromEl.value = start.toISOString().slice(0, 10);
+        toEl.value   = end.toISOString().slice(0, 10);
+      }
+      fromEl.closest('form').submit();
+    });
+  });
+})();
 </script>
 {% endblock %}

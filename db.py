@@ -89,52 +89,87 @@ def kpi_production_progress():
     return {"planned": p, "finished": f, "active": a, "ratio": round(a / (p + f or 1), 4)}
 
 
-def kpi_lead_time_delta(date_clause: str = "", params: dict | None = None):
+def kpi_lead_time_delta(date_from=None, date_to=None):
+    cond, params = [], {}
+    if date_from:
+        cond.append("End >= :date_from")
+        params["date_from"] = date_from
+    if date_to:
+        cond.append("End < DATE_ADD(:date_to, INTERVAL 1 DAY)")
+        params["date_to"] = date_to
+    extra = (" AND " + " AND ".join(cond)) if cond else ""
     df = run_query(f"""
         SELECT CONCAT(ONo, '-', OPos)                          AS order_ref,
                TIMESTAMPDIFF(SECOND, PlannedStart, PlannedEnd) AS planned_secs,
                TIMESTAMPDIFF(SECOND, Start, End)               AS actual_secs
         FROM tblfinorderpos
-        WHERE Start IS NOT NULL AND End IS NOT NULL {date_clause}
-    """, params or {})
+        WHERE Start IS NOT NULL AND End IS NOT NULL{extra}
+    """, params)
     if df.empty:
         return df
     df["delta_secs"] = df["actual_secs"] - df["planned_secs"]
     return df
 
-def kpi_finished_per_day(date_clause: str = "", params: dict | None = None):
+
+def kpi_finished_per_day(date_from=None, date_to=None):
+    cond, params = [], {}
+    if date_from:
+        cond.append("End >= :date_from")
+        params["date_from"] = date_from
+    if date_to:
+        cond.append("End < DATE_ADD(:date_to, INTERVAL 1 DAY)")
+        params["date_to"] = date_to
+    extra = (" AND " + " AND ".join(cond)) if cond else ""
     return run_query(f"""
         SELECT DATE(End) AS jour, COUNT(*) AS nb_ordres
         FROM tblfinorder
-        WHERE End IS NOT NULL {date_clause}
+        WHERE End IS NOT NULL{extra}
         GROUP BY DATE(End)
         ORDER BY jour
-    """, params or {})
+    """, params)
 
 
-def kpi_trs():
-    avail = run_query("""
+def kpi_trs(date_from=None, date_to=None):
+    cond_mr, p_mr = [], {}
+    cond_fs, p_fs = [], {}
+    if date_from:
+        cond_mr.append("TimeStamp >= :date_from")
+        p_mr["date_from"] = date_from
+        cond_fs.append("End >= :date_from")
+        p_fs["date_from"] = date_from
+    if date_to:
+        cond_mr.append("TimeStamp < DATE_ADD(:date_to, INTERVAL 1 DAY)")
+        p_mr["date_to"] = date_to
+        cond_fs.append("End < DATE_ADD(:date_to, INTERVAL 1 DAY)")
+        p_fs["date_to"] = date_to
+    where_mr  = ("WHERE " + " AND ".join(cond_mr)) if cond_mr else ""
+    extra_fs  = (" AND " + " AND ".join(cond_fs)) if cond_fs else ""
+    where_fs  = ("WHERE " + " AND ".join(cond_fs)) if cond_fs else ""
+
+    avail = run_query(f"""
         SELECT ResourceID,
                SUM(CASE WHEN Busy = 1 THEN 1 ELSE 0 END) AS busy_ticks,
                COUNT(*)                                   AS total_ticks
         FROM tblmachinereport
+        {where_mr}
         GROUP BY ResourceID
-    """)
-    perf = run_query("""
+    """, p_mr)
+    perf = run_query(f"""
         SELECT ResourceID,
                AVG(TIMESTAMPDIFF(SECOND, PlannedStart, PlannedEnd)) AS planned_secs,
                AVG(TIMESTAMPDIFF(SECOND, Start, End))               AS actual_secs
         FROM tblfinstep
-        WHERE Start IS NOT NULL AND End IS NOT NULL
+        WHERE Start IS NOT NULL AND End IS NOT NULL{extra_fs}
         GROUP BY ResourceID
-    """)
-    qual = run_query("""
+    """, p_fs)
+    qual = run_query(f"""
         SELECT ResourceID,
                SUM(CASE WHEN ErrorStep=1 OR ErrorRetVal<>0 THEN 1 ELSE 0 END) AS errors,
                COUNT(*)                                                         AS total_steps
         FROM tblfinstep
+        {where_fs}
         GROUP BY ResourceID
-    """)
+    """, p_fs)
     if avail.empty and perf.empty and qual.empty:
         return pd.DataFrame()
     df = pd.merge(avail, perf, how="outer", on="ResourceID")
@@ -147,23 +182,40 @@ def kpi_trs():
     return df[["ResourceID", "availability", "performance", "quality", "trs"]]
 
 
-def kpi_machine_load():
-    df = run_query("""
+def kpi_machine_load(date_from=None, date_to=None):
+    cond, params = [], {}
+    if date_from:
+        cond.append("TimeStamp >= :date_from")
+        params["date_from"] = date_from
+    if date_to:
+        cond.append("TimeStamp < DATE_ADD(:date_to, INTERVAL 1 DAY)")
+        params["date_to"] = date_to
+    where = ("WHERE " + " AND ".join(cond)) if cond else ""
+    df = run_query(f"""
         SELECT ResourceID,
                SUM(CASE WHEN Busy = 1 THEN 1 ELSE 0 END) AS busy_ticks,
                COUNT(*)                                   AS total_ticks
         FROM tblmachinereport
+        {where}
         GROUP BY ResourceID
-    """)
+    """, params)
     if df.empty:
         return df
     df["occupation"] = df.apply(lambda r: r.busy_ticks / r.total_ticks if r.total_ticks else 0.0, axis=1)
     return df[["ResourceID", "occupation"]]
 
 
-def kpi_errors_by_step():
+def kpi_errors_by_step(date_from=None, date_to=None):
     """KPI 8 – taux d'erreur (%) par numéro d'étape, trié Pareto."""
-    return run_query("""
+    cond, params = [], {}
+    if date_from:
+        cond.append("End >= :date_from")
+        params["date_from"] = date_from
+    if date_to:
+        cond.append("End < DATE_ADD(:date_to, INTERVAL 1 DAY)")
+        params["date_to"] = date_to
+    where = ("WHERE " + " AND ".join(cond)) if cond else ""
+    return run_query(f"""
         SELECT StepNo,
                COUNT(*) AS total,
                SUM(CASE WHEN ErrorStep=1 OR ErrorRetVal<>0 THEN 1 ELSE 0 END) AS errors,
@@ -172,11 +224,12 @@ def kpi_errors_by_step():
                  2
                ) AS error_rate
         FROM tblfinstep
+        {where}
         GROUP BY StepNo
         HAVING total > 0
         ORDER BY error_rate DESC
         LIMIT 25
-    """)
+    """, params)
 
 
 def kpi_top_errors():
@@ -199,22 +252,40 @@ def kpi_top_errors():
     return df[["error_code", "description", "occurrences"]]
 
 
-def kpi_total_errors() -> int:
-    df = run_query("""
+def kpi_total_errors(date_from=None, date_to=None) -> int:
+    cond, params = [], {}
+    if date_from:
+        cond.append("End >= :date_from")
+        params["date_from"] = date_from
+    if date_to:
+        cond.append("End < DATE_ADD(:date_to, INTERVAL 1 DAY)")
+        params["date_to"] = date_to
+    where = ("WHERE " + " AND ".join(cond)) if cond else ""
+    df = run_query(f"""
         SELECT SUM(CASE WHEN ErrorStep=1 OR ErrorRetVal<>0 THEN 1 ELSE 0 END) AS n
         FROM tblfinstep
-    """)
+        {where}
+    """, params)
     val = df.iloc[0]["n"] if not df.empty else 0
     return int(val) if val else 0
 
 
-def kpi_first_pass_yield():
-    df = run_query("""
+def kpi_first_pass_yield(date_from=None, date_to=None):
+    cond, params = [], {}
+    if date_from:
+        cond.append("End >= :date_from")
+        params["date_from"] = date_from
+    if date_to:
+        cond.append("End < DATE_ADD(:date_to, INTERVAL 1 DAY)")
+        params["date_to"] = date_to
+    where = ("WHERE " + " AND ".join(cond)) if cond else ""
+    df = run_query(f"""
         SELECT ONo,
                SUM(CASE WHEN ErrorStep=1 OR ErrorRetVal<>0 THEN 1 ELSE 0 END) AS errors
         FROM tblfinstep
+        {where}
         GROUP BY ONo
-    """)
+    """, params)
     if df.empty:
         return 0.0, 0, 0
     ok    = int((df["errors"] == 0).sum())
@@ -227,6 +298,20 @@ def get_machine_date_range():
     df = run_query("""
         SELECT MIN(TimeStamp) AS min_ts, MAX(TimeStamp) AS max_ts
         FROM tblmachinereport
+    """)
+    if df.empty or df.iloc[0]["min_ts"] is None:
+        return None, None
+    min_ts = pd.to_datetime(df.iloc[0]["min_ts"])
+    max_ts = pd.to_datetime(df.iloc[0]["max_ts"])
+    return min_ts.strftime("%Y-%m-%d"), max_ts.strftime("%Y-%m-%d")
+
+
+def get_finstep_date_range():
+    """Retourne (min_date, max_date) depuis tblfinstep.End."""
+    df = run_query("""
+        SELECT MIN(End) AS min_ts, MAX(End) AS max_ts
+        FROM tblfinstep
+        WHERE End IS NOT NULL
     """)
     if df.empty or df.iloc[0]["min_ts"] is None:
         return None, None

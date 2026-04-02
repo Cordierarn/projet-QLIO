@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Géographie – T'Elefan MES 4.0{% endblock %}
+{% block page_title %}Site de Production{% endblock %}
+{% block page_sub %}IUT Lumière Lyon 2 – Campus Portes des Alpes, Bron{% endblock %}
+
+{% block content %}
+
+<!-- ── 4 KPI Cards ───────────────────────────────────────────────────── -->
+<div class="grid-4 mb-16">
+
+  <div class="kpi-card accent">
+    <div class="kpi-label">OF en cours</div>
+    <div class="kpi-value accent">{{ in_prog_total }}</div>
+    <div class="kpi-sub">produits en production</div>
+  </div>
+
+  <div class="kpi-card green">
+    <div class="kpi-label">OF terminés</div>
+    <div class="kpi-value green">{{ finished }}</div>
+    <div class="kpi-sub">total cumulé</div>
+  </div>
+
+  <div class="kpi-card amber">
+    <div class="kpi-label">TRS Global</div>
+    <div class="kpi-value amber">{{ trs_pct }}%</div>
+    <div class="kpi-sub">rendement synthétique</div>
+  </div>
+
+  <div class="kpi-card {% if fill_pct > 80 %}amber{% else %}green{% endif %}">
+    <div class="kpi-label">Remplissage Buffers</div>
+    <div class="kpi-value {% if fill_pct > 80 %}amber{% else %}green{% endif %}">{{ fill_pct }}%</div>
+    <div class="kpi-sub">taux moyen buffers</div>
+  </div>
+
+</div>
+
+<!-- ── Carte Leaflet ─────────────────────────────────────────────────── -->
+<div class="grid-2 mb-16">
+
+  <div class="section" style="grid-column:1/3">
+    <div class="section-title">
+      <i data-lucide="map-pin"></i> Localisation – IUT Lumière Lyon 2, Campus Portes des Alpes, Bron
+    </div>
+    <div id="map" style="height:460px;border-radius:10px;overflow:hidden;margin-top:12px;"></div>
+  </div>
+
+</div>
+
+<!-- ── Informations site ──────────────────────────────────────────────── -->
+<div class="grid-3 mb-16">
+
+  <div class="section">
+    <div class="section-title"><i data-lucide="building-2"></i> Site de production</div>
+    <table class="data-table" style="margin-top:8px">
+      <tbody>
+        <tr><td style="color:var(--text-muted)">Établissement</td><td>IUT Lumière Lyon 2</td></tr>
+        <tr><td style="color:var(--text-muted)">Adresse</td><td>160 Bd de l'Université</td></tr>
+        <tr><td style="color:var(--text-muted)">Ville</td><td>Bron (69500)</td></tr>
+        <tr><td style="color:var(--text-muted)">Département</td><td>Rhône (69)</td></tr>
+        <tr><td style="color:var(--text-muted)">Région</td><td>Auvergne-Rhône-Alpes</td></tr>
+        <tr><td style="color:var(--text-muted)">Coordonnées</td><td>45.723874°N · 4.915885°E</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i data-lucide="cpu"></i> Système MES</div>
+    <table class="data-table" style="margin-top:8px">
+      <tbody>
+        <tr><td style="color:var(--text-muted)">Plateforme</td><td>Festo MES 4.0</td></tr>
+        <tr><td style="color:var(--text-muted)">Serveur BDD</td><td>MariaDB (Docker)</td></tr>
+        <tr><td style="color:var(--text-muted)">Interface</td><td>Flask 3.1 · Python 3.14</td></tr>
+        <tr><td style="color:var(--text-muted)">Capteurs CSV</td><td>Robotino · data_all.csv</td></tr>
+        <tr><td style="color:var(--text-muted)">Énergie CSV</td><td>dataEnergy.csv</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i data-lucide="users"></i> Équipe projet</div>
+    <table class="data-table" style="margin-top:8px">
+      <tbody>
+        <tr><td style="color:var(--text-muted)">Groupe</td><td>n°7 – BUT Science des Données</td></tr>
+        <tr><td style="color:var(--text-muted)">Membres</td><td>Arnaud Cordier</td></tr>
+        <tr><td style="color:var(--text-muted)"></td><td>Corentin Seu</td></tr>
+        <tr><td style="color:var(--text-muted)"></td><td>Alem Nadji</td></tr>
+        <tr><td style="color:var(--text-muted)">Livraison</td><td>02 avril 2026</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- Leaflet CSS/JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// ── Leaflet map init ─────────────────────────────────────────────────
+const MAP_LAT = 45.723874;
+const MAP_LNG = 4.915885;
+
+const map = L.map('map', {
+  center: [MAP_LAT, MAP_LNG],
+  zoom: 16,
+  zoomControl: true,
+});
+
+// Tile layer OpenStreetMap
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 19,
+}).addTo(map);
+
+// Marker usine T'Elefan
+const factoryIcon = L.divIcon({
+  className: '',
+  html: `<div style="
+    width:44px;height:44px;border-radius:50%;
+    background:var(--accent,#3b82f6);
+    border:3px solid #fff;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 8px rgba(0,0,0,0.4);
+    color:#fff;font-size:20px;
+  ">🏭</div>`,
+  iconSize: [44, 44],
+  iconAnchor: [22, 22],
+  popupAnchor: [0, -26],
+});
+
+const marker = L.marker([MAP_LAT, MAP_LNG], { icon: factoryIcon }).addTo(map);
+
+marker.bindPopup(`
+  <div style="min-width:200px;font-family:Inter,sans-serif;font-size:13px">
+    <div style="font-weight:700;font-size:15px;margin-bottom:8px">T'Elefan – MES 4.0</div>
+    <div style="color:#555;margin-bottom:4px">IUT Lumière Lyon 2</div>
+    <div style="color:#555;margin-bottom:2px;font-size:12px">160 Bd de l'Université</div>
+    <div style="color:#555;margin-bottom:10px">Bron · Rhône (69)</div>
+    <hr style="border:none;border-top:1px solid #ddd;margin-bottom:10px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+      <div><div style="color:#888;font-size:11px">OF en cours</div>
+           <div style="font-weight:600;color:#3b82f6">{{ in_prog_total }}</div></div>
+      <div><div style="color:#888;font-size:11px">OF terminés</div>
+           <div style="font-weight:600;color:#10b981">{{ finished }}</div></div>
+      <div><div style="color:#888;font-size:11px">TRS Global</div>
+           <div style="font-weight:600;color:#f59e0b">{{ trs_pct }}%</div></div>
+      <div><div style="color:#888;font-size:11px">Buffers</div>
+           <div style="font-weight:600;color:{% if fill_pct > 80 %}#f59e0b{% else %}#10b981{% endif %}">{{ fill_pct }}%</div></div>
+    </div>
+  </div>
+`, { maxWidth: 260 }).openPopup();
+
+lucide.createIcons();
+</script>
+{% endblock %}

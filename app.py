@@ -2,6 +2,7 @@ import os
 import json
 
 from flask import Flask, render_template, redirect, url_for, session, request, jsonify
+from werkzeug.security import generate_password_hash, check_password_hash
 import db
 
 app = Flask(__name__)
@@ -21,21 +22,22 @@ def sep_filter(value):
 
 USERS = {
     os.getenv("ADMIN_EMAIL", "admin@telefan.fr"): {
-        "password": os.getenv("ADMIN_PASSWORD", "Admin@MES4_2026!"),
-        "role":     "Administrateur",
+        "password_hash": generate_password_hash(os.getenv("ADMIN_PASSWORD", "Admin@MES4_2026!")),
+        "role":          "Administrateur",
     },
     os.getenv("OPER_EMAIL", "operateur@telefan.fr"): {
-        "password": os.getenv("OPER_PASSWORD", "Oper@Prod_2026"),
-        "role":     "Opérateur",
+        "password_hash": generate_password_hash(os.getenv("OPER_PASSWORD", "Oper@Prod_2026")),
+        "role":          "Opérateur",
     },
 }
 
 NAV = [
-    ("dashboard",    "Accueil",     "home",        "Vue générale"),
-    ("production",   "Production",  "settings-2",  "KPI 1–4"),
-    ("qualite",      "Qualité",     "check-circle","KPI 5–9"),
-    ("machines",     "Machines",    "cpu",         "KPI 10"),
-    ("maintenance",  "Maintenance", "wrench",      "KPI 11–12"),
+    ("dashboard",    "Accueil",     "home",         "Vue générale"),
+    ("production",   "Production",  "settings-2",   "KPI 1–4"),
+    ("qualite",      "Qualité",     "check-circle", "KPI 5–9"),
+    ("machines",     "Machines",    "cpu",          "KPI 10"),
+    ("maintenance",  "Maintenance", "wrench",       "KPI 11–12"),
+    ("geographie",   "Géographie",  "map-pin",      "Site & Capteurs"),
 ]
 
 
@@ -57,7 +59,7 @@ def login():
         email    = request.form.get("email", "").strip()
         password = request.form.get("password", "")
         u = USERS.get(email)
-        if u and u["password"] == password:
+        if u and check_password_hash(u["password_hash"], password):
             session["user"] = email
             session["role"] = u["role"]
             return redirect(url_for("dashboard"))
@@ -91,12 +93,16 @@ def _base_ctx(active: str) -> dict:
 
 @app.route("/")
 def dashboard():
+    date_from = request.args.get("from", "").strip()
+    date_to   = request.args.get("to",   "").strip()
+    db_min, db_max = db.get_finstep_date_range()
+
     in_prog_total, in_prog_df = db.kpi_in_progress()
     progress     = db.kpi_production_progress()
-    trs_df       = db.kpi_trs()
-    total_errors = db.kpi_total_errors()
+    trs_df       = db.kpi_trs(date_from or None, date_to or None)
+    total_errors = db.kpi_total_errors(date_from or None, date_to or None)
     buf_df       = db.kpi_buffer_fill()
-    lead_df      = db.kpi_lead_time_delta()
+    lead_df      = db.kpi_lead_time_delta(date_from or None, date_to or None)
 
     trs_g  = float(trs_df["trs"].mean())          if not trs_df.empty else 0.0
     dispo  = float(trs_df["availability"].mean()) if not trs_df.empty else 0.0
@@ -117,10 +123,6 @@ def dashboard():
     if not alerts:
         alerts.append(("ok", "Aucune alerte active"))
 
-    # Chart data
-    in_prog_chart = {
-        "labels": db.to_records(in_prog_df.head(15)),
-    }
     lead_chart = db.to_records(lead_df.tail(40)) if not lead_df.empty else []
 
     return render_template(
@@ -137,16 +139,24 @@ def dashboard():
         in_prog_data=json.dumps(db.to_records(in_prog_df.head(15))),
         lead_data=json.dumps(lead_chart),
         top3=db.to_records(in_prog_df.head(3)),
+        date_from=date_from,
+        date_to=date_to,
+        db_min=db_min or "",
+        db_max=db_max or "",
     )
 
 
 @app.route("/production")
 def production():
+    date_from = request.args.get("from", "").strip()
+    date_to   = request.args.get("to",   "").strip()
+    db_min, db_max = db.get_finstep_date_range()
+
     in_prog_total, in_prog_df = db.kpi_in_progress()
-    progress     = db.kpi_production_progress()
-    lead_df      = db.kpi_lead_time_delta()
-    finished_df  = db.kpi_finished_per_day()
-    orders_df    = db.kpi_orders_table()
+    progress       = db.kpi_production_progress()
+    lead_df        = db.kpi_lead_time_delta(date_from or None, date_to or None)
+    finished_df    = db.kpi_finished_per_day(date_from or None, date_to or None)
+    orders_df      = db.kpi_orders_table()
     advancement_df = db.kpi_order_advancement()
 
     ecart_avg = 0
@@ -165,17 +175,25 @@ def production():
         finished_data=json.dumps(db.to_records(finished_df) if not finished_df.empty else []),
         advancement=db.to_records(advancement_df),
         orders=db.to_records(orders_df),
+        date_from=date_from,
+        date_to=date_to,
+        db_min=db_min or "",
+        db_max=db_max or "",
     )
 
 
 @app.route("/qualite")
 def qualite():
-    trs_df       = db.kpi_trs()
-    ml_df        = db.kpi_machine_load()
+    date_from = request.args.get("from", "").strip()
+    date_to   = request.args.get("to",   "").strip()
+    db_min, db_max = db.get_finstep_date_range()
+
+    trs_df       = db.kpi_trs(date_from or None, date_to or None)
+    ml_df        = db.kpi_machine_load(date_from or None, date_to or None)
     top_errors   = db.kpi_top_errors()
-    step_errors  = db.kpi_errors_by_step()
-    total_errors = db.kpi_total_errors()
-    fp_yield, ok_orders, total_orders = db.kpi_first_pass_yield()
+    step_errors  = db.kpi_errors_by_step(date_from or None, date_to or None)
+    total_errors = db.kpi_total_errors(date_from or None, date_to or None)
+    fp_yield, ok_orders, total_orders = db.kpi_first_pass_yield(date_from or None, date_to or None)
 
     trs_g = float(trs_df["trs"].mean())          if not trs_df.empty else 0.0
     dispo = float(trs_df["availability"].mean()) if not trs_df.empty else 0.0
@@ -210,6 +228,10 @@ def qualite():
         errors_data=json.dumps(db.to_records(top_errors) if not top_errors.empty else []),
         step_errors_data=json.dumps(db.to_records(step_errors) if not step_errors.empty else []),
         qual_by_resource=json.dumps(trs_table),
+        date_from=date_from,
+        date_to=date_to,
+        db_min=db_min or "",
+        db_max=db_max or "",
     )
 
 
@@ -326,6 +348,34 @@ def maintenance():
         energy_stats=energy_stats,
         energy_sample=json.dumps(energy_sample),
     )
+
+
+@app.route("/geographie")
+def geographie():
+    in_prog_total, _ = db.kpi_in_progress()
+    progress         = db.kpi_production_progress()
+    trs_df           = db.kpi_trs()
+    trs_g            = float(trs_df["trs"].mean()) if not trs_df.empty else 0.0
+    buf_df           = db.kpi_buffer_fill()
+    fill_global      = float(buf_df["fill_rate"].mean()) if not buf_df.empty else 0.0
+
+    return render_template(
+        "geographie.html",
+        **_base_ctx("geographie"),
+        in_prog_total=in_prog_total,
+        finished=progress["finished"],
+        trs_pct=round(trs_g * 100, 1),
+        fill_pct=round(fill_global * 100, 1),
+    )
+
+
+# ──────────────────────────────────────────────
+# Error handlers
+# ──────────────────────────────────────────────
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html", **_base_ctx(""), error=str(e)), 404
 
 
 # ──────────────────────────────────────────────
