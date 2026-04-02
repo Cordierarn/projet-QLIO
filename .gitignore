@@ -56,6 +56,9 @@ cookies.txt
 ~$*
 *.tmp
 
+# Anciens dumps SQL (versions obsolètes)
+FestoMES-2025*.sql
+
 # Documents pédagogiques (consignes professeur)
 Stat & More*.pdf
 Maquette_Dashboard_TElefan*.pdf
