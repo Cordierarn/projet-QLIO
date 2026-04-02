@@ -97,9 +97,9 @@
       <i data-lucide="trending-up"></i> Avancement OF en cours (Top 3)
     </div>
     {% if top3 %}
-      {% set max_steps = top3[0].active_steps %}
+      {% set max_steps = top3[0].products_in_progress %}
       {% for item in top3 %}
-        {% set pct = (item.active_steps / max_steps * 100)|round(1) if max_steps else 0 %}
+        {% set pct = (item.products_in_progress / max_steps * 100)|round(1) if max_steps else 0 %}
         <div class="progress-row">
           <div class="progress-header">
             <span class="progress-label">{{ item.order_ref }}</span>
@@ -144,9 +144,9 @@ const leadData   = {{ lead_data|safe }};
 if (inProgData.length > 0) {
   new ApexCharts(document.getElementById('chart-inprog'), mergeApex({
     chart:  { type: 'bar', height: 220 },
-    series: [{ name: 'Étapes actives', data: inProgData.map(d => d.active_steps) }],
+    series: [{ name: 'Produits en cours', data: inProgData.map(d => d.products_in_progress) }],
     xaxis:  { categories: inProgData.map(d => d.order_ref), labels: { rotate: -30, style: { fontSize: '11px' } } },
-    yaxis:  { title: { text: 'Étapes' } },
+    yaxis:  { title: { text: 'Produits' } },
     colors: ['#3b82f6'],
     plotOptions: { bar: { borderRadius: 4 } }
   })).render();

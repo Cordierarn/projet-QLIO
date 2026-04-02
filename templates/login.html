@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>T'Elefan – Connexion</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo_telefan.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -11,7 +12,9 @@
   <div class="login-card">
 
     <div class="login-logo">
-      <div class="brand">T'Elefan</div>
+      <div class="login-logo-img-wrap">
+        <img src="{{ url_for('static', filename='img/logo_telefan.png') }}" alt="T'Elefan">
+      </div>
       <div class="sub">MES 4.0 – Système de Pilotage de Production</div>
     </div>
 

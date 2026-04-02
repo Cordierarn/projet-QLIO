@@ -10,15 +10,15 @@
 <div class="grid-3 mb-16">
 
   <div class="kpi-card {% if fill_pct > 80 %}amber{% else %}green{% endif %}">
-    <div class="kpi-label">KPI 11 – Remplissage Buffers</div>
+    <div class="kpi-label">Remplissage Buffers</div>
     <div class="kpi-value {% if fill_pct > 80 %}amber{% else %}green{% endif %}">{{ fill_pct }}%</div>
     <div class="kpi-sub">global tous buffers</div>
   </div>
 
   <div class="kpi-card accent">
-    <div class="kpi-label">KPI 12 – Énergie / OF</div>
-    <div class="kpi-value accent">{{ real_epp }}</div>
-    <div class="kpi-sub">mWs réels · {{ calc_epp }} mWs calculés</div>
+    <div class="kpi-label">Énergie / OF</div>
+    <div class="kpi-value accent">{% if real_epp %}{{ real_epp }}{% else %}N/D{% endif %}</div>
+    <div class="kpi-sub">{% if real_epp %}mWs réels · {% endif %}{{ calc_epp }} mWs calculés</div>
   </div>
 
   <div class="kpi-card amber">
@@ -35,7 +35,7 @@
   <!-- KPI 11 - Buffers -->
   <div class="section">
     <div class="section-title">
-      <i data-lucide="database"></i> KPI 11 – Taux de remplissage des buffers
+      <i data-lucide="database"></i> Taux de remplissage des buffers
     </div>
     {% if buffers %}
       {% for b in buffers %}
@@ -71,13 +71,13 @@
   <!-- KPI 12 - Energy -->
   <div class="section">
     <div class="section-title">
-      <i data-lucide="zap"></i> KPI 12 – Consommation électrique par OF
+      <i data-lucide="zap"></i> Consommation électrique par OF
     </div>
     <div class="dual-metric mb-16">
       <div class="item">
         <div class="lbl">Réelle</div>
         <div class="val" style="color:var(--accent)">
-          {{ real_epp }} <span class="u">mWs</span>
+          {% if real_epp %}{{ real_epp }} <span class="u">mWs</span>{% else %}<span style="color:var(--text-muted)">N/D</span>{% endif %}
         </div>
       </div>
       <div class="item">
@@ -109,12 +109,68 @@
   <div class="chart-box" id="chart-equip"></div>
 </div>
 
+<!-- ── Données Capteurs Physiques ─────────────────────────────────────── -->
+<div class="section mt-16">
+  <div class="section-title">
+    <i data-lucide="activity"></i> Données Capteurs – Puissance électrique (data_all.csv)
+  </div>
+  {% if energy_stats %}
+    <div class="grid-3 mb-16">
+      <div class="kpi-card accent">
+        <div class="kpi-label">Puissance L1 moy.</div>
+        <div class="kpi-value accent">{{ energy_stats.get('pwr_l1', {}).get('mean', '–') }} <span style="font-size:14px">W</span></div>
+        <div class="kpi-sub">min {{ energy_stats.get('pwr_l1', {}).get('min', '–') }} / max {{ energy_stats.get('pwr_l1', {}).get('max', '–') }}</div>
+      </div>
+      <div class="kpi-card accent">
+        <div class="kpi-label">Puissance L2 moy.</div>
+        <div class="kpi-value accent">{{ energy_stats.get('pwr_l2', {}).get('mean', '–') }} <span style="font-size:14px">W</span></div>
+        <div class="kpi-sub">min {{ energy_stats.get('pwr_l2', {}).get('min', '–') }} / max {{ energy_stats.get('pwr_l2', {}).get('max', '–') }}</div>
+      </div>
+      <div class="kpi-card accent">
+        <div class="kpi-label">Puissance L3 moy.</div>
+        <div class="kpi-value accent">{{ energy_stats.get('pwr_l3', {}).get('mean', '–') }} <span style="font-size:14px">W</span></div>
+        <div class="kpi-sub">min {{ energy_stats.get('pwr_l3', {}).get('min', '–') }} / max {{ energy_stats.get('pwr_l3', {}).get('max', '–') }}</div>
+      </div>
+    </div>
+  {% endif %}
+  <div class="chart-box" id="chart-power-csv" style="height:220px"></div>
+</div>
+
+<div class="grid-2 mt-16">
+
+  <!-- Pression + Débit (data_all.csv) -->
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="gauge"></i> Pression & Débit (data_all.csv)
+    </div>
+    {% if energy_stats.get('pressure_bar') %}
+      <div style="display:flex;gap:24px;margin-bottom:12px;font-size:13px;color:var(--text-muted)">
+        <span>Pression moy. <strong style="color:var(--text)">{{ energy_stats.get('pressure_bar', {}).get('mean', '–') }} bar</strong></span>
+        <span>Débit moy. <strong style="color:var(--text)">{{ energy_stats.get('flow_lmin', {}).get('mean', '–') }} l/min</strong></span>
+      </div>
+    {% endif %}
+    <div class="chart-box" id="chart-pneumatics" style="height:180px"></div>
+  </div>
+
+  <!-- Puissance instantanée (data_all.csv) -->
+  <div class="section">
+    <div class="section-title">
+      <i data-lucide="zap"></i> Puissance active L1/L2/L3 (data_all.csv)
+    </div>
+    <div class="chart-box" id="chart-power-instant" style="height:180px"></div>
+  </div>
+
+</div>
+
 {% endblock %}
 
 {% block scripts %}
 <script>
-const bufData    = {{ buf_chart_data|safe }};
-const energyData = {{ energy_data|safe }};
+const bufData       = {{ buf_chart_data|safe }};
+const energyData    = {{ energy_data|safe }};
+const powerData     = {{ power_data|safe }};
+const pneumData     = {{ pneumatics_data|safe }};
+const energySample  = {{ energy_sample|safe }};
 
 // Buffer fill chart
 if (bufData.length > 0) {
@@ -176,6 +232,78 @@ if (bufData.length > 0) {
 } else {
   document.getElementById('chart-equip').innerHTML =
     '<p style="color:var(--text-muted);padding:20px;text-align:center">Pas de données</p>';
+}
+
+// ── CSV Power (dataEnergy.csv sample) – L1/L2/L3 long series
+if (energySample.length > 0) {
+  new ApexCharts(document.getElementById('chart-power-csv'), mergeApex({
+    chart:  { type: 'line', height: 220, animations: { enabled: false } },
+    series: [
+      { name: 'L1 (W)', data: energySample.map(d => +(d.pwr_l1 ?? 0).toFixed(1)) },
+      { name: 'L2 (W)', data: energySample.map(d => +(d.pwr_l2 ?? 0).toFixed(1)) },
+      { name: 'L3 (W)', data: energySample.map(d => +(d.pwr_l3 ?? 0).toFixed(1)) },
+    ],
+    xaxis: {
+      categories: energySample.map(d => Math.round(d.time_s) + 's'),
+      tickAmount: 10,
+      labels: { style: { fontSize: '10px' } }
+    },
+    yaxis: { title: { text: 'W' } },
+    colors: ['#3b82f6', '#10b981', '#f59e0b'],
+    stroke: { width: 1, curve: 'smooth' },
+    tooltip: { y: { formatter: v => v.toFixed(1) + ' W' } },
+    legend: { position: 'top' }
+  })).render();
+} else {
+  document.getElementById('chart-power-csv').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Fichier dataEnergy.csv non trouvé</p>';
+}
+
+// ── CSV Pneumatics (data_all.csv)
+if (pneumData.length > 0) {
+  new ApexCharts(document.getElementById('chart-pneumatics'), mergeApex({
+    chart:  { type: 'line', height: 180, animations: { enabled: false } },
+    series: [
+      { name: 'Pression (bar)', data: pneumData.map(d => +(d.Pressure ?? 0).toFixed(3)) },
+      { name: 'Débit (l/min)',  data: pneumData.map(d => +(d.Flow ?? 0).toFixed(3)) },
+    ],
+    xaxis: {
+      categories: pneumData.map(d => d.Timestamp ?? ''),
+      tickAmount: 8,
+      labels: { rotate: -30, style: { fontSize: '10px' } }
+    },
+    colors: ['#06b6d4', '#8b5cf6'],
+    stroke: { width: 1.5, curve: 'smooth' },
+    tooltip: { shared: true },
+    legend: { position: 'top' }
+  })).render();
+} else {
+  document.getElementById('chart-pneumatics').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Fichier data_all.csv non trouvé</p>';
+}
+
+// ── CSV Instant Power (data_all.csv) – L1/L2/L3
+if (powerData.length > 0) {
+  new ApexCharts(document.getElementById('chart-power-instant'), mergeApex({
+    chart:  { type: 'line', height: 180, animations: { enabled: false } },
+    series: [
+      { name: 'L1 (W)', data: powerData.map(d => +(d.ActivePowerL1 ?? 0).toFixed(1)) },
+      { name: 'L2 (W)', data: powerData.map(d => +(d.ActivePowerL2 ?? 0).toFixed(1)) },
+      { name: 'L3 (W)', data: powerData.map(d => +(d.ActivePowerL3 ?? 0).toFixed(1)) },
+    ],
+    xaxis: {
+      categories: powerData.map(d => d.Timestamp ?? ''),
+      tickAmount: 8,
+      labels: { rotate: -30, style: { fontSize: '10px' } }
+    },
+    colors: ['#3b82f6', '#10b981', '#f59e0b'],
+    stroke: { width: 1.5, curve: 'smooth' },
+    tooltip: { shared: true, y: { formatter: v => v.toFixed(1) + ' W' } },
+    legend: { position: 'top' }
+  })).render();
+} else {
+  document.getElementById('chart-power-instant').innerHTML =
+    '<p style="color:var(--text-muted);padding:20px;text-align:center">Fichier data_all.csv non trouvé</p>';
 }
 
 lucide.createIcons();

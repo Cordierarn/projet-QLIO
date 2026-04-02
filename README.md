@@ -83,11 +83,19 @@ projetqlio-phpmyadmin-1    0.0.0.0:8080->80/tcp
 > Étape indispensable — la base est vide au premier démarrage.
 
 
-**phpMyAdmin :**
+**Via PowerShell (recommandé — pas de limite de taille) :**
+
+```powershell
+Get-Content "FestoMES-2026-03-31-2.sql" | docker exec -i db_qlio mariadb -u root -pexample_root_password
+```
+
+> Le SQL crée automatiquement la base `mes4` et importe toutes les tables.
+
+**phpMyAdmin (fichiers < 2 MB seulement) :**
 
 1. Ouvrir http://localhost:8080
-2. Sélectionner la base `MES4`
-3. Onglet **Importer** → choisir `FestoMES-2025-11-25-v2.sql` → **Exécuter**
+2. Onglet **Importer** (sur la page d'accueil, sans sélectionner de base)
+3. Choisir `FestoMES-2026-03-31-2.sql` → **Exécuter**
 
 ### 6. Vérifier l'import
 
@@ -139,7 +147,7 @@ Le dashboard est accessible à :
 | `DB_PORT` | `3306` | Port de MariaDB |
 | `DB_USER` | `root` | Utilisateur BDD |
 | `DB_PASSWORD` | `example_root_password` | Mot de passe BDD |
-| `DB_NAME` | `MES4` | Nom de la base |
+| `DB_NAME` | `mes4` | Nom de la base (créée par le SQL) |
 | `ADMIN_EMAIL` | `admin@telefan.fr` | Email de connexion au dashboard |
 | `ADMIN_PASSWORD` | `telefan2026` | Mot de passe de connexion |
 | `SECRET_KEY` | `telefan-mes-4-secret-2026` | Clé de session Flask |
@@ -163,7 +171,10 @@ projet-QLIO/
 ├── db.py                       # Requêtes SQL et fonctions KPI
 ├── requirements.txt            # Dépendances Python
 ├── docker-compose.yml          # MariaDB + phpMyAdmin
-├── FestoMES-2025-11-25-v2.sql  # Dump base de données (version courante)
+├── FestoMES-2026-03-31-2.sql   # Dump base de données (version courante – 31/03/2026)
+├── FestoMES-2025-11-25-v2.sql  # Dump base de données (version précédente)
+├── data_all.csv                # Données capteurs complets (puissance, pression, débit)
+├── dataEnergy.csv              # Série temporelle longue (puissance phases L1/L2/L3)
 ├── templates/
 │   ├── base.html               # Layout : sidebar, header, CDN JS
 │   ├── login.html              # Page de connexion
@@ -185,9 +196,9 @@ projet-QLIO/
 
 | KPI | Source | Description |
 |-----|--------|-------------|
-| **KPI 1** – OF en cours | `tblstep` | Nombre d'étapes actives (`Active=1`) |
+| **KPI 1** – Produits en cours | `tblstep` | Nombre de produits actifs (distinct ONo/OPos, `Active=1`) |
 | **KPI 2** – Lead Time | `tblfinorderpos` | Écart entre durée planifiée et réelle |
-| **KPI 3** – Taux d'avancement | `tblorder` + `tblfinorder` | Progression des OF actifs |
+| **KPI 3** – Taux d'avancement | `tblorderpos` | Produits terminés / total produits (top 3 FIFO) |
 | **KPI 4** – OF terminés | `tblfinorder` | Histogramme des ordres terminés/jour |
 
 ### Qualité (KPI 5–9)
@@ -211,7 +222,7 @@ projet-QLIO/
 | KPI | Source | Description |
 |-----|--------|-------------|
 | **KPI 11** – Buffers | `tblbufferpos` | Taux de remplissage par buffer |
-| **KPI 12** – Énergie | `tblfinstep` | Consommation électrique réelle vs calculée |
+| **KPI 12** – Énergie | `tblfinstep` + `data_all.csv` + `dataEnergy.csv` | Consommation électrique réelle vs calculée + courbes capteurs |
 
 ---
 

@@ -11,18 +11,18 @@
 
   <div class="section">
     <div class="section-title">
-      <i data-lucide="package"></i> KPI 1 – Nombre d'OF en cours
+      <i data-lucide="package"></i> Produits en cours de production
     </div>
     <div class="big-metric accent">
       <span class="num">{{ in_prog_total|sep }}</span>
-      <span class="unit">OF actifs</span>
+      <span class="unit">produits en cours</span>
     </div>
     <div class="chart-box" id="chart-kpi1"></div>
   </div>
 
   <div class="section">
     <div class="section-title">
-      <i data-lucide="clock"></i> KPI 2 – Lead Time (Écart Prévu/Réel)
+      <i data-lucide="clock"></i> Lead Time (Écart Prévu/Réel)
     </div>
     <div class="big-metric {% if ecart_avg_min > 0 %}red{% else %}green{% endif %}">
       <span class="num">{% if ecart_avg_min > 0 %}+{% endif %}{{ ecart_avg_min }}</span>
@@ -38,7 +38,7 @@
 
   <div class="section">
     <div class="section-title">
-      <i data-lucide="percent"></i> KPI 3 – Taux d'avancement des OF (Top 3 FIFO)
+      <i data-lucide="percent"></i> Avancement des OF (Top 3 FIFO)
     </div>
     {% if advancement %}
       {% for item in advancement %}
@@ -48,7 +48,7 @@
             <span class="progress-value green">
               {{ item.pct }}%
               <span style="font-size:11px;color:var(--text-muted)">
-                (étape {{ item.current_step }}/{{ item.max_step }})
+                ({{ item.finished_products }}/{{ item.total_products }} produits)
               </span>
             </span>
           </div>
@@ -64,7 +64,7 @@
 
   <div class="section">
     <div class="section-title">
-      <i data-lucide="check-square"></i> KPI 4 – OF terminés
+      <i data-lucide="check-square"></i> OF terminés
     </div>
     <div class="big-metric amber">
       <span class="num">{{ finished|sep }}</span>
@@ -130,7 +130,7 @@ const finishedData= {{ finished_data|safe }};
 if (inProgData.length > 0) {
   new ApexCharts(document.getElementById('chart-kpi1'), mergeApex({
     chart:  { type: 'bar', height: 210 },
-    series: [{ name: 'Étapes actives', data: inProgData.map(d => d.active_steps) }],
+    series: [{ name: 'Produits en cours', data: inProgData.map(d => d.products_in_progress) }],
     xaxis:  { categories: inProgData.map(d => d.order_ref), labels: { rotate: -30, style: { fontSize: '11px' } } },
     colors: ['#3b82f6'],
     plotOptions: { bar: { borderRadius: 4 } }

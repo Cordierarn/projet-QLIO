@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}T'Elefan MES 4.0{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo_telefan.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -12,7 +13,9 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-brand">
-      <div class="brand-name">T'Elefan</div>
+      <div class="sidebar-logo-wrap">
+        <img src="{{ url_for('static', filename='img/logo_telefan.png') }}" alt="T'Elefan">
+      </div>
       <div class="brand-sub">MES 4.0 – Pilotage de Production</div>
     </div>
 
@@ -46,8 +49,11 @@
       <div class="header-right">
         <div class="header-meta" id="clock"></div>
         <a href="{{ url_for('logout') }}" class="header-user">
-          <div class="avatar">{{ user[0]|upper }}</div>
-          {{ user.split('@')[0]|title }}
+          <div class="avatar">{{ user.split('@')[0][0]|upper }}</div>
+          <div>
+            {{ user.split('@')[0]|title }}
+            {% if role %}<div style="font-size:11px;color:var(--text-muted)">{{ role }}</div>{% endif %}
+          </div>
         </a>
       </div>
     </header>

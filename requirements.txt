@@ -1,4 +1,24 @@
-flask==3.1.0
-pandas==2.2.3
-SQLAlchemy==2.0.34
+# Dépendances projet T'Elefan MES 4.0 – Groupe n°7
+# Généré le 02/04/2026 – Python 3.14.0
+
+# ── Framework web ─────────────────────────────
+Flask==3.1.2
+Werkzeug==3.1.5
+Jinja2==3.1.6
+MarkupSafe==3.0.3
+click==8.3.1
+blinker==1.9.0
+itsdangerous==2.2.0
+
+# ── Données ───────────────────────────────────
+pandas==3.0.0
+numpy==2.4.1
+python-dateutil==2.9.0.post0
+pytz==2025.2
+tzdata==2025.2
+six==1.17.0
+
+# ── Base de données ───────────────────────────
+SQLAlchemy==2.0.48
+greenlet==3.3.2
 PyMySQL==1.1.1

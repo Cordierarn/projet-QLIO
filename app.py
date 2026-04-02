@@ -19,8 +19,15 @@ def sep_filter(value):
     except (ValueError, TypeError):
         return value
 
-VALID_USERS = {
-    os.getenv("ADMIN_EMAIL", "admin@telefan.fr"): os.getenv("ADMIN_PASSWORD", "telefan2026"),
+USERS = {
+    os.getenv("ADMIN_EMAIL", "admin@telefan.fr"): {
+        "password": os.getenv("ADMIN_PASSWORD", "Admin@MES4_2026!"),
+        "role":     "Administrateur",
+    },
+    os.getenv("OPER_EMAIL", "operateur@telefan.fr"): {
+        "password": os.getenv("OPER_PASSWORD", "Oper@Prod_2026"),
+        "role":     "Opérateur",
+    },
 }
 
 NAV = [
@@ -49,8 +56,10 @@ def login():
     if request.method == "POST":
         email    = request.form.get("email", "").strip()
         password = request.form.get("password", "")
-        if VALID_USERS.get(email) == password:
+        u = USERS.get(email)
+        if u and u["password"] == password:
             session["user"] = email
+            session["role"] = u["role"]
             return redirect(url_for("dashboard"))
         error = "Identifiants incorrects."
     return render_template("login.html", error=error)
@@ -68,10 +77,11 @@ def logout():
 
 def _base_ctx(active: str) -> dict:
     return {
-        "nav":    NAV,
-        "active": active,
-        "user":   session.get("user", "Admin"),
-        "db_info": db.DEFAULT_DB,
+        "nav":      NAV,
+        "active":   active,
+        "user":     session.get("user", "admin@telefan.fr"),
+        "role":     session.get("role", ""),
+        "db_info":  db.DEFAULT_DB,
     }
 
 
@@ -216,8 +226,9 @@ def machines():
     t_h = t_m = 0
     if not dt_df.empty:
         total_dt  = float(dt_df["total_downtime_min"].sum())
-        avg_mtbf  = float(dt_df["mtbf_min"].mean())
-        avg_mttr  = float(dt_df["mttr_min"].mean())
+        with_fail = dt_df[dt_df["n_failures"] > 0]
+        avg_mtbf  = float(with_fail["mtbf_min"].median()) if not with_fail.empty else 0.0
+        avg_mttr  = float(with_fail["mttr_min"].median()) if not with_fail.empty else 0.0
         t_h, t_m  = int(total_dt // 60), int(total_dt % 60)
 
     detail = []
@@ -265,9 +276,18 @@ def maintenance():
     ml_df           = db.kpi_machine_load()
     energy_df       = db.kpi_energy_by_resource()
 
+    # CSV sensor data
+    power_df        = db.kpi_sensor_power()
+    pneumatics_df   = db.kpi_sensor_pneumatics()
+    energy_stats, energy_sample = db.kpi_sensor_energy_stats()
+
     fill_global = float(buf_df["fill_rate"].mean()) if not buf_df.empty else 0.0
-    avg_mtbf    = float(dt_df["mtbf_min"].mean())   if not dt_df.empty else 0.0
-    avg_mttr    = float(dt_df["mttr_min"].mean())   if not dt_df.empty else 0.0
+    if not dt_df.empty:
+        with_fail = dt_df[dt_df["n_failures"] > 0]
+        avg_mtbf  = float(with_fail["mtbf_min"].median()) if not with_fail.empty else 0.0
+        avg_mttr  = float(with_fail["mttr_min"].median()) if not with_fail.empty else 0.0
+    else:
+        avg_mtbf = avg_mttr = 0.0
 
     buffers = []
     if not buf_df.empty:
@@ -301,6 +321,10 @@ def maintenance():
         date_to=date_to,
         db_min=db_min or "",
         db_max=db_max or "",
+        power_data=json.dumps(db.to_records(power_df) if not power_df.empty else []),
+        pneumatics_data=json.dumps(db.to_records(pneumatics_df) if not pneumatics_df.empty else []),
+        energy_stats=energy_stats,
+        energy_sample=json.dumps(energy_sample),
     )
 
 

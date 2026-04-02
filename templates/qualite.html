@@ -10,25 +10,25 @@
 <div class="grid-4 mb-16">
 
   <div class="kpi-card amber">
-    <div class="kpi-label">KPI 5 – TRS Global</div>
+    <div class="kpi-label">TRS Global</div>
     <div class="kpi-value amber">{{ trs_pct }}%</div>
     <div class="kpi-sub">Rendement Synthétique</div>
   </div>
 
   <div class="kpi-card accent">
-    <div class="kpi-label">KPI 6 – Occupation</div>
+    <div class="kpi-label">Occupation machines</div>
     <div class="kpi-value accent">{{ occ_pct }}%</div>
     <div class="kpi-sub">taux moyen machines</div>
   </div>
 
   <div class="kpi-card {% if total_errors > 0 %}red{% else %}green{% endif %}">
-    <div class="kpi-label">KPI 7 – Erreurs</div>
+    <div class="kpi-label">Erreurs détectées</div>
     <div class="kpi-value {% if total_errors > 0 %}red{% else %}green{% endif %}">{{ total_errors|sep }}</div>
     <div class="kpi-sub">total détectées</div>
   </div>
 
   <div class="kpi-card green">
-    <div class="kpi-label">KPI 9 – Sans erreur</div>
+    <div class="kpi-label">Sans erreur (FPY)</div>
     <div class="kpi-value green">{{ ok_orders|sep }}</div>
     <div class="kpi-sub">{{ fp_yield_pct }}% des OF ({{ total_orders|sep }} total)</div>
   </div>
@@ -38,7 +38,7 @@
 <!-- ── TRS global breakdown ─────────────────────────────────────────────── -->
 <div class="section mb-16">
   <div class="section-title">
-    <i data-lucide="gauge"></i> KPI 5 – Composantes TRS globales
+    <i data-lucide="gauge"></i> Composantes TRS globales
   </div>
   <div class="grid-3">
     <div>
@@ -80,7 +80,7 @@
 <!-- ── TRS par ressource ───────────────────────────────────────────────── -->
 <div class="section mb-16">
   <div class="section-title">
-    <i data-lucide="table"></i> KPI 5 – TRS par ressource
+    <i data-lucide="table"></i> TRS par ressource
   </div>
   {% if trs_table %}
   <table class="data-table">
@@ -131,7 +131,7 @@
 
   <div class="section">
     <div class="section-title">
-      <i data-lucide="bar-chart"></i> KPI 8 – Taux d'erreur par étape (Pareto)
+      <i data-lucide="bar-chart"></i> Taux d'erreur par étape (Pareto)
     </div>
     <div class="chart-box" id="chart-pareto"></div>
   </div>

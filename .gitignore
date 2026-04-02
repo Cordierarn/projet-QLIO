@@ -42,3 +42,16 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Claude Code (fichiers internes)
+.claude/
+
+# Fichiers temporaires
+cookies.txt
+
+# Logo source racine (déjà dans static/img/)
+/logo_telefan.png
+
+# Fichiers temporaires Microsoft Office
+~$*
+*.tmp

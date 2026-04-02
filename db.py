@@ -1,6 +1,7 @@
 import os
 import json
 from datetime import datetime
+from urllib.parse import quote_plus
 
 import pandas as pd
 from sqlalchemy import create_engine, text
@@ -8,9 +9,9 @@ from sqlalchemy import create_engine, text
 DEFAULT_DB = {
     "host":     os.getenv("DB_HOST",     "localhost"),
     "port":     int(os.getenv("DB_PORT", 3306)),
-    "user":     os.getenv("DB_USER",     "root"),
-    "password": os.getenv("DB_PASSWORD", "example_root_password"),
-    "database": os.getenv("DB_NAME",     "MES4"),
+    "user":     os.getenv("DB_USER",     "qlio_user"),
+    "password": os.getenv("DB_PASSWORD", "Qlio_MES4@2026"),
+    "database": os.getenv("DB_NAME",     "mes4"),
 }
 
 _engine = None
@@ -20,7 +21,7 @@ def get_engine():
     global _engine
     if _engine is None:
         url = (
-            f"mysql+pymysql://{DEFAULT_DB['user']}:{DEFAULT_DB['password']}"
+            f"mysql+pymysql://{quote_plus(DEFAULT_DB['user'])}:{quote_plus(DEFAULT_DB['password'])}"
             f"@{DEFAULT_DB['host']}:{DEFAULT_DB['port']}/{DEFAULT_DB['database']}"
         )
         _engine = create_engine(url, pool_pre_ping=True, pool_recycle=300)
@@ -47,36 +48,34 @@ def to_records(df: pd.DataFrame) -> list:
 # ──────────────────────────────────────────────
 
 def kpi_in_progress():
-    """KPI 1 – nombre d'OF distincts en cours (Active=1)."""
+    """KPI 1 – nombre de produits distincts en cours (Active=1, par ONo/OPos)."""
     df = run_query("""
         SELECT ONo AS order_ref,
-               COUNT(*) AS active_steps
+               COUNT(DISTINCT OPos) AS products_in_progress
         FROM tblstep
         WHERE Active = 1
         GROUP BY ONo
-        ORDER BY active_steps DESC
+        ORDER BY products_in_progress DESC
     """)
-    total = len(df) if not df.empty else 0
+    total = int(df["products_in_progress"].sum()) if not df.empty else 0
     return total, df
 
 
 def kpi_order_advancement():
-    """KPI 3 – top 3 OF les plus avancés (FIFO) : StepNo_actuel / max_global_steps."""
+    """KPI 3 – top 3 OF les plus avancés (FIFO) : produits terminés / total produits."""
     df = run_query("""
-        SELECT op.ONo,
-               MAX(op.StepNo)   AS current_step,
-               tot.max_step
-        FROM tblorderpos op
-        CROSS JOIN (SELECT MAX(StepNo) AS max_step FROM tblorderpos) tot
-        WHERE op.End IS NULL
-        GROUP BY op.ONo, tot.max_step
-        ORDER BY current_step DESC
+        SELECT ONo,
+               SUM(CASE WHEN End IS NOT NULL THEN 1 ELSE 0 END) AS finished_products,
+               COUNT(*) AS total_products
+        FROM tblorderpos
+        GROUP BY ONo
+        HAVING total_products > 0
+        ORDER BY (SUM(CASE WHEN End IS NOT NULL THEN 1 ELSE 0 END) / COUNT(*)) DESC
         LIMIT 3
     """)
     if df.empty:
         return df
-    max_s = int(df.iloc[0]["max_step"]) if df.iloc[0]["max_step"] else 1
-    df["pct"] = (df["current_step"] / max_s * 100).round(1).clip(upper=100)
+    df["pct"] = (df["finished_products"] / df["total_products"] * 100).round(1).clip(upper=100)
     return df
 
 
@@ -142,7 +141,7 @@ def kpi_trs():
     df = pd.merge(df,    qual, how="outer", on="ResourceID")
     df.fillna(0, inplace=True)
     df["availability"] = df.apply(lambda r: r.busy_ticks  / r.total_ticks  if r.total_ticks  else 0.0, axis=1)
-    df["performance"]  = df.apply(lambda r: r.planned_secs / r.actual_secs if r.actual_secs  else 0.0, axis=1)
+    df["performance"]  = df.apply(lambda r: min(r.planned_secs / r.actual_secs, 1.0) if r.actual_secs else 0.0, axis=1)
     df["quality"]      = df.apply(lambda r: 1 - r.errors  / r.total_steps  if r.total_steps  else 1.0, axis=1)
     df["trs"]          = df["availability"] * df["performance"] * df["quality"]
     return df[["ResourceID", "availability", "performance", "quality", "trs"]]
@@ -330,3 +329,84 @@ def kpi_orders_table():
         ORDER BY fo.End DESC
         LIMIT 25
     """)
+
+
+# ──────────────────────────────────────────────
+# CSV SENSOR DATA (data_all.csv / dataEnergy.csv)
+# ──────────────────────────────────────────────
+
+_CSV_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def kpi_sensor_power():
+    """Charge data_all.csv et retourne une série temporelle de puissance (échantillonnée)."""
+    path = os.path.join(_CSV_DIR, "data_all.csv")
+    try:
+        df = pd.read_csv(path, sep=",")
+        df.columns = [c.strip() for c in df.columns]
+        cols = ["Timestamp", "ActivePowerL1", "ActivePowerL2", "ActivePowerL3", "ActivePowerTotal"]
+        df = df[[c for c in cols if c in df.columns]].copy()
+        df.replace("null", pd.NA, inplace=True)
+        for c in df.columns[1:]:
+            df[c] = pd.to_numeric(df[c], errors="coerce")
+        # Échantillonnage : max 200 points
+        step = max(1, len(df) // 200)
+        df = df.iloc[::step].reset_index(drop=True)
+        return df
+    except Exception as exc:
+        print(f"[CSV POWER ERROR] {exc}")
+        return pd.DataFrame()
+
+
+def kpi_sensor_pneumatics():
+    """Charge data_all.csv et retourne pression + débit (échantillonnés)."""
+    path = os.path.join(_CSV_DIR, "data_all.csv")
+    try:
+        df = pd.read_csv(path, sep=",")
+        df.columns = [c.strip() for c in df.columns]
+        cols = ["Timestamp", "Pressure", "Flow"]
+        df = df[[c for c in cols if c in df.columns]].copy()
+        df.replace("null", pd.NA, inplace=True)
+        for c in df.columns[1:]:
+            df[c] = pd.to_numeric(df[c], errors="coerce")
+        step = max(1, len(df) // 200)
+        df = df.iloc[::step].reset_index(drop=True)
+        return df
+    except Exception as exc:
+        print(f"[CSV PNEUMATICS ERROR] {exc}")
+        return pd.DataFrame()
+
+
+def kpi_sensor_energy_stats():
+    """Calcule des statistiques globales depuis dataEnergy.csv (min/max/moy)."""
+    path = os.path.join(_CSV_DIR, "dataEnergy.csv")
+    try:
+        df = pd.read_csv(path, sep=";", header=0)
+        df.columns = [c.strip() for c in df.columns]
+        # Renommage pour accès simple
+        rename = {
+            "Time [s]": "time_s",
+            "Pressure [bar]": "pressure_bar",
+            "Flow Rate [l/min]": "flow_lmin",
+            "Active Power L1 [W]": "pwr_l1",
+            "Active Power L2 [W]": "pwr_l2",
+            "Active Power L3 [W]": "pwr_l3",
+        }
+        df.rename(columns={k: v for k, v in rename.items() if k in df.columns}, inplace=True)
+        for c in df.columns[1:]:
+            df[c] = pd.to_numeric(df[c], errors="coerce")
+        stats = {}
+        for col in ["pressure_bar", "flow_lmin", "pwr_l1", "pwr_l2", "pwr_l3"]:
+            if col in df.columns:
+                stats[col] = {
+                    "min":  round(float(df[col].min()), 3),
+                    "max":  round(float(df[col].max()), 3),
+                    "mean": round(float(df[col].mean()), 3),
+                }
+        # Série temporelle échantillonnée pour graphique (max 300 pts)
+        step = max(1, len(df) // 300)
+        sample = df[["time_s"] + [c for c in ["pwr_l1", "pwr_l2", "pwr_l3"] if c in df.columns]].iloc[::step]
+        return stats, json.loads(sample.to_json(orient="records"))
+    except Exception as exc:
+        print(f"[CSV ENERGY STATS ERROR] {exc}")
+        return {}, []
