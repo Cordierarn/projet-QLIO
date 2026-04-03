@@ -132,6 +132,21 @@ Pour arrêter : `Ctrl+C` dans le terminal.
 
 ---
 
+### Erreur `Access denied for 'qlio_user'@'172.18.0.1'`
+
+MariaDB peut refuser la connexion depuis l'adresse bridge Docker (`172.18.0.1`) 
+malgré le wildcard `'%'`. Solution : supprimer et recréer l'utilisateur.
+```bash
+docker exec db_qlio mariadb -u root -pexample_root_password -e "
+DROP USER IF EXISTS 'qlio_user'@'%';
+CREATE USER 'qlio_user'@'%' IDENTIFIED BY 'Qlio_MES4@2026';
+GRANT SELECT ON mes4.* TO 'qlio_user'@'%';
+FLUSH PRIVILEGES;
+"
+```
+
+Puis relancer `python app.py`.
+
 ## Accès aux interfaces
 
 | Service | URL | Utilisateur | Mot de passe |
